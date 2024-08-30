@@ -4,9 +4,10 @@
     "designResolution": {
       "width": 375,
       "height": 667,
-      "fitHeight": false,
+      "fitHeight": true,
       "fitWidth": false
-    }
+    },
+    "renderPipeline": "fd8ec536-a354-4a17-9c74-4f3883c378c8"
   },
   "custom_joint_texture_layouts": []
 }
