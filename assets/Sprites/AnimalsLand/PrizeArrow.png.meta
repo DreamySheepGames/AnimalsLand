@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "73ebe3b2-7ed9-41be-9911-30b62482b12e",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "73ebe3b2-7ed9-41be-9911-30b62482b12e@6c48a",
+      "displayName": "PrizeArrow",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "73ebe3b2-7ed9-41be-9911-30b62482b12e",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "73ebe3b2-7ed9-41be-9911-30b62482b12e@f9941",
+      "displayName": "PrizeArrow",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 2.5,
+        "offsetY": 4.5,
+        "trimX": 107,
+        "trimY": 71,
+        "width": 291,
+        "height": 349,
+        "rawWidth": 500,
+        "rawHeight": 500,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -145.5,
+            -174.5,
+            0,
+            145.5,
+            -174.5,
+            0,
+            -145.5,
+            174.5,
+            0,
+            145.5,
+            174.5,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            107,
+            429,
+            398,
+            429,
+            107,
+            80,
+            398,
+            80
+          ],
+          "nuv": [
+            0.214,
+            0.16,
+            0.796,
+            0.16,
+            0.214,
+            0.858,
+            0.796,
+            0.858
+          ],
+          "minPos": [
+            -145.5,
+            -174.5,
+            0
+          ],
+          "maxPos": [
+            145.5,
+            174.5,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "73ebe3b2-7ed9-41be-9911-30b62482b12e@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "73ebe3b2-7ed9-41be-9911-30b62482b12e@6c48a"
+  }
+}
