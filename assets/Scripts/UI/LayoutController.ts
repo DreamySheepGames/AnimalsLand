@@ -16,6 +16,7 @@ export class LayoutController extends Component {
     }
 
     start() {
+        this.onResize();
         window.addEventListener('resize', this.onResize.bind(this));
     }
 

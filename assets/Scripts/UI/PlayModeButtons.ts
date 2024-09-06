@@ -1,4 +1,5 @@
-import { _decorator, Component, Node, Color, tween, UIOpacity } from 'cc';
+import { _decorator, Component, Node, Color, tween, UIOpacity, Button } from 'cc';
+import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayModeButtons')
@@ -19,11 +20,18 @@ export class PlayModeButtons extends Component {
 
     public changeToEndless()
     {
+        GameManager.Instance.isEndlessMode = true;
+
         // Change buttonEndless color
-        // const endlessSprite = this.buttonEndless.getComponent('cc.Sprite');
-        // if (endlessSprite) {
-        //     endlessSprite.color = new Color(255, 215, 0); // Change to gold (or whatever color you prefer)
-        // }
+        const endlessSprite = this.buttonEndless.getComponent(Button);
+        if (endlessSprite) {
+            endlessSprite.normalColor = this.hexToColor("#FFFFFF");
+        }
+
+        const challengeSprite = this.buttonChallenge.getComponent(Button);
+        if (challengeSprite) {
+            challengeSprite.normalColor = this.hexToColor("#D6D6D6");
+        }
 
         // Tween alpha buttonEndlessHighlight from 0 to 1
         const highlightOpacity = this.buttonEndlessHighlight.getComponent(UIOpacity);
@@ -43,11 +51,18 @@ export class PlayModeButtons extends Component {
 
     public changeToChallenge()
     {
+        GameManager.Instance.isEndlessMode = false;
+
         // Change buttonEndless color
-        // const endlessSprite = this.buttonEndless.getComponent('cc.Sprite');
-        // if (endlessSprite) {
-        //     endlessSprite.color = new Color(255, 215, 0); // Change to gold (or whatever color you prefer)
-        // }
+        const endlessSprite = this.buttonEndless.getComponent(Button);
+        if (endlessSprite) {
+            endlessSprite.normalColor = this.hexToColor("#D6D6D6");
+        }
+
+        const challengeSprite = this.buttonChallenge.getComponent(Button);
+        if (challengeSprite) {
+            challengeSprite.normalColor = this.hexToColor("#FFFFFF");
+        }
 
         // Tween alpha buttonEndlessHighlight from 0 to 1
         const highlightOpacity = this.buttonEndlessHighlight.getComponent(UIOpacity);
@@ -63,6 +78,13 @@ export class PlayModeButtons extends Component {
                 .to(this.opacityTweenTime, { opacity: 255 }, { easing: 'smooth' }) // Tween to full opacity (255)
                 .start();
         }
+    }
+
+    private hexToColor(hex: string): Color {
+        const r = parseInt(hex.substring(1, 3), 16);
+        const g = parseInt(hex.substring(3, 5), 16);
+        const b = parseInt(hex.substring(5, 7), 16);
+        return new Color(r, g, b);
     }
 }
 

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Event } from 'cc';
+import { _decorator, Component, Node, Event, director } from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 const { ccclass, property } = _decorator;
 
@@ -13,7 +13,8 @@ export class ButttonManager extends Component {
 
     public openPanel(event: Event, CustomEventData) {
         // Turn on dark layer
-        this.darkLayer.active = true;
+        if (this.darkLayer)
+            this.darkLayer.active = true;
 
         // First, close all panels
         this.panels.forEach(panel => panel.active = false);
@@ -43,6 +44,16 @@ export class ButttonManager extends Component {
     public playButtonPressedSFX()
     {
         AudioManager.Instance.playSFX(AudioManager.Instance.buttonPressed);
+    }
+
+    public openMenuScene()
+    {
+        director.loadScene('MainMenu');
+    }
+
+    public openEndlessScene()
+    {
+        director.loadScene('Endless');
     }
 }
 
