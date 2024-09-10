@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, view, UITransform } from 'cc';
+import { _decorator, Component, Node, Vec3, view, UITransform, RigidBody2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('MoveSideWay')
@@ -11,6 +11,9 @@ export class MoveSideWay extends Component {
 
     @property
     hasSpeedBurst: boolean = false;
+
+    @property
+    isSpin: boolean = false;
 
     private moveDirection: number = 1; // 1 for right, -1 for left
     private speed: number; // Movement speed
@@ -28,7 +31,24 @@ export class MoveSideWay extends Component {
     private isSpeedBurstActive: boolean = false; // Flag to check if burst is active
     private timeUntilNormalSpeed: number = 0; // Timer to track when to return to normal speed
 
+    private spinForceMin: number = -10;
+    private spinForceMax: number = 10;
+
+    get IsMoveSideWay(): boolean {
+        return this.isMoveSideWay;
+    }
+
+    set IsMoveSideWay(value: boolean){
+        this.isMoveSideWay = value;
+    }
+
     start() {
+        if (this.isSpin)
+        {
+            var spinForce = Math.random() * (this.spinForceMax - this.spinForceMin) + this.spinForceMin;
+            this.getComponent(RigidBody2D).angularVelocity = spinForce;
+        }
+
         // Randomize normal speed between speedMin and speedMax
         this.speed = Math.random() * (this.speedMax - this.speedMin) + this.speedMin;
 

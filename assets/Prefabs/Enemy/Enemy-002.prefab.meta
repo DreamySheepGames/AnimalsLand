@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "5951511c-b772-4464-9717-814dfd787b0d",
+  "uuid": "ed1c4ab4-c5dc-42d7-a61c-ae23ad579b4e",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Enemy"
+    "syncNodeName": "Enemy-002"
   }
 }
