@@ -19,7 +19,7 @@ export class PlayerColliderController extends Component {
         console.log('onBeginContact' + otherCollider.name);
 
         // Check if the other collider is the enemy (tag = 1)
-        if (otherCollider.tag === 1 && !this.playerController.isReturnAfterEnemyHit) {
+        if (otherCollider.tag === 1 && !this.playerController.isReturnAfterEnemyHit && !this.playerController.isInvincible) {
             EndlessGameManager.Instance.decreaseHeart();
 
             if (this.playerController.hasGoneUp) {

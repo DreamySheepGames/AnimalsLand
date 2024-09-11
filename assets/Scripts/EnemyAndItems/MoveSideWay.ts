@@ -38,8 +38,16 @@ export class MoveSideWay extends Component {
         return this.isMoveSideWay;
     }
 
-    set IsMoveSideWay(value: boolean){
+    set IsMoveSideWay(value: boolean) {
         this.isMoveSideWay = value;
+    }
+
+    get MoveDirection(): number {
+        return this.moveDirection;
+    }
+
+    set MoveDirection(value: number) {
+        this.moveDirection = value;
     }
 
     load()
@@ -105,7 +113,6 @@ export class MoveSideWay extends Component {
             || (newPos.x - objectWidth <= -this.screenWidth && this.moveDirection == -1))
             && this.isMoveSideWay)
         {
-            console.log("switch way");
             this.moveDirection *= -1; // Reverse the direction
 
             // If isOneTimeUse is true, stop moving sideways after the first hit

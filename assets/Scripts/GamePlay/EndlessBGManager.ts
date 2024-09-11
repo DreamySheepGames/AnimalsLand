@@ -1,8 +1,19 @@
 import { _decorator, Component, Node, Vec3, view, UITransform, tween, Tween } from 'cc';
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessBGManager')
 export class EndlessBGManager extends Component {
+
+    // private static instance: EndlessBGManager;
+    //
+    // public static get Instance(): EndlessBGManager {
+    //     if (!this.instance) {
+    //         console.error("EndlessBGManager instance is not initialized in the scene.");
+    //     }
+    //     return this.instance;
+    // }
 
     @property({ type: [Node] })
     private backgrounds: Node[] = []; // Array for portrait backgrounds
@@ -23,7 +34,15 @@ export class EndlessBGManager extends Component {
 
     private hasDoneAllLevel = false;
 
+    get LevelSteps(): number[] {
+        return this.levelSteps;
+    }
+
     onLoad() {
+        // for (let i = 0; i < this.levelSteps.length; i++)
+        //     EndlessGameManager.Instance.stageCheckPoint[i] = this.levelSteps[i];
+        //EndlessBGManager.instance = this;
+
         this.screenHeight = view.getDesignResolutionSize().height;
         this.screenWidth = view.getDesignResolutionSize().width;
         this.setBackgroundAnchors();
@@ -98,6 +117,11 @@ export class EndlessBGManager extends Component {
         nextBG.setPosition(0, this.screenHeight, 0); // Position above the current one
         nextBG.active = true; // Reactivate the new background
     }
+
+    // public getLevelSteps(): number[] {
+    //     var levelStepsArray = this.levelSteps;
+    //     return levelStepsArray;
+    // }
 
     // private getTopBackground(): Node {
     //     let topBG: Node = null;

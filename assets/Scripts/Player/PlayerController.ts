@@ -23,7 +23,7 @@ export class PlayerController extends Component {
     @property(Node)
     private backgroundManager: Node;
 
-    private _isInvincible: boolean = false;
+    private _isInvincible: boolean = true;
     private _currentTween: Tween<Node> = null; // Reference to the active tween
     private _isReturnAfterEnemyHit: boolean = false;
     private rb: RigidBody2D;
