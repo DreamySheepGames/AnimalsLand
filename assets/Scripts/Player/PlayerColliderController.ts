@@ -1,5 +1,6 @@
 import { _decorator, Component, Collider2D, ITriggerEvent, Contact2DType, IPhysics2DContact, tween, Vec3 } from 'cc';
 import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -18,7 +19,9 @@ export class PlayerColliderController extends Component {
         console.log('onBeginContact' + otherCollider.name);
 
         // Check if the other collider is the enemy (tag = 1)
-        if (otherCollider.tag === 1) {
+        if (otherCollider.tag === 1 && !this.playerController.isReturnAfterEnemyHit) {
+            EndlessGameManager.Instance.decreaseHeart();
+
             if (this.playerController.hasGoneUp) {
                 // If hasGoneUp is true, set it to false (reverse direction)
                 this.playerController.hasGoneUp = false;

@@ -25,7 +25,7 @@ export class PlayerController extends Component {
 
     private _isInvincible: boolean = false;
     private _currentTween: Tween<Node> = null; // Reference to the active tween
-
+    private _isReturnAfterEnemyHit: boolean = false;
     private rb: RigidBody2D;
 
     // Getter and Setter for _hasGoneUp
@@ -62,6 +62,15 @@ export class PlayerController extends Component {
 
     set currentTween(tween: Tween<Node>) {
         this._currentTween = tween;
+    }
+
+    // Getter and Setter for _isReturnAfterEnemyHit
+    get isReturnAfterEnemyHit(): boolean {
+        return this._isReturnAfterEnemyHit;
+    }
+
+    set isReturnAfterEnemyHit(value: boolean) {
+        this._isReturnAfterEnemyHit = value;
     }
 
     start() {
@@ -138,6 +147,7 @@ export class PlayerController extends Component {
     public returnAfterEnemyHit()
     {
         this._isMoving = true; // Set moving flag
+        this._isReturnAfterEnemyHit = true;
 
         this._currentTween = tween(this.node)
             .to(this.moveSpeed / 2, { position: this.startPosition })
@@ -146,6 +156,7 @@ export class PlayerController extends Component {
                 this.cancelPseudoForce();
 
                 this._isMoving = false;  // Reset moving flag when done
+                this._isReturnAfterEnemyHit = false;
             })
             .start();
     }

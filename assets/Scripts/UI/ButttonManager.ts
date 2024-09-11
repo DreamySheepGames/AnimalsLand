@@ -26,7 +26,8 @@ export class ButttonManager extends Component {
     }
 
     public closeParent(event: Event) {
-        this.darkLayer.active = false;
+        if (this.darkLayer)
+            this.darkLayer.active = false;
 
         const buttonNode = event.currentTarget as Node; // Get the button node
         const parentNode = buttonNode.parent; // Get the grandparent of the button (assuming this is the panel)

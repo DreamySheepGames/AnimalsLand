@@ -42,7 +42,14 @@ export class MoveSideWay extends Component {
         this.isMoveSideWay = value;
     }
 
+    load()
+    {
+
+    }
+
     start() {
+        this.screenWidth = view.getDesignResolutionSize().width / 2; // Get half the screen width
+
         if (this.isSpin)
         {
             var spinForce = Math.random() * (this.spinForceMax - this.spinForceMin) + this.spinForceMin;
@@ -52,10 +59,10 @@ export class MoveSideWay extends Component {
         // Randomize normal speed between speedMin and speedMax
         this.speed = Math.random() * (this.speedMax - this.speedMin) + this.speedMin;
 
-        if (view.getDesignResolutionSize().width > view.getVisibleSize().width)
-            this.screenWidth = view.getVisibleSize().width / 2; // Get half the screen width
-        else
-            this.screenWidth = view.getDesignResolutionSize().width / 2; // Get half the screen width
+        // if (view.getDesignResolutionSize().width > view.getVisibleSize().width)
+        //     this.screenWidth = view.getVisibleSize().width / 2; // Get half the screen width
+        // else
+        //     this.screenWidth = view.getDesignResolutionSize().width / 2; // Get half the screen width
 
         // Set initial direction based on position
         if (this.node.position.x < 0) {
@@ -94,7 +101,11 @@ export class MoveSideWay extends Component {
         const objectWidth = uiTransform.width / 2;
 
         // Check if the object has hit the edges of the screen
-        if ((newPos.x + objectWidth >= this.screenWidth || newPos.x - objectWidth <= -this.screenWidth) && this.isMoveSideWay) {
+        if (((newPos.x + objectWidth >= this.screenWidth && this.moveDirection == 1)
+            || (newPos.x - objectWidth <= -this.screenWidth && this.moveDirection == -1))
+            && this.isMoveSideWay)
+        {
+            console.log("switch way");
             this.moveDirection *= -1; // Reverse the direction
 
             // If isOneTimeUse is true, stop moving sideways after the first hit

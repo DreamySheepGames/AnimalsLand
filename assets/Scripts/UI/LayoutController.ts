@@ -32,8 +32,10 @@ export class LayoutController extends Component {
     }
 
     private toggleWidgets(enable: boolean) {
-        this.buttonWidgets.forEach(widget => {
-            widget.enabled = enable;
-        });
+        if (this.buttonWidgets && this.buttonWidgets.length > 0) {
+            this.buttonWidgets.forEach(widget => {
+                widget.enabled = enable;
+            });
+        }
     }
 }
