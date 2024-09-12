@@ -30,7 +30,7 @@ export class EndlessBGManager extends Component {
     private currentTween2: Tween<Node> = null; // Reference to the active tween (tween next background)
     private tweenSpeed = 0.4;
     private lastStepValue: number;
-    private yToDisactivate = 5;
+    private yToDisactivate = 4;
 
     private hasDoneAllLevel = false;
 
@@ -39,10 +39,6 @@ export class EndlessBGManager extends Component {
     }
 
     onLoad() {
-        // for (let i = 0; i < this.levelSteps.length; i++)
-        //     EndlessGameManager.Instance.stageCheckPoint[i] = this.levelSteps[i];
-        //EndlessBGManager.instance = this;
-
         this.screenHeight = view.getDesignResolutionSize().height;
         this.screenWidth = view.getDesignResolutionSize().width;
         this.setBackgroundAnchors();
@@ -112,28 +108,8 @@ export class EndlessBGManager extends Component {
         this.nextBackgroundIndex = (this.nextBackgroundIndex + 1) % this.backgrounds.length;
 
         const nextBG = this.backgrounds[this.nextBackgroundIndex];
-        //const topBG = this.getTopBackground(); // Get the current top background
 
         nextBG.setPosition(0, this.screenHeight, 0); // Position above the current one
         nextBG.active = true; // Reactivate the new background
     }
-
-    // public getLevelSteps(): number[] {
-    //     var levelStepsArray = this.levelSteps;
-    //     return levelStepsArray;
-    // }
-
-    // private getTopBackground(): Node {
-    //     let topBG: Node = null;
-    //
-    //     for (const bg of this.backgrounds) {
-    //         if (bg && bg.isValid && bg.active) {  // Ensure the background is valid and active
-    //             if (topBG === null || bg.position.y > topBG.position.y) {
-    //                 topBG = bg;
-    //             }
-    //         }
-    //     }
-    //
-    //     return topBG;
-    // }
 }

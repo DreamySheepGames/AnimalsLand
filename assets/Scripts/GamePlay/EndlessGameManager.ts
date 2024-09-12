@@ -37,6 +37,9 @@ export class EndlessGameManager extends Component {
     private stageCheckPoint: number[] = []; // Queue for stage checkpoints
     private lastValueStageCheckPoint: number;
     private targetPoint: number = 0;
+    private stageToTurnOnSpeedBurst: number = 5;
+    private currentStage: number = 1;
+    private hasSpeedBurst: boolean = false;
 
     get StageCheckPoint(): number[] {
         return this.stageCheckPoint;
@@ -69,12 +72,12 @@ export class EndlessGameManager extends Component {
         this.targetPoint = this.stageCheckPoint.shift();
 
         // Spawn the first enemy
-        this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0]);
+        this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
     }
 
     // Function to increment score and update label
     public incrementScore() {
-        this.score += 1;
+        this.score++;
         this.updateScoreLabel();
 
         // Check if we need to go to next stage
@@ -132,6 +135,11 @@ export class EndlessGameManager extends Component {
     }
 
     public goToNextStage() {
+        this.currentStage++;
+
+        if (this.currentStage >= this.stageToTurnOnSpeedBurst)
+            this.hasSpeedBurst = true;
+
         var spawnAmount;
         // Pop the next spawn amount
         if (this.enemyAmountQueue.length > 0)
@@ -155,9 +163,9 @@ export class EndlessGameManager extends Component {
         // spawn enemies
         // if there are still assigned amount then we use that amount, else we use the last amount value
         if (this.enemyAmountQueue.length > 0)
-            this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0]);
+            this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
         else
-            this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.lastAmountValue);
+            this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.lastAmountValue, this.hasSpeedBurst);
 
         // Update the next target point
         if (this.stageCheckPoint.length > 0) {

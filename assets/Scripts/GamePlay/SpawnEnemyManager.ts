@@ -1,6 +1,6 @@
-import { _decorator, Component, Prefab, Node, instantiate} from 'cc';
+import { _decorator, Component, Prefab, Node, instantiate, Vec3 } from 'cc';
 import { EndlessGameManager } from 'db://assets/Scripts/GamePlay/EndlessGameManager';
-import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
+import { MoveSideWay } from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
 const { ccclass, property } = _decorator;
 
 @ccclass('SpawnEnemyManager')
@@ -11,12 +11,34 @@ export class SpawnEnemyManager extends Component {
     @property(Node)
     private canvas: Node;
 
+    @property({ type: [Node] })
+    private spawnPos: Node[] = []; // Array of Nodes for spawn positions
+
+    @property(Node)
+    private spawnPosParent: Node; // The parent node of spawn positions
+
     private spawnX1: number = -262;
     private spawnX2: number = 262;
-    private spawnYMin: number = -133;
-    private spawnYMax: number = 166;
 
-    public spawnEnemy(spawnAmount: number) {
+    public spawnEnemy(spawnAmount: number, hasSpeedBurst: boolean) {
+        if (spawnAmount > this.spawnPos.length) {
+            console.error('Spawn amount exceeds available spawn positions.');
+            return;
+        }
+
+        // Calculate Y-values based on parent and own position
+        const yPositions = this.spawnPos.map(node => {
+            if (this.spawnPosParent) {
+                return this.spawnPosParent.position.y + node.position.y;
+            } else {
+                console.error('Spawn positions parent is not set.');
+                return 0;
+            }
+        });
+
+        // Shuffle the Y-values array
+        const shuffledYPositions = this.shuffleArray(yPositions.slice());
+
         for (let i = 0; i < spawnAmount; i++) {
             const randomIndex = Math.floor(Math.random() * this.enemyPrefabs.length);
             const enemy = instantiate(this.enemyPrefabs[randomIndex]);
@@ -25,28 +47,39 @@ export class SpawnEnemyManager extends Component {
                 enemy.parent = this.canvas; // Set parent to Canvas
             } else {
                 console.error("Canvas not found in the scene.");
+                return;
             }
 
             // Randomly select x1 or x2 for X coordinate
             const randomX = Math.random() < 0.5 ? this.spawnX1 : this.spawnX2;
 
-            // Randomly select a Y coordinate between spawnYMin and spawnYMax
-            const randomY = Math.random() * (this.spawnYMax - this.spawnYMin) + this.spawnYMin;
+            // Get the Y position from the shuffled Y positions array
+            const spawnYPos = shuffledYPositions[i];
 
-            // Set the position of the enemy to (randomX, randomY)
-            enemy.setPosition(randomX, randomY, 0);
+            // Set the position of the enemy to (randomX, spawnYPos)
+            enemy.setPosition(randomX, spawnYPos, 0);
 
             // Set move direction based on randomX
-            enemy.getComponent(MoveSideWay).MoveDirection = randomX == this.spawnX1 ? 1 : -1;
+            const moveSideway = enemy.getComponent(MoveSideWay);
+            if (moveSideway) {
+                moveSideway.MoveDirection = randomX == this.spawnX1 ? 1 : -1;
+            }
+
+            // Decide if the enemy has speed burst ability or not
+            if (hasSpeedBurst)
+                enemy.getComponent(MoveSideWay).HasSpeedBurst = true;
 
             // Push the enemy to the enemyQueue
             EndlessGameManager.Instance.enemyQueue.push(enemy);
-
-            // Push spawnAmount to the enemyAmountQueue
-            // EndlessGameManager.Instance.enemyAmountQueue.push(spawnAmount);
         }
     }
 
+    // Utility function to shuffle an array
+    private shuffleArray<T>(array: T[]): T[] {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        }
+        return array;
+    }
 }
-
-

@@ -50,9 +50,12 @@ export class MoveSideWay extends Component {
         this.moveDirection = value;
     }
 
-    load()
-    {
+    get HasSpeedBurst(): boolean {
+        return this.hasSpeedBurst;
+    }
 
+    set HasSpeedBurst(value: boolean) {
+        this.hasSpeedBurst = value;
     }
 
     start() {
