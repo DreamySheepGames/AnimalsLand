@@ -28,7 +28,7 @@ export class EndlessBGManager extends Component {
 
     private currentTween1: Tween<Node> = null; // Reference to the active tween (tween current background)
     private currentTween2: Tween<Node> = null; // Reference to the active tween (tween next background)
-    private tweenSpeed = 0.4;
+    private tweenSpeed = 0.35;                  // IMPORTANT NOTE: tween speed must be <= player tween move speed fast * 2;
     private lastStepValue: number;
     private yToDisactivate = 4;
 

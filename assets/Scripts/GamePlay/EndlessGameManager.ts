@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Label, director } from 'cc';
 import { EndlessBGManager } from 'db://assets/Scripts/GamePlay/EndlessBGManager';
 import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
 import {SpawnEnemyManager} from "db://assets/Scripts/GamePlay/SpawnEnemyManager";
+import {SpawnDiamondManager} from "db://assets/Scripts/GamePlay/SpawnDiamondManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManager')
@@ -23,6 +24,9 @@ export class EndlessGameManager extends Component {
     @property(Node)
     private spawnEnemyManager: Node;
 
+    @property({ type: SpawnDiamondManager })
+    private spawnDiamondManager: SpawnDiamondManager;
+
     @property(Node)
     private endlessBGManager: Node;
 
@@ -40,6 +44,7 @@ export class EndlessGameManager extends Component {
     private stageToTurnOnSpeedBurst: number = 5;
     private currentStage: number = 1;
     private hasSpeedBurst: boolean = false;
+    private receivedDiamond = 0;
 
     get StageCheckPoint(): number[] {
         return this.stageCheckPoint;
@@ -49,6 +54,17 @@ export class EndlessGameManager extends Component {
         this.stageCheckPoint = value;
     }
 
+    get CurrentStage(): number {
+        return this.currentStage;
+    }
+
+    get ReceivedDiamond(): number {
+        return this.receivedDiamond;
+    }
+
+    set ReceivedDiamond(value: number) {
+        this.receivedDiamond = value;
+    }
     onLoad() {
         //console.log(this.endlessBGManager.getComponent(EndlessBGManager).LevelSteps);
 
@@ -56,7 +72,6 @@ export class EndlessGameManager extends Component {
         EndlessGameManager.instance = this;
 
         // Get the last value of the enemy amount array
-        console.log(this.enemyAmountQueue);
         this.lastAmountValue = this.enemyAmountQueue[this.enemyAmountQueue.length - 1];
 
         // Get the checkpoints from EndlessBGManager's LevelSteps
@@ -83,6 +98,12 @@ export class EndlessGameManager extends Component {
         // Check if we need to go to next stage
         if (this.checkIfAtTargetPoint()) {
             this.goToNextStage();
+        }
+
+        // after increase the score and have the enemy spawned positions, we spawn diamond
+        if (this.currentStage != 1)
+        {
+            this.spawnDiamondManager.spawnDiamond();
         }
     }
 

@@ -20,6 +20,13 @@ export class SpawnEnemyManager extends Component {
     private spawnX1: number = -262;
     private spawnX2: number = 262;
 
+    private usedYPos: number[] = [];
+    private unUsedYPos: number[] = [];
+
+    get UnUsedYPos(): number[] {
+        return this.unUsedYPos;
+    }
+
     public spawnEnemy(spawnAmount: number, hasSpeedBurst: boolean) {
         if (spawnAmount > this.spawnPos.length) {
             console.error('Spawn amount exceeds available spawn positions.');
@@ -38,6 +45,10 @@ export class SpawnEnemyManager extends Component {
 
         // Shuffle the Y-values array
         const shuffledYPositions = this.shuffleArray(yPositions.slice());
+
+        // Reset the used and un-used y position
+        this.usedYPos = [];
+        this.unUsedYPos = [];
 
         for (let i = 0; i < spawnAmount; i++) {
             const randomIndex = Math.floor(Math.random() * this.enemyPrefabs.length);
@@ -71,7 +82,20 @@ export class SpawnEnemyManager extends Component {
 
             // Push the enemy to the enemyQueue
             EndlessGameManager.Instance.enemyQueue.push(enemy);
+
+            // assigned used y position
+            this.usedYPos.push(shuffledYPositions[i]);
         }
+
+        // assigned unused y positions
+        for (let i = 0; i < shuffledYPositions.length; i++) {
+            // Check if shuffledYPositions[i] is not in usedYPos
+            if (this.usedYPos.indexOf(shuffledYPositions[i]) === -1) {
+                // If not, push the value into unUsedYPos
+                this.unUsedYPos.push(shuffledYPositions[i]);
+            }
+        }
+
     }
 
     // Utility function to shuffle an array
