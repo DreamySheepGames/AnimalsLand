@@ -3,6 +3,8 @@ import { EndlessBGManager } from 'db://assets/Scripts/GamePlay/EndlessBGManager'
 import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
 import {SpawnEnemyManager} from "db://assets/Scripts/GamePlay/SpawnEnemyManager";
 import {SpawnDiamondManager} from "db://assets/Scripts/GamePlay/SpawnDiamondManager";
+import {SpawnItemsManager} from "db://assets/Scripts/GamePlay/SpawnItemsManager";
+import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManager')
@@ -21,11 +23,17 @@ export class EndlessGameManager extends Component {
 
     private score: number = 0; // Initial score
 
+    @property({type: PlayerController})
+    private playerController: PlayerController;
+
     @property(Node)
     private spawnEnemyManager: Node;
 
     @property({ type: SpawnDiamondManager })
     private spawnDiamondManager: SpawnDiamondManager;
+
+    @property({ type: SpawnItemsManager })
+    private spawnItemsManager: SpawnItemsManager;
 
     @property(Node)
     private endlessBGManager: Node;
@@ -45,6 +53,7 @@ export class EndlessGameManager extends Component {
     private currentStage: number = 1;
     private hasSpeedBurst: boolean = false;
     private receivedDiamond = 0;
+    private doubleDiamond: boolean = false;
 
     get StageCheckPoint(): number[] {
         return this.stageCheckPoint;
@@ -65,6 +74,15 @@ export class EndlessGameManager extends Component {
     set ReceivedDiamond(value: number) {
         this.receivedDiamond = value;
     }
+
+    get DoubleDiamond(): boolean {
+        return this.doubleDiamond;
+    }
+
+    set DoubleDiamond(value: boolean) {
+        this.doubleDiamond = value;
+    }
+
     onLoad() {
         //console.log(this.endlessBGManager.getComponent(EndlessBGManager).LevelSteps);
 
@@ -100,10 +118,11 @@ export class EndlessGameManager extends Component {
             this.goToNextStage();
         }
 
-        // after increase the score and have the enemy spawned positions, we spawn diamond
+        // after increase the score and have the enemy spawned positions, we spawn diamond, then an item
         if (this.currentStage != 1)
         {
             this.spawnDiamondManager.spawnDiamond();
+            this.spawnItemsManager.spawnItems();
         }
     }
 
@@ -194,5 +213,18 @@ export class EndlessGameManager extends Component {
         }
         else
             this.targetPoint += this.lastValueStageCheckPoint;
+    }
+
+    diamondIncrement(value: number)
+    {
+        if (this.doubleDiamond)
+            this.receivedDiamond += value;
+        else
+            this.receivedDiamond += 2 * value;
+    }
+
+    playerInvincibleOff()
+    {
+        this.playerController.turnOffInvincible();
     }
 }

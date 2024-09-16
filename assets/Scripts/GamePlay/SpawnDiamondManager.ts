@@ -21,6 +21,13 @@ export class SpawnDiamondManager extends Component {
     private spawnX2: number = 262;
     private spawnYPositions: number[] = [];
 
+    private usedYPos: number[] = [];
+    private unUsedYPos: number[] = [];
+
+    get UnUsedYPos(): number[] {
+        return this.unUsedYPos;
+    }
+
     spawnDiamond()
     {
         // Randomly select x1 or x2 for X coordinate
@@ -31,7 +38,11 @@ export class SpawnDiamondManager extends Component {
         const randomY = this.spawnYPositions[Math.floor(Math.random() * this.spawnYPositions.length)];
 
         // Decide if we should spawn or not
-        let shouldSpawn = Math.random() >= this.spawnRate ? true : false;
+        let shouldSpawn = Math.random() <= this.spawnRate ? true : false;
+
+        // Reset used and un-used y pos
+        this.usedYPos = [];
+        this.unUsedYPos = [];
 
         if (shouldSpawn)
         {
@@ -47,6 +58,18 @@ export class SpawnDiamondManager extends Component {
 
             // Set the position of the diamond to (randomX, spawnYPos)
             diamond.setPosition(randomX, randomY, 0);
+
+            // Mark used y pos
+            this.usedYPos.push(randomY);
+        }
+
+        // assigned unused y positions
+        for (let i = 0; i < this.spawnYPositions.length; i++) {
+            // Check if shuffledYPositions[i] is not in usedYPos
+            if (this.usedYPos.indexOf(this.spawnYPositions[i]) === -1) {
+                // If not, push the value into unUsedYPos
+                this.unUsedYPos.push(this.spawnYPositions[i]);
+            }
         }
     }
 }

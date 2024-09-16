@@ -3,6 +3,7 @@ import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {InvincibleMeterController} from "db://assets/Scripts/UI/InvincibleMeterController";
 import {Diamond} from "db://assets/Scripts/EnemyAndItems/Diamond";
+import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -12,6 +13,9 @@ export class PlayerColliderController extends Component {
 
     @property({ type: PlayerController })
     private playerController: PlayerController = null; // Reference to the PlayerController
+
+    @property({type: TimerManager})
+    private timerManager: TimerManager;
 
     start() {
         var collider = this.getComponent(Collider2D);
@@ -33,10 +37,24 @@ export class PlayerColliderController extends Component {
             this.hitEnemyGaze();
         }
 
-        // other collider is diamond (tag = 2)
-        if (otherCollider.tag === 2 && !this.playerController.isReturnAfterEnemyHit) {
-            const otherNode = otherCollider.node;
-            this.hitDiamond(otherCollider, otherNode);
+        // if (otherCollider.tag === 2 && !this.playerController.isReturnAfterEnemyHit) {
+        //
+        // }
+
+        if (!this.playerController.isReturnAfterEnemyHit)
+        {
+            switch (otherCollider.tag)
+            {
+                case 2:     // other collider is diamond (tag = 2)
+                    const otherNode = otherCollider.node;
+                    this.hitDiamond(otherCollider, otherNode);
+                    break;
+
+                case 3:     // super hero item (tag = 3)
+                    if (!this.playerController.isInvincible)
+                        this.hitSuperHeroItem(otherCollider);
+                    break;
+            }
         }
     }
 
@@ -67,12 +85,29 @@ export class PlayerColliderController extends Component {
     hitDiamond(otherCollider, otherNode)
     {
         // update total received diamond value
-        EndlessGameManager.Instance.ReceivedDiamond += otherNode.getComponent(Diamond).Value;
+        EndlessGameManager.Instance.diamondIncrement(otherNode.getComponent(Diamond).Value);
 
         // we have to destroy the diamond AFTER the colliding callback has completed, so we have to use schedule callback
         this.scheduleOnce(() => {
             if (otherNode && otherNode.isValid) {
                 otherNode.destroy();
+            }
+        }, 0);
+    }
+
+    hitSuperHeroItem(otherCollider)
+    {
+        // turn on invincible
+        this.playerController.turnOnInvincible();
+
+        // turn on countdown timer through TimerManager
+        this.timerManager.timerSuperHeroOn();
+
+        // destroy item
+        let itemNode = otherCollider.node;
+        this.scheduleOnce(() => {
+            if (itemNode && itemNode.isValid) {
+                itemNode.destroy();
             }
         }, 0);
     }
