@@ -58,6 +58,14 @@ export class MoveSideWay extends Component {
         this.hasSpeedBurst = value;
     }
 
+    get Speed(): number {
+        return this.speed;
+    }
+
+    set Speed(value: number) {
+        this.speed = value;
+    }
+
     start() {
         this.screenWidth = view.getDesignResolutionSize().width / 2; // Get half the screen width
 
@@ -69,11 +77,6 @@ export class MoveSideWay extends Component {
 
         // Randomize normal speed between speedMin and speedMax
         this.speed = Math.random() * (this.speedMax - this.speedMin) + this.speedMin;
-
-        // if (view.getDesignResolutionSize().width > view.getVisibleSize().width)
-        //     this.screenWidth = view.getVisibleSize().width / 2; // Get half the screen width
-        // else
-        //     this.screenWidth = view.getDesignResolutionSize().width / 2; // Get half the screen width
 
         // Set initial direction based on position
         if (this.node.position.x < 0) {

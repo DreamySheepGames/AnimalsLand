@@ -54,6 +54,8 @@ export class EndlessGameManager extends Component {
     private hasSpeedBurst: boolean = false;
     private receivedDiamond = 0;
     private doubleDiamond: boolean = false;
+    private hasSlowdown: boolean = false;
+    private currentEnemyQueue: Node[] = [];
 
     get StageCheckPoint(): number[] {
         return this.stageCheckPoint;
@@ -81,6 +83,14 @@ export class EndlessGameManager extends Component {
 
     set DoubleDiamond(value: boolean) {
         this.doubleDiamond = value;
+    }
+
+    get HasSlowdown(): boolean {
+        return this.hasSlowdown;
+    }
+
+    set HasSlowdown(value: boolean) {
+        this.hasSlowdown = value;
     }
 
     onLoad() {
@@ -217,7 +227,7 @@ export class EndlessGameManager extends Component {
 
     diamondIncrement(value: number)
     {
-        if (this.doubleDiamond)
+        if (!this.doubleDiamond)
             this.receivedDiamond += value;
         else
             this.receivedDiamond += 2 * value;
@@ -226,5 +236,27 @@ export class EndlessGameManager extends Component {
     playerInvincibleOff()
     {
         this.playerController.turnOffInvincible();
+    }
+
+    slowdownEnemy()
+    {
+        this.currentEnemyQueue = this.enemyQueue;
+
+        // loop through all enemy in the scene to half their speed
+        for (let i = 0; i < this.currentEnemyQueue.length; i++) {
+            if (this.currentEnemyQueue[i] && this.hasSlowdown)
+                this.currentEnemyQueue[i].getComponent(MoveSideWay).Speed /= 2;
+        }
+    }
+
+    returnEnemySpeed()
+    {
+        for (let i = 0; i < this.currentEnemyQueue.length; i++) {
+            console.log("RETURN SPEED");
+            if (this.currentEnemyQueue[i])
+                this.currentEnemyQueue[i].getComponent(MoveSideWay).Speed *= 2;
+        }
+
+        this.hasSlowdown = false;
     }
 }

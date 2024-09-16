@@ -67,6 +67,14 @@ export class TimerController extends Component {
             case 3:     // super hero
                 EndlessGameManager.Instance.playerInvincibleOff();
                 break;
+
+            case 4:     // double
+                EndlessGameManager.Instance.DoubleDiamond = false;
+                break;
+
+            case 5:     // slowdown
+                EndlessGameManager.Instance.returnEnemySpeed();
+                break;
         }
 
         // set this timer's and icon's active to false to reuse next time

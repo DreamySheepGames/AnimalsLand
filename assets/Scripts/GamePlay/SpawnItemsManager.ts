@@ -25,7 +25,8 @@ export class SpawnItemsManager extends Component {
     {
         // read player data, select available items
         // fake scenario: if from player data we created this bought items array:
-        let dataPlayerBoughtItem = ["SuperHero", "Double"];
+        //let dataPlayerBoughtItem = ["SuperHero", "Double", "Slowdown"];
+        let dataPlayerBoughtItem = ["Slowdown"];
 
         // get all the prefab's names into an array
         let prefabNames = this.getPrefabNames();
