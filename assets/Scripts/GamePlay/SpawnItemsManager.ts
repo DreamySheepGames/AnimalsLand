@@ -26,7 +26,7 @@ export class SpawnItemsManager extends Component {
         // read player data, select available items
         // fake scenario: if from player data we created this bought items array:
         //let dataPlayerBoughtItem = ["SuperHero", "Double", "Slowdown"];
-        let dataPlayerBoughtItem = ["Slowdown"];
+        let dataPlayerBoughtItem = ["Freeze"];
 
         // get all the prefab's names into an array
         let prefabNames = this.getPrefabNames();
@@ -55,10 +55,11 @@ export class SpawnItemsManager extends Component {
         if (shouldSpawn)
         {
             // randomly select bought items indexes
-            const randomBoughtIndex = Math.floor(Math.random() * this.boughtItemsIndexes.length);
+            const randomBoughtIndex = this.boughtItemsIndexes[Math.floor(Math.random() * this.boughtItemsIndexes.length)];
 
             // Spawn item
             const item = instantiate(this.itemPrefabs[randomBoughtIndex]);
+            console.log(item.name);
 
             if (this.canvas) {
                 item.parent = this.canvas; // Set parent to Canvas

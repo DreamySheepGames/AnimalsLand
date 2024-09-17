@@ -56,6 +56,10 @@ export class PlayerColliderController extends Component {
                 case 5:     // slowdown item hit (tag = 5)
                     this.hitSlowdown(otherCollider);
                     break;
+
+                case 6:     // freeze item hit (tag = 6)
+                    this.hitFreeze(otherCollider);
+                    break;
             }
         }
     }
@@ -114,10 +118,16 @@ export class PlayerColliderController extends Component {
 
     hitSlowdown(otherCollider)
     {
-        EndlessGameManager.Instance.HasSlowdown = true;
         EndlessGameManager.Instance.slowdownEnemy();
         this.timerManager.timerSlowdownOn();
         this.destroyCollidedNode(otherCollider);
+    }
+
+    hitFreeze(otherCollider)
+    {
+        EndlessGameManager.Instance.freezeEnemy();
+        this.timerManager.timerFreezeOn();
+        this.destroyCollidedNode(otherCollider)
     }
 
     destroyCollidedNode(otherCollider)

@@ -12,6 +12,9 @@ export class TimerManager extends Component {
     @property(Node)
     timerSlowdown: Node;
 
+    @property(Node)
+    timerFreeze: Node;
+
     timerSuperHeroOn()
     {
         this.timerSuperHero.active = true;
@@ -25,6 +28,11 @@ export class TimerManager extends Component {
     timerSlowdownOn()
     {
         this.timerSlowdown.active = true;
+    }
+
+    timerFreezeOn()
+    {
+        this.timerFreeze.active = true;
     }
 }
 

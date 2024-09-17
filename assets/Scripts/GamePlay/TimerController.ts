@@ -75,6 +75,10 @@ export class TimerController extends Component {
             case 5:     // slowdown
                 EndlessGameManager.Instance.returnEnemySpeed();
                 break;
+
+            case 6:     // freeze
+                EndlessGameManager.Instance.unFreezeEnemy();
+                break;
         }
 
         // set this timer's and icon's active to false to reuse next time

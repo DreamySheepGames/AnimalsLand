@@ -15,21 +15,23 @@ export class MoveSideWay extends Component {
     @property
     isSpin: boolean = false;
 
-    private moveDirection: number = 1; // 1 for right, -1 for left
-    private speed: number; // Movement speed
-    private speedMin: number = 200; // Minimum speed
-    private speedMax: number = 400; // Maximum speed
-    private screenWidth: number; // Width of the screen
-    private oneTimeUseTriggered: boolean = false; // Tracks if one-time use was triggered
+    private moveDirection: number = 1;              // 1 for right, -1 for left
+    private speed: number;                          // Movement speed
+    private speedMin: number = 200;                 // Minimum speed
+    private speedMax: number = 400;                 // Maximum speed
+    private screenWidth: number;                    // Width of the screen
+    private oneTimeUseTriggered: boolean = false;   // Tracks if one-time use was triggered
 
-    private speedBurstFactor: number = 2; // Speed burst multiplier
-    private speedBurstCountDownMin: number = 3; // Min countdown to burst in seconds
-    private speedBurstCountDownMax: number = 6; // Max countdown to burst in seconds
-    private returnToNormalSpeedAfter: number = 1; // Time in seconds to return to normal speed
+    private speedBurstFactor: number = 2;           // Speed burst multiplier
+    private speedBurstCountDownMin: number = 3;     // Min countdown to burst in seconds
+    private speedBurstCountDownMax: number = 6;     // Max countdown to burst in seconds
+    private returnToNormalSpeedAfter: number = 1;   // Time in seconds to return to normal speed
 
-    private speedBurstCountDown: number; // Countdown for next speed burst
-    private isSpeedBurstActive: boolean = false; // Flag to check if burst is active
-    private timeUntilNormalSpeed: number = 0; // Timer to track when to return to normal speed
+    private speedBurstCountDown: number;            // Countdown for next speed burst
+    private isSpeedBurstActive: boolean = false;    // Flag to check if burst is active
+    private timeUntilNormalSpeed: number = 0;       // Timer to track when to return to normal speed
+    private isSlowdown: boolean = false;            // Slowdown mode flag
+    private isFreeze: boolean = false;              // Freeze mode flag
 
     private spinForceMin: number = -10;
     private spinForceMax: number = 10;
@@ -64,6 +66,22 @@ export class MoveSideWay extends Component {
 
     set Speed(value: number) {
         this.speed = value;
+    }
+
+    get IsSlowdown(): boolean {
+        return this.isSlowdown;
+    }
+
+    set IsSlowdown(value: boolean) {
+        this.isSlowdown = value;
+    }
+
+    get IsFreeze(): boolean {
+        return this.isFreeze;
+    }
+
+    set IsFreeze(value: boolean) {
+        this.isFreeze = value;
     }
 
     start() {
@@ -107,8 +125,14 @@ export class MoveSideWay extends Component {
 
         // Move the object sideways based on the current direction and speed
         const newPos = this.node.position.clone();
-        newPos.x += this.moveDirection * this.speed * deltaTime;
-        this.node.setPosition(newPos);
+
+        if (!this.isFreeze)
+        {
+            newPos.x += this.isSlowdown ? (this.moveDirection * this.speed * deltaTime / 2)
+                                        : (this.moveDirection * this.speed * deltaTime)
+
+            this.node.setPosition(newPos);
+        }
 
         // Get the current position and UITransform size of the node
         const uiTransform = this.node.getComponent(UITransform);

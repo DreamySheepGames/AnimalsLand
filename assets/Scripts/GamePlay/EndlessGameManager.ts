@@ -54,8 +54,9 @@ export class EndlessGameManager extends Component {
     private hasSpeedBurst: boolean = false;
     private receivedDiamond = 0;
     private doubleDiamond: boolean = false;
-    private hasSlowdown: boolean = false;
-    private currentEnemyQueue: Node[] = [];
+
+    private slowedEnemies: Node[] = [];
+    private freezedEnemies: Node[] = [];
 
     get StageCheckPoint(): number[] {
         return this.stageCheckPoint;
@@ -83,14 +84,6 @@ export class EndlessGameManager extends Component {
 
     set DoubleDiamond(value: boolean) {
         this.doubleDiamond = value;
-    }
-
-    get HasSlowdown(): boolean {
-        return this.hasSlowdown;
-    }
-
-    set HasSlowdown(value: boolean) {
-        this.hasSlowdown = value;
     }
 
     onLoad() {
@@ -240,23 +233,56 @@ export class EndlessGameManager extends Component {
 
     slowdownEnemy()
     {
-        this.currentEnemyQueue = this.enemyQueue;
-
         // loop through all enemy in the scene to half their speed
-        for (let i = 0; i < this.currentEnemyQueue.length; i++) {
-            if (this.currentEnemyQueue[i] && this.hasSlowdown)
-                this.currentEnemyQueue[i].getComponent(MoveSideWay).Speed /= 2;
+        for (let i = 0; i < this.enemyQueue.length; i++) {
+            if (this.enemyQueue[i]) {
+                this.enemyQueue[i].getComponent(MoveSideWay).IsSlowdown = true;
+                this.slowedEnemies.push(this.enemyQueue[i]);
+            }
         }
     }
 
     returnEnemySpeed()
     {
-        for (let i = 0; i < this.currentEnemyQueue.length; i++) {
-            console.log("RETURN SPEED");
-            if (this.currentEnemyQueue[i])
-                this.currentEnemyQueue[i].getComponent(MoveSideWay).Speed *= 2;
+        for (let i = 0; i < this.enemyQueue.length; i++) {
+            if (this.enemyQueue[i])
+                this.enemyQueue[i].getComponent(MoveSideWay).IsSlowdown = false;
         }
 
-        this.hasSlowdown = false;
+        if (this.slowedEnemies.length > 0) {
+            for (let i = 0; i < this.slowedEnemies.length; i++) {
+                let enemy = this.slowedEnemies.shift();
+                if (enemy)
+                    enemy.getComponent(MoveSideWay).IsSlowdown = false;
+            }
+        }
+    }
+
+    freezeEnemy()
+    {
+        // loop through all enemy in the scene to freeze them
+        for (let i = 0; i < this.enemyQueue.length; i++) {
+            if (this.enemyQueue[i]) {
+                this.enemyQueue[i].getComponent(MoveSideWay).IsFreeze = true;
+                this.freezedEnemies.push(this.enemyQueue[i]);
+            }
+        }
+    }
+
+    unFreezeEnemy()
+    {
+        // loop through all enemy in the scene to freeze them
+        for (let i = 0; i < this.enemyQueue.length; i++) {
+            if (this.enemyQueue[i])
+                this.enemyQueue[i].getComponent(MoveSideWay).IsFreeze = false;
+        }
+
+        if (this.freezedEnemies.length > 0) {
+            for (let i = 0; i < this.freezedEnemies.length; i++) {
+                let enemy = this.freezedEnemies.shift();
+                if (enemy)
+                    enemy.getComponent(MoveSideWay).IsFreeze = false;
+            }
+        }
     }
 }
