@@ -54,6 +54,11 @@ export class InvincibleMeterController extends Component {
                 // turn on the invincible ability
                 if (this.currentStep == this.fillingStep)
                     this.turnOnInvincible();
+                else        // patch invincible bug (meter hasn't done tweening but current step = 0)
+                {
+                    if (this.currentStep == 0)
+                        this.decreaseFillerNoCurrentStep();
+                }
             })
             .start();
     }
@@ -62,6 +67,20 @@ export class InvincibleMeterController extends Component {
     {
         this.currentStep = 0;
 
+        if (this.node.getScale() != new Vec3(0, 0, 0))
+        {
+            tween(this.node)
+                .to(this.meterTweenDuration, { scale: new Vec3(0, 0, 0) })
+                .start();
+
+            tween(this.invincibleFiller)
+                .to(this.fillerTweenDuration, { scale: new Vec3(0, 0, 0) })
+                .start();
+        }
+    }
+
+    decreaseFillerNoCurrentStep()
+    {
         if (this.node.getScale() != new Vec3(0, 0, 0))
         {
             tween(this.node)
