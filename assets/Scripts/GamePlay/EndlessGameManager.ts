@@ -249,11 +249,16 @@ export class EndlessGameManager extends Component {
                 this.enemyQueue[i].getComponent(MoveSideWay).IsSlowdown = false;
         }
 
-        if (this.slowedEnemies.length > 0) {
-            for (let i = 0; i < this.slowedEnemies.length; i++) {
-                let enemy = this.slowedEnemies.shift();
-                if (enemy)
-                    enemy.getComponent(MoveSideWay).IsSlowdown = false;
+        while (this.slowedEnemies.length > 0) {
+            const enemy = this.slowedEnemies.shift(); // Remove the first element
+
+            // Ensure enemy is valid and not destroyed
+            if (enemy && enemy.isValid) {
+                const moveSideWay = enemy.getComponent(MoveSideWay);
+
+                if (moveSideWay) {
+                    moveSideWay.IsSlowdown = false;
+                }
             }
         }
     }
@@ -277,11 +282,16 @@ export class EndlessGameManager extends Component {
                 this.enemyQueue[i].getComponent(MoveSideWay).IsFreeze = false;
         }
 
-        if (this.freezedEnemies.length > 0) {
-            for (let i = 0; i < this.freezedEnemies.length; i++) {
-                let enemy = this.freezedEnemies.shift();
-                if (enemy)
-                    enemy.getComponent(MoveSideWay).IsFreeze = false;
+        while (this.freezedEnemies.length > 0) {
+            const enemy = this.freezedEnemies.shift(); // Remove the first element
+
+            // Ensure enemy is valid and not destroyed
+            if (enemy && enemy.isValid) {
+                const moveSideWay = enemy.getComponent(MoveSideWay);
+
+                if (moveSideWay) {
+                    moveSideWay.IsFreeze = false;
+                }
             }
         }
     }
