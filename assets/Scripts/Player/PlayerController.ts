@@ -99,6 +99,24 @@ export class PlayerController extends Component {
         this.rb.applyForceToCenter(new Vec2(0, 100), true); // Adjust small force as needed
     }
 
+    private applyIdlePseudoForce() {
+        this.schedule(() => {
+            if (!this._isMoving) {
+                // Apply a very small force to keep physics engine active without moving the object
+                this.rb.applyForceToCenter(new Vec2(0, 1), true); // Adjust force as needed
+            }
+        }, 1); // Adjust interval if needed
+    }
+
+    private applyReverseIdlePseudoForce() {
+        this.schedule(() => {
+            if (!this._isMoving) {
+                // Apply a very small force to keep physics engine active without moving the object
+                this.rb.applyForceToCenter(new Vec2(0, -1), true); // Adjust force as needed
+            }
+        }, 1); // Adjust interval if needed
+    }
+
     private cancelPseudoForce() {
         // Set the velocity to zero to stop any movement caused by the applied force
         this.rb.linearVelocity = new Vec2(0, 0);
@@ -122,6 +140,9 @@ export class PlayerController extends Component {
                     // Move BG down
                     this.backgroundManager.getComponent(EndlessBGManager).moveBackground();
                 }
+
+                this.applyIdlePseudoForce();
+                this.applyReverseIdlePseudoForce();
 
                 // Change direction
                 this._hasGoneUp = !this._hasGoneUp;

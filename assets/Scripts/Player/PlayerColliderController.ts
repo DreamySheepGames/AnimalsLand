@@ -1,4 +1,4 @@
-import { _decorator, Component, Collider2D, ITriggerEvent, Contact2DType, IPhysics2DContact, tween, Vec3, Node } from 'cc';
+import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, tween, Vec3, Node } from 'cc';
 import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {InvincibleMeterController} from "db://assets/Scripts/UI/InvincibleMeterController";
@@ -40,7 +40,6 @@ export class PlayerColliderController extends Component {
             switch (otherCollider.tag)
             {
                 case 2:     // other collider is diamond (tag = 2)
-                    const otherNode = otherCollider.node;
                     this.hitDiamond(otherCollider);
                     break;
 
@@ -59,6 +58,10 @@ export class PlayerColliderController extends Component {
 
                 case 6:     // freeze item hit (tag = 6)
                     this.hitFreeze(otherCollider);
+                    break;
+
+                case 7:     // magnet item hit (tag = 7)
+                    this.hitMagnet(otherCollider);
                     break;
             }
         }
@@ -86,6 +89,16 @@ export class PlayerColliderController extends Component {
     hitEnemyGaze()
     {
         this.invincibleMeter.increaseFiller();
+    }
+
+    destroyCollidedNode(otherCollider)
+    {
+        let itemNode = otherCollider.node;
+        this.scheduleOnce(() => {
+            if (itemNode && itemNode.isValid) {
+                itemNode.destroy();
+            }
+        }, 0);
     }
 
     hitDiamond(otherCollider)
@@ -127,16 +140,13 @@ export class PlayerColliderController extends Component {
     {
         EndlessGameManager.Instance.freezeEnemy();
         this.timerManager.timerFreezeOn();
-        this.destroyCollidedNode(otherCollider)
+        this.destroyCollidedNode(otherCollider);
     }
 
-    destroyCollidedNode(otherCollider)
+    hitMagnet(otherCollider)
     {
-        let itemNode = otherCollider.node;
-        this.scheduleOnce(() => {
-            if (itemNode && itemNode.isValid) {
-                itemNode.destroy();
-            }
-        }, 0);
+        EndlessGameManager.Instance.Magnet = true;
+        this.timerManager.timerMagnetOn();
+        this.destroyCollidedNode(otherCollider);
     }
 }

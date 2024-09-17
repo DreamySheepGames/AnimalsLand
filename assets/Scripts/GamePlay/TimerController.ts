@@ -79,6 +79,10 @@ export class TimerController extends Component {
             case 6:     // freeze
                 EndlessGameManager.Instance.unFreezeEnemy();
                 break;
+
+            case 7:     // magnet
+                EndlessGameManager.Instance.Magnet = false;
+                break;
         }
 
         // set this timer's and icon's active to false to reuse next time

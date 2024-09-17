@@ -54,6 +54,7 @@ export class EndlessGameManager extends Component {
     private hasSpeedBurst: boolean = false;
     private receivedDiamond = 0;
     private doubleDiamond: boolean = false;
+    private magnet: boolean = false;
 
     private slowedEnemies: Node[] = [];
     private freezedEnemies: Node[] = [];
@@ -84,6 +85,14 @@ export class EndlessGameManager extends Component {
 
     set DoubleDiamond(value: boolean) {
         this.doubleDiamond = value;
+    }
+
+    get Magnet(): boolean {
+        return this.magnet;
+    }
+
+    set Magnet(value: boolean) {
+        this.magnet = value;
     }
 
     onLoad() {
