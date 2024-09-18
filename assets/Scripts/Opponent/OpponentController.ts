@@ -1,10 +1,10 @@
 import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Sprite, Color, UITransform } from 'cc';
-import { EndlessGameManager } from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import { EndlessBGManager } from "db://assets/Scripts/GamePlay/EndlessBGManager";
+import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
 const { ccclass, property } = _decorator;
 
-@ccclass('PlayerController')
-export class PlayerController extends Component {
+@ccclass('OpponentController')
+export class OpponentController extends Component {
     private _hasGoneUp: boolean = false; // To track direction (player at bottom: false, player at top: true)
     private _isMoving: boolean = false;  // To track if the player is moving
 
@@ -77,6 +77,13 @@ export class PlayerController extends Component {
     start() {
         this.rb = this.getComponent(RigidBody2D);
         this.node.setPosition(this.startPosition); // Set initial position
+        //this.togglePosition();
+    }
+
+    update()
+    {
+        if (!EndlessGameManagerOpponent.Instance.IsGameOver)
+            this.togglePosition();
     }
 
     public togglePosition() {
@@ -140,7 +147,7 @@ export class PlayerController extends Component {
 
                 // If the player reaches the start position, increase score
                 if (targetPosition.equals(this.startPosition) && this._hasGoneUp) {
-                    EndlessGameManager.Instance.incrementScore();
+                    EndlessGameManagerOpponent.Instance.incrementScore();
 
                     // Move BG down
                     this.backgroundManager.getComponent(EndlessBGManager).moveBackground();

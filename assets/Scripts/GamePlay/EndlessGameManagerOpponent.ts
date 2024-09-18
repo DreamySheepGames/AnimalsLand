@@ -9,13 +9,13 @@ import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 const { ccclass, property } = _decorator;
 
-@ccclass('EndlessGameManager')
-export class EndlessGameManager extends Component {
-    private static instance: EndlessGameManager;
+@ccclass('EndlessGameManagerOpponent')
+export class EndlessGameManagerOpponent extends Component {
+    private static instance: EndlessGameManagerOpponent;
 
-    public static get Instance(): EndlessGameManager {
+    public static get Instance(): EndlessGameManagerOpponent {
         if (!this.instance) {
-            console.error("EndlessGameManager instance is not initialized in the scene.");
+            console.error("EndlessGameManagerOpponent instance is not initialized in the scene.");
         }
         return this.instance;
     }
@@ -58,6 +58,7 @@ export class EndlessGameManager extends Component {
     private receivedDiamond = 0;
     private doubleDiamond: boolean = false;
     private magnet: boolean = false;
+    private isGameOver: boolean = false;
 
     private slowedEnemies: Node[] = [];
     private freezedEnemies: Node[] = [];
@@ -114,11 +115,15 @@ export class EndlessGameManager extends Component {
         this.opponentScore = value;
     }
 
+    get IsGameOver(): boolean {
+        return this.isGameOver;
+    }
+
     onLoad() {
         //console.log(this.endlessBGManager.getComponent(EndlessBGManager).LevelSteps);
 
         // Assign the instance when the script is loaded
-        EndlessGameManager.instance = this;
+        EndlessGameManagerOpponent.instance = this;
 
         // Get the last value of the enemy amount array
         this.lastAmountValue = this.enemyAmountQueue[this.enemyAmountQueue.length - 1];
@@ -132,8 +137,6 @@ export class EndlessGameManager extends Component {
 
     start()
     {
-        GameManager.Instance.isEndlessMode = false;
-
         // Initialize targetPoint with the first checkpoint
         this.targetPoint = this.stageCheckPoint.shift();
 
@@ -198,15 +201,7 @@ export class EndlessGameManager extends Component {
         // if is game over then open game over scene
         if (isGameOver)
         {
-            // get play data of the player
-            const endlessGameData = EndlessGameData.getInstance();
-            endlessGameData.Score = this.score;
-            endlessGameData.ReceivedDiamond = this.receivedDiamond;
-
-            if (GameManager.Instance.isEndlessMode)
-                director.loadScene('GameOver');
-            else
-                director.loadScene('GameOverChallenge');
+            this.isGameOver = true;
         }
     }
 

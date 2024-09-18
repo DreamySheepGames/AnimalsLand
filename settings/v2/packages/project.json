@@ -11,7 +11,12 @@
   },
   "custom_joint_texture_layouts": [],
   "physics": {
-    "collisionGroups": [],
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "OPPONENT"
+      }
+    ],
     "collisionMatrix": {
       "0": 1,
       "1": 2

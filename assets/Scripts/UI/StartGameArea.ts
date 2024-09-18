@@ -20,7 +20,7 @@ export class StartGameArea extends Component {
         }
         else    // if game mode is challenge, open challenge scene
         {
-
+            director.loadScene('Challenge');
         }
     }
 }

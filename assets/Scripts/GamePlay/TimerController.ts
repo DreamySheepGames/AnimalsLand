@@ -1,6 +1,7 @@
-import { _decorator, Component, Node, Label } from 'cc';
+import { _decorator, Component, Node, Label, director } from 'cc';
 import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 const { ccclass, property } = _decorator;
 
 @ccclass('TimerController')
@@ -10,6 +11,7 @@ export class TimerController extends Component {
 
     @property
     private tag: number = 3;
+    // tag = 0: challenge timer
     // tag = 3: super hero
     // tag = 4: double
     // tag = 5: slowdown
@@ -63,6 +65,10 @@ export class TimerController extends Component {
     {
         switch(this.tag)
         {
+            case 0:     // timer for challenge mode
+                this.EndChallengeMode();
+                break;
+
             // turn off effects through endless game manager
             case 3:     // super hero
                 EndlessGameManager.Instance.playerInvincibleOff();
@@ -88,6 +94,15 @@ export class TimerController extends Component {
         // set this timer's and icon's active to false to reuse next time
         this.node.active = false;
     }
+
+    EndChallengeMode()
+    {
+        // get play data of the enemy
+        let endlessGameData = EndlessGameData.getInstance();
+        endlessGameData.OpponentScore = EndlessGameManager.Instance.OpponentScore;
+        endlessGameData.Score = EndlessGameManager.Instance.Score;
+        endlessGameData.ReceivedDiamond = EndlessGameManager.Instance.ReceivedDiamond;
+
+        director.loadScene('GameOverChallenge');
+    }
 }
-
-
