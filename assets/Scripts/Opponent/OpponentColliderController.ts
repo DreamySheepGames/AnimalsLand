@@ -5,12 +5,13 @@ import {InvincibleMeterController} from "db://assets/Scripts/UI/InvincibleMeterC
 import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
 import {OpponentController} from "db://assets/Scripts/Opponent/OpponentController";
 import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
+import {OpponentInvincibleMeterController} from "db://assets/Scripts/Opponent/UI/OpponentInvincibleMeterController";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentColliderController')
 export class OpponentColliderController extends Component {
-    @property({ type: InvincibleMeterController})
-    private invincibleMeter: InvincibleMeterController;
+    @property({ type: OpponentInvincibleMeterController})
+    private invincibleMeter: OpponentInvincibleMeterController;
 
     @property({ type: OpponentController })
     private playerController: OpponentController = null; // Reference to the PlayerController

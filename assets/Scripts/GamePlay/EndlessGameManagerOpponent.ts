@@ -1,12 +1,10 @@
 import { _decorator, Component, Node, Label, director } from 'cc';
 import { EndlessBGManager } from 'db://assets/Scripts/GamePlay/EndlessBGManager';
 import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
-import {SpawnEnemyManager} from "db://assets/Scripts/GamePlay/SpawnEnemyManager";
-import {SpawnDiamondManager} from "db://assets/Scripts/GamePlay/SpawnDiamondManager";
-import {SpawnItemsManager} from "db://assets/Scripts/GamePlay/SpawnItemsManager";
-import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
-import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
-import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
+import {OpponentController} from "db://assets/Scripts/Opponent/OpponentController";
+import {OpponentSpawnDiamondManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnDiamondManager";
+import {OpponentSpawnItemsManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnItemsManager";
+import {OpponentSpawnEnemyManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnEnemyManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManagerOpponent')
@@ -26,17 +24,17 @@ export class EndlessGameManagerOpponent extends Component {
     private score: number = 0; // Initial score
     private opponentScore: number = 0; // Initial score
 
-    @property({type: PlayerController})
-    private playerController: PlayerController;
+    @property({type: OpponentController})
+    private playerController: OpponentController;
 
     @property(Node)
     private spawnEnemyManager: Node;
 
-    @property({ type: SpawnDiamondManager })
-    private spawnDiamondManager: SpawnDiamondManager;
+    @property({ type: OpponentSpawnDiamondManager })
+    private spawnDiamondManager: OpponentSpawnDiamondManager;
 
-    @property({ type: SpawnItemsManager })
-    private spawnItemsManager: SpawnItemsManager;
+    @property({ type: OpponentSpawnItemsManager })
+    private spawnItemsManager: OpponentSpawnItemsManager;
 
     @property(Node)
     private endlessBGManager: Node;
@@ -141,7 +139,7 @@ export class EndlessGameManagerOpponent extends Component {
         this.targetPoint = this.stageCheckPoint.shift();
 
         // Spawn the first enemy
-        this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
+        this.spawnEnemyManager.getComponent(OpponentSpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
     }
 
     // Function to increment score and update label
@@ -239,9 +237,9 @@ export class EndlessGameManagerOpponent extends Component {
         // spawn enemies
         // if there are still assigned amount then we use that amount, else we use the last amount value
         if (this.enemyAmountQueue.length > 0)
-            this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
+            this.spawnEnemyManager.getComponent(OpponentSpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
         else
-            this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.lastAmountValue, this.hasSpeedBurst);
+            this.spawnEnemyManager.getComponent(OpponentSpawnEnemyManager).spawnEnemy(this.lastAmountValue, this.hasSpeedBurst);
 
         // Update the next target point
         if (this.stageCheckPoint.length > 0) {

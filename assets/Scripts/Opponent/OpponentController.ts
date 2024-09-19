@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Sprite, Color, UITransform } from 'cc';
 import { EndlessBGManager } from "db://assets/Scripts/GamePlay/EndlessBGManager";
 import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
+import {CheckEnemyController} from "db://assets/Scripts/Opponent/CheckEnemyController";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentController')
@@ -22,6 +23,9 @@ export class OpponentController extends Component {
 
     @property(Node)
     private backgroundManager: Node;
+
+    @property(CheckEnemyController)
+    private checkEnemyController: CheckEnemyController;
 
     private _isInvincible: boolean = false;
     private _currentTween: Tween<Node> = null; // Reference to the active tween
@@ -82,7 +86,7 @@ export class OpponentController extends Component {
 
     update()
     {
-        if (!EndlessGameManagerOpponent.Instance.IsGameOver)
+        if (!EndlessGameManagerOpponent.Instance.IsGameOver && !this.checkEnemyController.HasEnemy)
             this.togglePosition();
     }
 
@@ -209,6 +213,9 @@ export class OpponentController extends Component {
                 this.clonedNode = new Node("ClonedSprite");
                 const clonedSprite = this.clonedNode.addComponent(Sprite);
                 clonedSprite.spriteFrame = spriteComponent.spriteFrame; // Clone the sprite frame
+
+                // Set layer to UI_3D (index 23)
+                this.clonedNode.layer = this.node.layer;
 
                 // Add the cloned node as a child of the original node
                 this.clonedNode.setParent(this.node);
