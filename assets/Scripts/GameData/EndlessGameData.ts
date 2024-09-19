@@ -9,6 +9,7 @@ export class EndlessGameData {
     private score: number = 0;
     private receivedDiamond: number = 0;
     private opponentScore: number = 0;
+    private challengeDeadBeforeEnd: boolean = false;
 
     get Score(): number {
         return this.score;
@@ -32,6 +33,14 @@ export class EndlessGameData {
 
     set OpponentScore(value: number) {
         this.opponentScore = value;
+    }
+
+    get ChallengeDeadBeforeEnd(): boolean {
+        return this.challengeDeadBeforeEnd;
+    }
+
+    set ChallengeDeadBeforeEnd(value: boolean) {
+        this.challengeDeadBeforeEnd = value;
     }
 
     private constructor() {}

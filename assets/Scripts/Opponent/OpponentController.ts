@@ -86,8 +86,14 @@ export class OpponentController extends Component {
 
     update()
     {
-        if (!EndlessGameManagerOpponent.Instance.IsGameOver && !this.checkEnemyController.HasEnemy)
-            this.togglePosition();
+        if (!EndlessGameManagerOpponent.Instance.IsGameOver)
+        {
+            if (!this.checkEnemyController.HasEnemy)
+                this.togglePosition();
+            else
+                if (this.isInvincible)
+                    this.togglePosition();
+        }
     }
 
     public togglePosition() {

@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Label, director } from 'cc';
 import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
+import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
 const { ccclass, property } = _decorator;
 
 @ccclass('TimerController')
@@ -99,9 +100,11 @@ export class TimerController extends Component {
     {
         // get play data of the enemy
         let endlessGameData = EndlessGameData.getInstance();
-        endlessGameData.OpponentScore = EndlessGameManager.Instance.OpponentScore;
+        endlessGameData.OpponentScore = EndlessGameManagerOpponent.Instance.Score;
         endlessGameData.Score = EndlessGameManager.Instance.Score;
         endlessGameData.ReceivedDiamond = EndlessGameManager.Instance.ReceivedDiamond;
+
+        endlessGameData.ChallengeDeadBeforeEnd = false;
 
         director.loadScene('GameOverChallenge');
     }

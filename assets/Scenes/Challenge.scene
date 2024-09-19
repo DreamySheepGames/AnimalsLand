@@ -10873,7 +10873,7 @@
     "playerController": {
       "__id__": 338
     },
-    "fillingStep": 2,
+    "fillingStep": 9,
     "_id": "de7QJ+eO9JoISuzMJsR9Hm"
   },
   {
@@ -13642,7 +13642,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160,
+      "width": 130,
       "height": 500
     },
     "_anchorPoint": {
@@ -13703,7 +13703,7 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 160,
+      "width": 130,
       "height": 500
     },
     "_id": "5cpRYzIMFA87EroogO6Xx7"
@@ -13966,7 +13966,7 @@
     "canvas": {
       "__id__": 305
     },
-    "spawnRate": 1,
+    "spawnRate": 0.2,
     "_id": "42RH9sW0tEwYLlvV9Lqpvj"
   },
   {

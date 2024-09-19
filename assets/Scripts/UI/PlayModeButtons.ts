@@ -18,6 +18,14 @@ export class PlayModeButtons extends Component {
 
     private opacityTweenTime = 0.12;
 
+    start()
+    {
+        if (GameManager.Instance.isEndlessMode)
+            this.changeToEndless();
+        else
+            this.changeToChallenge();
+    }
+
     public changeToEndless()
     {
         GameManager.Instance.isEndlessMode = true;

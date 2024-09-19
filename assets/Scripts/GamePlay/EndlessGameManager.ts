@@ -132,7 +132,7 @@ export class EndlessGameManager extends Component {
 
     start()
     {
-        GameManager.Instance.isEndlessMode = false;
+        //GameManager.Instance.isEndlessMode = false;
 
         // Initialize targetPoint with the first checkpoint
         this.targetPoint = this.stageCheckPoint.shift();
@@ -206,7 +206,10 @@ export class EndlessGameManager extends Component {
             if (GameManager.Instance.isEndlessMode)
                 director.loadScene('GameOver');
             else
+            {
+                EndlessGameData.getInstance().ChallengeDeadBeforeEnd = true;
                 director.loadScene('GameOverChallenge');
+            }
         }
     }
 
