@@ -32,6 +32,7 @@ export class OpponentController extends Component {
     private _isReturnAfterEnemyHit: boolean = false;
     private rb: RigidBody2D;
     private clonedNode: Node;
+    private startAuto: boolean = false;
 
     // Getter and Setter for _hasGoneUp
     get hasGoneUp(): boolean {
@@ -81,12 +82,15 @@ export class OpponentController extends Component {
     start() {
         this.rb = this.getComponent(RigidBody2D);
         this.node.setPosition(this.startPosition); // Set initial position
-        //this.togglePosition();
+
+        this.schedule(() => {
+            this.startAuto = true;
+        }, 0.4);
     }
 
     update()
     {
-        if (!EndlessGameManagerOpponent.Instance.IsGameOver)
+        if (!EndlessGameManagerOpponent.Instance.IsGameOver && this.startAuto)
         {
             if (!this.checkEnemyController.HasEnemy)
                 this.togglePosition();

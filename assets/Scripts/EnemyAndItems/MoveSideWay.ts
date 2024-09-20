@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Vec3, view, UITransform, RigidBody2D } from 'cc';
+import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
 const { ccclass, property } = _decorator;
 
 @ccclass('MoveSideWay')

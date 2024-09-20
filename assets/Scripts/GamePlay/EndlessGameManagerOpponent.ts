@@ -5,6 +5,7 @@ import {OpponentController} from "db://assets/Scripts/Opponent/OpponentControlle
 import {OpponentSpawnDiamondManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnDiamondManager";
 import {OpponentSpawnItemsManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnItemsManager";
 import {OpponentSpawnEnemyManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnEnemyManager";
+import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManagerOpponent')
@@ -300,6 +301,7 @@ export class EndlessGameManagerOpponent extends Component {
         for (let i = 0; i < this.enemyQueue.length; i++) {
             if (this.enemyQueue[i]) {
                 this.enemyQueue[i].getComponent(MoveSideWay).IsFreeze = true;
+                this.enemyQueue[i].getComponent(EnemyFXController).freezeFXOn();
                 this.freezedEnemies.push(this.enemyQueue[i]);
             }
         }
@@ -310,7 +312,10 @@ export class EndlessGameManagerOpponent extends Component {
         // loop through all enemy in the scene to freeze them
         for (let i = 0; i < this.enemyQueue.length; i++) {
             if (this.enemyQueue[i])
+            {
                 this.enemyQueue[i].getComponent(MoveSideWay).IsFreeze = false;
+                this.enemyQueue[i].getComponent(EnemyFXController).freezeFXOff();
+            }
         }
 
         while (this.freezedEnemies.length > 0) {
@@ -319,6 +324,7 @@ export class EndlessGameManagerOpponent extends Component {
             // Ensure enemy is valid and not destroyed
             if (enemy && enemy.isValid) {
                 const moveSideWay = enemy.getComponent(MoveSideWay);
+                enemy.getComponent(EnemyFXController).freezeFXOff();
 
                 if (moveSideWay) {
                     moveSideWay.IsFreeze = false;
