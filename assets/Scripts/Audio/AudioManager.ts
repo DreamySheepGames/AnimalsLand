@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, AudioSource, AudioClip } from 'cc';
+import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 const { ccclass, property } = _decorator;
 
 @ccclass('AudioManager')
@@ -30,7 +31,11 @@ export class AudioManager extends Component {
 
     start() {
         this.musicSource.clip = this.background;
-        this.musicSource.play();
+        //this.musicSource.play();
+
+        // assign volume for music and sfx
+        this.musicSource.volume = SettingsData.getInstance().MusicVol;
+        this.sfxSource.volume = SettingsData.getInstance().SfxVol;
     }
 
     public playSFX(clip: AudioClip) {

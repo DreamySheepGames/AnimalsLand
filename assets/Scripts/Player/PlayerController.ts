@@ -1,6 +1,7 @@
-import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Sprite, Color, UITransform } from 'cc';
+import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Sprite, Color, UITransform, resources, SpriteFrame } from 'cc';
 import { EndlessGameManager } from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import { EndlessBGManager } from "db://assets/Scripts/GamePlay/EndlessBGManager";
+import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
@@ -28,6 +29,7 @@ export class PlayerController extends Component {
     private _isReturnAfterEnemyHit: boolean = false;
     private rb: RigidBody2D;
     private clonedNode: Node;
+    private playerSprite: Sprite;
 
     // Getter and Setter for _hasGoneUp
     get hasGoneUp(): boolean {
@@ -72,6 +74,11 @@ export class PlayerController extends Component {
 
     set isReturnAfterEnemyHit(value: boolean) {
         this._isReturnAfterEnemyHit = value;
+    }
+
+    onLoad()
+    {
+        this.applyPlayerSkin();
     }
 
     start() {
@@ -241,5 +248,29 @@ export class PlayerController extends Component {
         else
             console.error("No cloned node found");
 
+    }
+
+    applyPlayerSkin()
+    {
+        this.playerSprite = this.getComponent(Sprite);
+        const characterData = CharacterData.getInstance();
+        const chosenFrameName = characterData.CharacterName; // The saved sprite frame name
+
+        if (chosenFrameName) {
+            // Load the sprite frame by name from the atlas
+            resources.load(`CharactersIcon/${chosenFrameName}/spriteFrame`, SpriteFrame, (err, spriteFrame) => {
+                if (err) {
+                    console.error('Error loading sprite frame:', err);
+                    return;
+                }
+                if (this.playerSprite && spriteFrame) {
+                    this.playerSprite.spriteFrame = spriteFrame; // Set the loaded frame to the player sprite
+                } else {
+                    console.error('Player sprite or loaded sprite frame is null.');
+                }
+            });
+        } else {
+            console.warn('Chosen sprite frame name is missing.');
+        }
     }
 }

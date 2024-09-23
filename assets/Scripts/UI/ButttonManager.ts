@@ -1,5 +1,7 @@
-import { _decorator, Component, Node, Event, director } from 'cc';
+import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle} from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
+import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
+import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 const { ccclass, property } = _decorator;
 
 @ccclass('ButttonManager')
@@ -10,6 +12,21 @@ export class ButttonManager extends Component {
 
     @property(Node)
     private darkLayer: Node;
+
+    @property(Slider)
+    private musicSlider: Slider;
+
+    @property(Slider)
+    private sfxSlider: Slider;
+
+    @property(Toggle)
+    private vibrateToggle: Toggle;
+
+    @property(AudioSource)
+    private musicSource: AudioSource;
+
+    @property(AudioSource)
+    private sfxSource: AudioSource;
 
     public openPanel(event: Event, CustomEventData) {
         // Turn on dark layer
@@ -55,6 +72,48 @@ export class ButttonManager extends Component {
     public openEndlessScene()
     {
         director.loadScene('Endless');
+    }
+
+    public chooseCharacter(event: Event)
+    {
+        const buttonNode = event.currentTarget as Node; // Get the button node
+        CharacterData.getInstance().CharacterName = buttonNode.getComponent(Sprite).spriteFrame.name;
+    }
+
+    public doneChooseCharacter(event: Event)
+    {
+        const buttonNode = event.currentTarget as Node; // Get the button node
+        buttonNode.parent.parent.parent.active = false;
+        this.darkLayer.active = false;
+    }
+
+    changingMusicVolume(event: Event)
+    {
+        if (this.musicSlider) {
+            SettingsData.getInstance().MusicVol = this.musicSlider.progress;
+            this.musicSource.volume = this.musicSlider.progress;
+        } else {
+            console.error('Slider component is missing on the target node.');
+        }
+    }
+
+    changingSfxVolume(event: Event)
+    {
+        if (this.sfxSlider) {
+            SettingsData.getInstance().SfxVol = this.sfxSlider.progress;
+            this.sfxSource.volume = this.sfxSlider.progress;
+        } else {
+            console.error('Slider component is missing on the target node.');
+        }
+    }
+
+    changingVibration()
+    {
+        if (this.vibrateToggle) {
+            SettingsData.getInstance().IsVibrate = this.vibrateToggle.isChecked;
+        } else {
+            console.error("Toggle commponent is missing on the target node.");
+        }
     }
 }
 

@@ -1,7 +1,9 @@
-import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Sprite, Color, UITransform } from 'cc';
+import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Sprite, Color, UITransform,
+SpriteFrame, resources} from 'cc';
 import { EndlessBGManager } from "db://assets/Scripts/GamePlay/EndlessBGManager";
 import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
 import {CheckEnemyController} from "db://assets/Scripts/Opponent/CheckEnemyController";
+import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentController')
@@ -33,6 +35,7 @@ export class OpponentController extends Component {
     private rb: RigidBody2D;
     private clonedNode: Node;
     private startAuto: boolean = false;
+    private opponentSprite;
 
     // Getter and Setter for _hasGoneUp
     get hasGoneUp(): boolean {
@@ -77,6 +80,11 @@ export class OpponentController extends Component {
 
     set isReturnAfterEnemyHit(value: boolean) {
         this._isReturnAfterEnemyHit = value;
+    }
+
+    onLoad()
+    {
+        this.applyOpponentSkin();
     }
 
     start() {
@@ -266,4 +274,35 @@ export class OpponentController extends Component {
             console.error("No cloned node found");
 
     }
+
+    applyOpponentSkin() {
+        this.opponentSprite = this.getComponent(Sprite);
+
+        // Get all assets in the CharactersIcon directory
+        resources.loadDir('CharactersIcon', SpriteFrame, (err, assets: SpriteFrame[]) => {
+            if (err) {
+                console.error('Error loading assets from CharactersIcon:', err);
+                return;
+            }
+
+            // Check if any sprite frames were found
+            if (assets.length === 0) {
+                console.warn('No sprite frames found in CharactersIcon directory.');
+                return;
+            }
+
+            // Pick a random sprite frame from the list
+            const randomIndex = Math.floor(Math.random() * assets.length);
+            const chosenSpriteFrame = assets[randomIndex];
+            //const chosenFrameName = chosenSpriteFrame.name; // You can use this name for further logic if needed
+
+            // Assign the chosen sprite frame to the opponent sprite
+            if (this.opponentSprite) {
+                this.opponentSprite.spriteFrame = chosenSpriteFrame;
+            } else {
+                console.error('Opponent sprite is null or missing the Sprite component.');
+            }
+        });
+    }
+
 }

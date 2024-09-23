@@ -69,6 +69,13 @@ export class PlayerColliderController extends Component {
 
     hitEnemy()
     {
+        // Trigger a vibration if the device supports it
+        if (navigator.vibrate) {
+            navigator.vibrate(200); // Vibrate for 200 milliseconds
+        } else {
+            console.warn('Vibration not supported on this device.');
+        }
+
         // decrease invincible filler and heart
         this.invincibleMeter.decreaseFiller();
         EndlessGameManager.Instance.decreaseHeart();
