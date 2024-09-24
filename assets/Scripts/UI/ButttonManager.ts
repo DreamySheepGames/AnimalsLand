@@ -2,6 +2,8 @@ import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSour
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 const { ccclass, property } = _decorator;
 
 @ccclass('ButttonManager')
@@ -87,7 +89,7 @@ export class ButttonManager extends Component {
         this.darkLayer.active = false;
     }
 
-    changingMusicVolume(event: Event)
+    public changingMusicVolume(event: Event)
     {
         if (this.musicSlider) {
             SettingsData.getInstance().MusicVol = this.musicSlider.progress;
@@ -97,7 +99,7 @@ export class ButttonManager extends Component {
         }
     }
 
-    changingSfxVolume(event: Event)
+    public changingSfxVolume(event: Event)
     {
         if (this.sfxSlider) {
             SettingsData.getInstance().SfxVol = this.sfxSlider.progress;
@@ -107,13 +109,43 @@ export class ButttonManager extends Component {
         }
     }
 
-    changingVibration()
+    public changingVibration()
     {
         if (this.vibrateToggle) {
             SettingsData.getInstance().IsVibrate = this.vibrateToggle.isChecked;
         } else {
             console.error("Toggle commponent is missing on the target node.");
         }
+    }
+
+    public closeEndGamePanel()
+    {
+        director.loadScene("GameOver");
+    }
+
+    public doubleDiamond()
+    {
+        // advertisement then double
+        EndlessGameManager.Instance.ReceivedDiamond *= 2;
+        EndlessGameData.getInstance().ReceivedDiamond = EndlessGameManager.Instance.ReceivedDiamond;
+
+        this.closeEndGamePanel();
+    }
+
+    public revive(event: Event)
+    {
+        const buttonNode = event.currentTarget as Node; // Get the button node
+
+        // close the dark layer and the panel
+        buttonNode.parent.active = false;
+        this.darkLayer.active = false;
+
+        // increase a heart then decrease revive count
+        EndlessGameManager.Instance.Heart[0].active = true;
+        --EndlessGameData.getInstance().ReviveHearts;
+        localStorage.setItem('revivedHeartsCount', EndlessGameData.getInstance().ReviveHearts.toString());
+
+        EndlessGameManager.Instance.cancelScheduledGameOver();
     }
 }
 

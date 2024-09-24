@@ -45,6 +45,12 @@ export class EndlessGameManager extends Component {
     @property([Node])
     private heart: Node[] = [];
 
+    @property(Node)
+    private darkLayer: Node;
+
+    @property(Node)
+    private endGamePanel: Node;
+
     @property({ type: [Number] })
     public enemyAmountQueue: number[] = []; // Queue for spawn amounts
     private lastAmountValue: number;
@@ -62,6 +68,9 @@ export class EndlessGameManager extends Component {
 
     private slowedEnemies: Node[] = [];
     private freezedEnemies: Node[] = [];
+
+    private scheduledCallback: Function | null = null; // To store the reference of the scheduled callback
+    private playerHasDied:boolean = false;
 
     get StageCheckPoint(): number[] {
         return this.stageCheckPoint;
@@ -113,6 +122,14 @@ export class EndlessGameManager extends Component {
 
     set OpponentScore(value: number) {
         this.opponentScore = value;
+    }
+
+    get Heart(): Node[] {
+        return this.heart;
+    }
+
+    set Heart(value: Node[]) {
+        this.heart = value;
     }
 
     onLoad() {
@@ -204,13 +221,44 @@ export class EndlessGameManager extends Component {
             endlessGameData.Score = this.score;
             endlessGameData.ReceivedDiamond = this.receivedDiamond;
 
-            if (GameManager.Instance.isEndlessMode)
-                director.loadScene('GameOver');
-            else
+            if (GameManager.Instance.isEndlessMode)     // endless mode
+            {
+                // player can't revive and didn't receive any diamond
+                if (EndlessGameManager.Instance.ReceivedDiamond == 0 && EndlessGameData.getInstance().ReviveHearts == 0)
+                    director.loadScene('GameOver');
+                else
+                {
+                    // revive or double
+                    if(this.endGamePanel && this.darkLayer && !this.playerHasDied)
+                    {
+                        this.playerHasDied = true;
+                        this.endGamePanel.active = true;
+                        this.darkLayer.active = true;
+
+                        this.endGamePanel.setSiblingIndex(this.darkLayer.children.length - 1);
+
+                        // load game over scene
+                        this.scheduledCallback = () => {
+                            director.loadScene('GameOver');
+                        };
+                        this.scheduleOnce(this.scheduledCallback, 4);
+                    } else
+                        director.loadScene('GameOver');
+                }
+            }
+            else                                        // challenge mode
             {
                 EndlessGameData.getInstance().ChallengeDeadBeforeEnd = true;
                 director.loadScene('GameOverChallenge');
             }
+        }
+    }
+
+    cancelScheduledGameOver() {
+        // Cancel the scheduled callback if it exists
+        if (this.scheduledCallback) {
+            this.unschedule(this.scheduledCallback);
+            this.scheduledCallback = null;
         }
     }
 
@@ -313,9 +361,7 @@ export class EndlessGameManager extends Component {
                 this.enemyQueue[i].getComponent(MoveSideWay).IsFreeze = true;
                 if (this.enemyQueue[i].getComponent(EnemyFXController))
                     this.enemyQueue[i].getComponent(EnemyFXController).freezeFXOn()
-                    //console.log("not null");
-                else
-                    console.log("FUCK!!!!!!!!!!");
+
                 this.freezedEnemies.push(this.enemyQueue[i]);
             }
         }

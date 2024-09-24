@@ -10,6 +10,7 @@ export class EndlessGameData {
     private receivedDiamond: number = 0;
     private opponentScore: number = 0;
     private challengeDeadBeforeEnd: boolean = false;
+    private reviveHearts: number;
 
     get Score(): number {
         return this.score;
@@ -41,6 +42,14 @@ export class EndlessGameData {
 
     set ChallengeDeadBeforeEnd(value: boolean) {
         this.challengeDeadBeforeEnd = value;
+    }
+
+    get ReviveHearts(): number {
+        return this.reviveHearts;
+    }
+
+    set ReviveHearts(value: number) {
+        this.reviveHearts = value;
     }
 
     private constructor() {}
