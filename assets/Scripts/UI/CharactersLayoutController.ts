@@ -8,17 +8,18 @@ export class CharactersLayoutController extends Component {
     @property(FillBarController)
     private characterSlider: FillBarController;
 
-    start() {
+    onEnable() {
         this.setFreezeFrameOff();
         this.characterSlider.updateFill();
     }
 
     setFreezeFrameOff()
     {
-        let characterData = CharacterData.getInstance();
-        for (let i = 0; i < characterData.CharacterID.length; i++)
+        console.log(JSON.parse(localStorage.getItem('characterIDs')));
+        let characterData = JSON.parse(localStorage.getItem('characterIDs'));
+        for (let i = 0; i < characterData.length; i++)
         {
-            const childIndex = characterData.CharacterID[i];
+            const childIndex = characterData[i];
             const childNode = this.node.children[childIndex];
 
             if (childNode && childNode.children.length > 1)

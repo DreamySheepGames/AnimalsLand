@@ -30,7 +30,30 @@ export class CharacterData{
         if (!CharacterData.instance) {
             CharacterData.instance = this;
         }
-        this.characterID = [0, 1, 3]; // Decide which skin is unlocked
+
+        // premium character IDs: 24 to 29
+        // read characterID from local storage, if there's no data file then create with id 0
+
+        // Define the key for character data in localStorage
+        const characterDataKey = 'characterIDs';
+
+        // Check if the data already exists in localStorage
+        const storedData = localStorage.getItem(characterDataKey);
+
+        if (storedData) {
+            // If data exists, parse it back into the characterID array
+            this.characterID = JSON.parse(storedData);
+        } else {
+            // If no data exists, initialize the array with the default value
+            this.characterID = [0]; // Default value (id 0)
+
+            // Save the default array to localStorage
+            localStorage.setItem(characterDataKey, JSON.stringify(this.characterID));
+        }
+
+        // testing, unimportant
+        // this.characterID = [0]; // Default value (id 0)
+        // localStorage.setItem(characterDataKey, JSON.stringify(this.characterID));
     }
 
     // Static method to get the singleton instance of CharacterData

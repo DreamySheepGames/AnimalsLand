@@ -31,6 +31,7 @@ export class ChallengeGameDataManager extends Component {
     onLoad()
     {
         const challengeGameData = EndlessGameData.getInstance();
+        challengeGameData.checkSpinWheelDoubleStatus();
 
         // assign scores to labels
         this.playerScoreLabel.string = "Your score: <color=#EE6E69>" + challengeGameData.Score.toString() + "</color>";

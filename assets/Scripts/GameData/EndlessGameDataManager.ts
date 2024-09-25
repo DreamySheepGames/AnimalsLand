@@ -19,6 +19,7 @@ export class EndlessGameDataManager extends Component {
     }
 
     start() {
+        EndlessGameData.getInstance().checkSpinWheelDoubleStatus();
         this.saveReceivedDiamond();
     }
 

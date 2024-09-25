@@ -11,6 +11,7 @@ export class EndlessGameData {
     private opponentScore: number = 0;
     private challengeDeadBeforeEnd: boolean = false;
     private reviveHearts: number;
+    private isSpinWheelDiamondDouble: boolean = false;
 
     get Score(): number {
         return this.score;
@@ -52,6 +53,14 @@ export class EndlessGameData {
         this.reviveHearts = value;
     }
 
+    get IsSpinWheelDiamondDouble(): boolean {
+        return this.isSpinWheelDiamondDouble;
+    }
+
+    set IsSpinWheelDiamondDouble(value: boolean) {
+        this.isSpinWheelDiamondDouble = value;
+    }
+
     private constructor() {}
 
     public static getInstance(): EndlessGameData {
@@ -59,6 +68,31 @@ export class EndlessGameData {
             EndlessGameData.instance = new EndlessGameData();
         }
         return EndlessGameData.instance;
+    }
+
+    public checkSpinWheelDoubleStatus() {
+        const gameData = EndlessGameData.getInstance();
+        const savedTimestamp = localStorage.getItem('spinWheelDoubleStartTime');
+
+        if (savedTimestamp) {
+            const startTime = parseInt(savedTimestamp, 10); // Convert the saved string back to a number
+            const now = Date.now();
+            const elapsedTime = now - startTime; // Time elapsed in milliseconds
+
+            const oneMinute = 60000; // 1 minute in milliseconds (for testing)
+            // const oneDay = 86400000; // 24 hours in milliseconds (for production)
+
+            // Check if the required time has passed
+            if (elapsedTime >= oneMinute) {
+                gameData.IsSpinWheelDiamondDouble = false;
+                //console.log('Spin wheel double diamond time expired. Flag turned off.');
+
+                // Optionally, remove the stored timestamp
+                localStorage.removeItem('spinWheelDoubleStartTime');
+            } else {
+                //console.log('Spin wheel double diamond still active.');
+            }
+        }
     }
 }
 

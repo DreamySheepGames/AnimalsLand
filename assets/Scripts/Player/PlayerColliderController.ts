@@ -4,6 +4,7 @@ import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManage
 import {InvincibleMeterController} from "db://assets/Scripts/UI/InvincibleMeterController";
 import {Diamond} from "db://assets/Scripts/EnemyAndItems/Diamond";
 import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
+import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -111,7 +112,10 @@ export class PlayerColliderController extends Component {
     hitDiamond(otherCollider)
     {
         // update total received diamond value
-        EndlessGameManager.Instance.diamondIncrement(otherCollider.node.getComponent(Diamond).Value);
+        if (!EndlessGameData.getInstance().IsSpinWheelDiamondDouble)
+            EndlessGameManager.Instance.diamondIncrement(otherCollider.node.getComponent(Diamond).Value);
+        else
+            EndlessGameManager.Instance.diamondIncrement(otherCollider.node.getComponent(Diamond).Value * 2);
 
         // we have to destroy the diamond AFTER the colliding callback has completed, so we have to use schedule callback
         this.destroyCollidedNode(otherCollider);
