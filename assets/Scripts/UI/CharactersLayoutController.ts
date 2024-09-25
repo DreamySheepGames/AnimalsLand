@@ -15,7 +15,7 @@ export class CharactersLayoutController extends Component {
 
     setFreezeFrameOff()
     {
-        console.log(JSON.parse(localStorage.getItem('characterIDs')));
+        //console.log(JSON.parse(localStorage.getItem('characterIDs')));
         let characterData = JSON.parse(localStorage.getItem('characterIDs'));
         for (let i = 0; i < characterData.length; i++)
         {

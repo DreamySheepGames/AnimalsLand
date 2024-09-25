@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, RichText } from 'cc';
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 const { ccclass, property } = _decorator;
@@ -17,8 +17,13 @@ export class EndGamePanel extends Component {
     @property(Node)
     private doubleDiamondText: Node;
 
+    @property(RichText)
+    private receivedDiamondLabel: RichText;
+
     onEnable()
     {
+        this.receivedDiamondLabel.string = EndlessGameManager.Instance.ReceivedDiamond.toString();
+
         if (EndlessGameManager.Instance.ReceivedDiamond == 0)
         {
             this.doubleDiamondButton.active = false;

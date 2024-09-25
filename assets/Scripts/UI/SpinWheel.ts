@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, tween, Vec3, RichText, Event, Button, sys } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, RichText, Event, Button, sys, Sprite, resources, SpriteFrame } from 'cc';
 import {MenuDataManager} from "db://assets/Scripts/GameData/MenuDataManager";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
@@ -24,6 +24,21 @@ export class SpinWheel extends Component {
     @property(RichText)
     private spinLabel: RichText;
 
+    @property(Node)
+    private prizePanel: Node;
+
+    @property(RichText)
+    private prizeName: RichText;
+
+    @property(RichText)
+    private prizeDescription: RichText;
+
+    @property(Sprite)
+    private characterIcon: Sprite;
+
+    @property(Node)
+    private characterLayout: Node;
+
     private smallDiamondPackage: number = 500;
     private mediumDiamondPackage: number = 1000;
     private hugeDiamondPackage: number = 5000;
@@ -47,7 +62,9 @@ export class SpinWheel extends Component {
         tween(this.wheel)
             .to(2, { eulerAngles: new Vec3(0, 0, -targetAngle) }, { easing: 'cubicOut' }) // Spin counter-clockwise
             .call(() => {
-                this.prize(randomStop);
+                this.prize(randomStop);             // assign prize
+                this.prizePanel.active = true;      // turn on prize panel
+                this.node.active = false;           // turn off spin panel
             })
             .start();
     }
@@ -56,32 +73,35 @@ export class SpinWheel extends Component {
     {
         switch (prizeIndex)
         {
-            case 0:     // small diamond package
+            case 0:     // small diamond pack
                 this.saveReceivedDiamond(this.smallDiamondPackage);
+                this.diamondPrize(prizeIndex);
                 break;
 
-            case 1:     // unlock premium character 1
-                this.unlockPremiumCharacter();
+            case 1:     // unlock casual character 1
+                this.unlockCasualCharacter();
                 break;
 
             case 2:     // +1 heart
                 this.incrementReviveHeart();
                 break;
 
-            case 3:     // unlock premium character 2
+            case 3:     // unlock premium character
                 this.unlockPremiumCharacter();
                 break;
 
-            case 4:     // huge diamond package
+            case 4:     // huge diamond pack
                 this.saveReceivedDiamond(this.hugeDiamondPackage);
+                this.diamondPrize(prizeIndex);
                 break;
 
-            case 5:     // unlock premium character 3
-                this.unlockPremiumCharacter();
+            case 5:     // unlock casual character 2
+                this.unlockCasualCharacter();
                 break;
 
-            case 6:     // medium premium character 3
+            case 6:     // medium diamond pack
                 this.saveReceivedDiamond(this.mediumDiamondPackage);
+                this.diamondPrize(prizeIndex);
                 break;
 
             case 7:     // double received diamond
@@ -109,6 +129,10 @@ export class SpinWheel extends Component {
 
     incrementReviveHeart()
     {
+        this.characterIcon.node.active = false;
+        this.prizeName.string = "Health";
+        this.prizeDescription.string = "Increase health to revive";
+
         const savedReviveHearts = localStorage.getItem('revivedHeartsCount');
         const currentSavedHearts = savedReviveHearts ? parseInt(savedReviveHearts, 10) : 3;
         if (currentSavedHearts < 5)
@@ -127,6 +151,10 @@ export class SpinWheel extends Component {
     {
         EndlessGameData.getInstance().IsSpinWheelDiamondDouble = true;
 
+        this.characterIcon.node.active = false;
+        this.prizeName.string = "Double diamond";
+        this.prizeDescription.string = "Double the received diamonds in 24 hours";
+
         // turn off the flag after 1 minute (1 minute is for testing, in game it would be 24 hours)
         // Get the current timestamp and save it in localStorage
         const now = Date.now(); // This gives you the current time in milliseconds
@@ -138,21 +166,37 @@ export class SpinWheel extends Component {
 
     unlockPremiumCharacter() {
         const premiumCharacterIDs = [24, 25, 26, 27, 28, 29];
+        this.unlockingCharacter(premiumCharacterIDs);
+    }
 
+    unlockCasualCharacter() {
+        const casualCharacterIDs = [];
+
+        // normal characters have IDs from 0 to 23
+        for (let i = 0; i < 24; i++)
+            casualCharacterIDs.push(i);
+
+        this.unlockingCharacter(casualCharacterIDs);
+    }
+
+    unlockingCharacter(IDsToRandom: number[])
+    {
         // Retrieve characterID array from localStorage
         let characterIDs = JSON.parse(localStorage.getItem('characterIDs') || '[]');
 
         // Filter out premium characters that are already unlocked
-        const unlockedPremiumIDs = characterIDs.filter(id => premiumCharacterIDs.indexOf(id) !== -1);
+        const unlockedPremiumIDs = characterIDs.filter(id => IDsToRandom.indexOf(id) !== -1);
 
         // If all premium characters are already unlocked, do nothing
-        if (unlockedPremiumIDs.length === premiumCharacterIDs.length) {
-            console.log('All premium characters are already unlocked.');
+        if (unlockedPremiumIDs.length === IDsToRandom.length) {
+            this.prizeName.string = "New character";
+            this.prizeDescription.string = "All characters are already unlocked.";
+            this.characterIcon.node.active = false;
         } else {
             // Randomly select a premium character that hasn't been unlocked
             let newCharacterID: number;
             do {
-                newCharacterID = premiumCharacterIDs[Math.floor(Math.random() * premiumCharacterIDs.length)];
+                newCharacterID = IDsToRandom[Math.floor(Math.random() * IDsToRandom.length)];
             } while (characterIDs.indexOf(newCharacterID) !== -1); // Repeat if ID is already unlocked
 
             // Add the new premium character ID to the characterID array
@@ -161,10 +205,43 @@ export class SpinWheel extends Component {
             // Save the updated characterID array back to localStorage
             localStorage.setItem('characterIDs', JSON.stringify(characterIDs));
 
-            console.log('Unlocked new premium character:', newCharacterID);
+            this.showUnlockedCharacter(newCharacterID);
         }
-
     }
+
+    showUnlockedCharacter(newCharacterID: number)
+    {
+        this.prizeDescription.node.active = false;
+        this.characterIcon.node.active = true;
+
+        // Assuming that this.characterLayout is a Node that contains children
+        const newCharacterNode = this.characterLayout.children[newCharacterID]; // Get the child at the newCharacterID
+        const characterIconNode = newCharacterNode.children[0]; // Get the first child of that node
+
+        // Assuming this.characterIcon is of type Sprite
+        const characterSprite = characterIconNode.getComponent(Sprite); // Get the Sprite component of the first child
+        const chracterSpriteName: string = characterSprite.spriteFrame.name;
+        // console.log("new ID: " + newCharacterID);
+        // console.log("character icon node: " + newCharacterNode.children[0].getComponent(Sprite).spriteFrame.name);
+
+        if (characterSprite) {
+            resources.load(`CharactersIcon/${chracterSpriteName}/spriteFrame`, SpriteFrame, (err, spriteFrame) => {
+                if (err) {
+                    console.error('Error loading sprite frame:', err);
+                    return;
+                }
+                if (this.characterIcon && spriteFrame) {
+                    this.characterIcon.spriteFrame = spriteFrame; // Set the loaded frame to the player sprite
+                    this.prizeName.string = spriteFrame.name;
+                } else {
+                    console.error('Player sprite or loaded sprite frame is null.');
+                }
+            });
+        } else {
+            console.error("Sprite component not found on the child node.");
+        }
+    }
+
 
     public buttonSpinClicked(event: Event)
     {
@@ -227,5 +304,31 @@ export class SpinWheel extends Component {
 
     padWithZero(num: number): string {
         return num < 10 ? '0' + num : num.toString();
+    }
+
+    diamondPrize(prizeIndex: number)
+    {
+        this.characterIcon.node.active = false;
+        let diamondAmount: number;
+        let prizeName: string;
+
+        switch (prizeIndex) {
+            case 0:     // small pack
+                diamondAmount = this.smallDiamondPackage;
+                prizeName = "Small diamond pack";
+                break;
+
+            case 4:     // huge pack
+                diamondAmount = this.hugeDiamondPackage;
+                prizeName = "Huge diamond pack";
+                break;
+
+            case 6:     // medium pack
+                diamondAmount = this.mediumDiamondPackage;
+                prizeName = "Medium diamond pack";
+                break;
+        }
+
+        this.prizeDescription.string = "A package contains " + diamondAmount.toString() + " diamonds.";
     }
 }

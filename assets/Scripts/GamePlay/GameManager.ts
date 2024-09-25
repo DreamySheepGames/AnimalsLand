@@ -51,8 +51,6 @@ export class GameManager extends Component {
         this.musicSlider.progress = SettingsData.getInstance().MusicVol;
         this.sfxSlider.progress = SettingsData.getInstance().SfxVol;
         this.vibrateToggle.isChecked = SettingsData.getInstance().IsVibrate;
-
-
     }
 
     start()
