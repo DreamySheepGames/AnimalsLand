@@ -26,7 +26,11 @@ export class TimerController extends Component {
 
     onEnable()
     {
-        this.currentTime = this.duration;
+        //this.currentTime = this.duration;
+        // read the effect level from data file
+        let effectLv = this.readItemLevel(this.tag);
+        this.currentTime = this.duration + 2 * (effectLv - 1)
+
         this.updateLabel(this.currentTime);
 
         // Schedule the countdown every second
@@ -107,5 +111,18 @@ export class TimerController extends Component {
         endlessGameData.ChallengeDeadBeforeEnd = false;
 
         director.loadScene('GameOverChallenge');
+    }
+
+    readItemLevel(tag)
+    {
+        switch (tag) {
+            case 3: return EndlessGameData.getInstance().SuperHeroLevel;
+            case 4: return EndlessGameData.getInstance().DoubleLevel;
+            case 5: return EndlessGameData.getInstance().SlowdownLevel;
+            case 6: return EndlessGameData.getInstance().FreezerLevel;
+            case 7: return EndlessGameData.getInstance().MagnetLevel;
+        }
+
+        return 0;
     }
 }

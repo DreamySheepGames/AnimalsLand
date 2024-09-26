@@ -13,53 +13,63 @@ export class EndlessGameData {
     private reviveHearts: number;
     private isSpinWheelDiamondDouble: boolean = false;
 
-    get Score(): number {
-        return this.score;
-    }
+    // item level
+    private magnetLevel: number = 0;
+    private freezerLevel: number = 0;
+    private slowdownLevel: number = 0;
+    private doubleLevel: number = 0;
+    private superHeroLevel: number = 0;
 
-    set Score(value: number) {
-        this.score = value;
-    }
+    // item price
+    private level1Price: number = 500;
+    private level2Price: number = 1200;
+    private level3Price: number = 2500;
+    private itemPrices: number[] = [this.level1Price, this.level2Price, this.level3Price];
 
-    get ReceivedDiamond(): number {
-        return this.receivedDiamond;
-    }
+    get Score(): number {return this.score;}
+    set Score(value: number) {this.score = value;}
 
-    set ReceivedDiamond(value: number) {
-        this.receivedDiamond = value;
-    }
+    get ReceivedDiamond(): number {return this.receivedDiamond;}
+    set ReceivedDiamond(value: number) {this.receivedDiamond = value;}
 
-    get OpponentScore(): number {
-        return this.opponentScore;
-    }
+    get OpponentScore(): number {return this.opponentScore;}
+    set OpponentScore(value: number) {this.opponentScore = value;}
 
-    set OpponentScore(value: number) {
-        this.opponentScore = value;
-    }
+    get ChallengeDeadBeforeEnd(): boolean {return this.challengeDeadBeforeEnd;}
+    set ChallengeDeadBeforeEnd(value: boolean) {this.challengeDeadBeforeEnd = value;}
 
-    get ChallengeDeadBeforeEnd(): boolean {
-        return this.challengeDeadBeforeEnd;
-    }
+    get ReviveHearts(): number {return this.reviveHearts;}
+    set ReviveHearts(value: number) {this.reviveHearts = value;}
 
-    set ChallengeDeadBeforeEnd(value: boolean) {
-        this.challengeDeadBeforeEnd = value;
-    }
+    get IsSpinWheelDiamondDouble(): boolean {return this.isSpinWheelDiamondDouble;}
+    set IsSpinWheelDiamondDouble(value: boolean) {this.isSpinWheelDiamondDouble = value;}
 
-    get ReviveHearts(): number {
-        return this.reviveHearts;
-    }
+    get MagnetLevel() {return this.magnetLevel;}
+    set MagnetLevel(value: number) {this.magnetLevel = value;}
 
-    set ReviveHearts(value: number) {
-        this.reviveHearts = value;
-    }
+    get FreezerLevel() { return this.freezerLevel; }
+    set FreezerLevel(value: number) {this.freezerLevel = value;}
 
-    get IsSpinWheelDiamondDouble(): boolean {
-        return this.isSpinWheelDiamondDouble;
-    }
+    get SlowdownLevel() {return this.slowdownLevel;}
+    set SlowdownLevel(value: number) {this.slowdownLevel = value;}
 
-    set IsSpinWheelDiamondDouble(value: boolean) {
-        this.isSpinWheelDiamondDouble = value;
-    }
+    get DoubleLevel() {return this.doubleLevel;}
+    set DoubleLevel(value: number) {this.doubleLevel = value;}
+
+    get SuperHeroLevel() {return this.superHeroLevel;}
+    set SuperHeroLevel(value: number) {this.superHeroLevel = value;}
+
+    get Level1Price(): number {return this.level1Price;}
+    set Level1Price(value: number) {this.level1Price = value;}
+
+    get Level2Price(): number {return this.level2Price;}
+    set Level2Price(value: number) {this.level2Price = value;}
+
+    get Level3Price(): number {return this.level3Price;}
+    set Level3Price(value: number) {this.level3Price = value;}
+
+    get ItemPrices(): number[] {return this.itemPrices;}
+    set ItemPrices(value: number[]) {this.itemPrices = value;}
 
     private constructor() {}
 
@@ -94,6 +104,13 @@ export class EndlessGameData {
             }
         }
     }
+
+    public updateItemLevels()
+    {
+        this.magnetLevel = parseInt(localStorage.getItem("magnetLevel"), 10);
+        this.freezerLevel = parseInt(localStorage.getItem("freezerLevel"), 10);
+        this.slowdownLevel = parseInt(localStorage.getItem("slowdownLevel"), 10);
+        this.doubleLevel = parseInt(localStorage.getItem("doubleLevel"), 10);
+        this.superHeroLevel = parseInt(localStorage.getItem("superHeroLevel"), 10);
+    }
 }
-
-

@@ -32,6 +32,16 @@ export class GameManager extends Component {
     private isEndless:boolean = true;
     private currentSavedHeartsCount: number;
 
+    // data key
+    private receivedDiamondsKey = "receivedDiamons";
+    private revivedHeartsCountKey = "revivedHeartsCount";
+    private magnetLevelKey = "magnetLevel";
+    private freezerLevelKey = "freezerLevel";
+    private slowdownLevelKey = "slowdownLevel";
+    private doubleLevelKey = "doubleLevel";
+    private superHeroLevelKey = "superHeroLevel";
+    private itemKeys: string[] = [this.magnetLevelKey, this.freezerLevelKey, this.slowdownLevelKey, this.doubleLevelKey, this.superHeroLevelKey];
+
     // play mode getter and setter
     public get isEndlessMode(): boolean {
         return this.isEndless;
@@ -44,7 +54,8 @@ export class GameManager extends Component {
     onLoad()
     {
         // generate revive hearts
-        this.ReviveHeartsDataLoading();
+        this.reviveHeartsDataLoading();
+        this.itemDataLoading();
 
         CharacterData.getInstance().onLoad();
 
@@ -57,12 +68,13 @@ export class GameManager extends Component {
     {
         EndlessGameData.getInstance().checkSpinWheelDoubleStatus();
         this.updateReviveHeartsLayout();
+        this.updateReceivedDiamond();
     }
 
-    ReviveHeartsDataLoading()
+    reviveHeartsDataLoading()
     {
         // Retrieve the current saved hearts from localStorage, if any
-        const savedDiamonds = localStorage.getItem('revivedHeartsCount');
+        const savedDiamonds = localStorage.getItem(this.revivedHeartsCountKey);
 
         // Convert the saved value to a number, defaulting to 3 if it's null
         this.currentSavedHeartsCount = savedDiamonds ? parseInt(savedDiamonds, 10) : 3;
@@ -72,7 +84,7 @@ export class GameManager extends Component {
         EndlessGameData.getInstance().ReviveHearts = this.currentSavedHeartsCount;
 
         // Save the updated total back to localStorage
-        localStorage.setItem('revivedHeartsCount', this.currentSavedHeartsCount.toString());
+        localStorage.setItem(this.revivedHeartsCountKey, this.currentSavedHeartsCount.toString());
 
         // testing, not important
         // let testSet: number = 3;
@@ -83,9 +95,69 @@ export class GameManager extends Component {
     {
         for (let i = 0; i < 5; i++)
         {
-            this.reviveHearts[i].active = i < parseInt(localStorage.getItem('revivedHeartsCount'), 10) ? true : false;
+            this.reviveHearts[i].active = i < parseInt(localStorage.getItem(this.revivedHeartsCountKey), 10) ? true : false;
         }
     }
+
+    itemDataLoading()
+    {
+        for (let i = 0; i < this.itemKeys.length; i++)
+        {
+            // Retrieve the current saved hearts from localStorage, if any
+            const savedItemData = localStorage.getItem(this.itemKeys[i]);
+
+            // Convert the saved value to a number, defaulting to 3 if it's null
+            let currentSavedItemData = savedItemData ? parseInt(savedItemData, 10) : 0;
+            if (currentSavedItemData > 3)
+                currentSavedItemData = 3;
+
+            // use switch i here
+            switch (i) {
+                case 0:
+                    EndlessGameData.getInstance().MagnetLevel = currentSavedItemData;
+                    break;
+                case 1:
+                    EndlessGameData.getInstance().FreezerLevel = currentSavedItemData;
+                    break;
+                case 2:
+                    EndlessGameData.getInstance().SlowdownLevel = currentSavedItemData;
+                    break;
+                case 3:
+                    EndlessGameData.getInstance().DoubleLevel = currentSavedItemData;
+                    break;
+                case 4:
+                    EndlessGameData.getInstance().SuperHeroLevel = currentSavedItemData;
+                    break;
+            }
+
+            // Save the updated total back to localStorage
+            localStorage.setItem(this.itemKeys[i], currentSavedItemData.toString());
+
+            // testing, not important
+            EndlessGameData.getInstance().MagnetLevel = 0;
+            EndlessGameData.getInstance().FreezerLevel = 0;
+            EndlessGameData.getInstance().SlowdownLevel = 0;
+            EndlessGameData.getInstance().DoubleLevel = 0;
+            EndlessGameData.getInstance().SuperHeroLevel = 0;
+
+            let zero = 0;
+            localStorage.setItem(this.magnetLevelKey, zero.toString())
+            localStorage.setItem(this.freezerLevelKey, zero.toString())
+            localStorage.setItem(this.slowdownLevelKey, zero.toString())
+            localStorage.setItem(this.doubleLevelKey, zero.toString())
+            localStorage.setItem(this.superHeroLevelKey, zero.toString())
+
+        }
+    }
+
+    updateReceivedDiamond()
+    {
+        const receivedDiamonds = localStorage.getItem(this.receivedDiamondsKey);
+        let currentSavedDiamondCount = receivedDiamonds ? parseInt(receivedDiamonds, 10) : 0;
+        localStorage.setItem("receivedDiamonds", currentSavedDiamondCount.toString());
+
+        // test, not importatnt
+        const money = 10000;
+        localStorage.setItem("receivedDiamonds", money.toString());
+    }
 }
-
-

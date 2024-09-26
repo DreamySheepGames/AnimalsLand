@@ -12,7 +12,7 @@ export class MenuDataManager extends Component {
     @property(RichText)
     private iapShopDiamondText: RichText;
 
-    onLoad()
+    start()
     {
         this.updateDiamondTexts();
     }
