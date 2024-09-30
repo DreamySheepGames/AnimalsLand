@@ -145,8 +145,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 300,
-      "height": 300
+      "width": 375,
+      "height": 400
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -218,8 +218,8 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 300,
-      "height": 300
+      "width": 375,
+      "height": 400
     },
     "_id": ""
   },
@@ -381,6 +381,7 @@
       "__id__": 16
     },
     "timerManager": null,
+    "missionProgressBarController": null,
     "_id": ""
   },
   {

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, director } from 'cc';
+import { _decorator, Component, Node, Label, director, RichText, tween, Vec3 } from 'cc';
 import { EndlessBGManager } from 'db://assets/Scripts/GamePlay/EndlessBGManager';
 import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
 import {SpawnEnemyManager} from "db://assets/Scripts/GamePlay/SpawnEnemyManager";
@@ -8,6 +8,8 @@ import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
+import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
+import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManager')
@@ -55,6 +57,15 @@ export class EndlessGameManager extends Component {
     public enemyAmountQueue: number[] = []; // Queue for spawn amounts
     private lastAmountValue: number;
 
+    @property(RichText)
+    private missionLabel: RichText;
+
+    @property(MissionProgressBarController)
+    private missionProgressBar: MissionProgressBarController;
+
+    @property(Node)
+    private missionCompletedText: Node;
+
     public enemyQueue: Node[] = []; // Queue for enemies
     private stageCheckPoint: number[] = []; // Queue for stage checkpoints
     private lastValueStageCheckPoint: number;
@@ -66,77 +77,58 @@ export class EndlessGameManager extends Component {
     private doubleDiamond: boolean = false;
     private magnet: boolean = false;
 
+    // mission related variables
+    private currentMissionKey = "currentMission";
+    private currentMission = "";
+    private missionKeys: string[] = [];
+    private missionGetDiamond: number = 0;
+    private missionScoreNoBump: number = 0;
+
     private slowedEnemies: Node[] = [];
     private freezedEnemies: Node[] = [];
 
     private scheduledCallback: Function | null = null; // To store the reference of the scheduled callback
     private playerHasDied:boolean = false;
 
-    get StageCheckPoint(): number[] {
-        return this.stageCheckPoint;
-    }
+    get StageCheckPoint(): number[] {return this.stageCheckPoint;}
+    set StageCheckPoint(value: number[]) {this.stageCheckPoint = value;}
 
-    set StageCheckPoint(value: number[]) {
-        this.stageCheckPoint = value;
-    }
+    get CurrentStage(): number {return this.currentStage;}
 
-    get CurrentStage(): number {
-        return this.currentStage;
-    }
+    get ReceivedDiamond(): number {return this.receivedDiamond;}
+    set ReceivedDiamond(value: number) {this.receivedDiamond = value;}
 
-    get ReceivedDiamond(): number {
-        return this.receivedDiamond;
-    }
+    get DoubleDiamond(): boolean {return this.doubleDiamond;}
+    set DoubleDiamond(value: boolean) {this.doubleDiamond = value;}
 
-    set ReceivedDiamond(value: number) {
-        this.receivedDiamond = value;
-    }
+    get Magnet(): boolean {return this.magnet;}
+    set Magnet(value: boolean) {this.magnet = value;}
 
-    get DoubleDiamond(): boolean {
-        return this.doubleDiamond;
-    }
+    get Score(): number {return this.score;}
+    set Score(value: number) {this.score = value;}
 
-    set DoubleDiamond(value: boolean) {
-        this.doubleDiamond = value;
-    }
+    get OpponentScore(): number {return this.opponentScore;}
+    set OpponentScore(value: number) {this.opponentScore = value;}
 
-    get Magnet(): boolean {
-        return this.magnet;
-    }
+    get Heart(): Node[] {return this.heart;}
+    set Heart(value: Node[]) {this.heart = value;}
 
-    set Magnet(value: boolean) {
-        this.magnet = value;
-    }
+    get MissionGetDiamond(): number {return this.missionGetDiamond;}
+    set MissionGetDiamond(value: number) {this.missionGetDiamond = value;}
 
-    get Score(): number {
-        return this.score;
-    }
+    get MissionScoreWithoutBump(): number {return this.missionScoreNoBump;}
+    set MissionScoreWithoutBump(value: number) {this.missionScoreNoBump = value;}
 
-    set Score(value: number) {
-        this.score = value;
-    }
-
-    get OpponentScore(): number {
-        return this.opponentScore;
-    }
-
-    set OpponentScore(value: number) {
-        this.opponentScore = value;
-    }
-
-    get Heart(): Node[] {
-        return this.heart;
-    }
-
-    set Heart(value: Node[]) {
-        this.heart = value;
-    }
+    get CurrentMission(): string {return this.currentMission;}
+    set CurrentMission(value: string) {this.currentMission = value;}
 
     onLoad() {
-        //console.log(this.endlessBGManager.getComponent(EndlessBGManager).LevelSteps);
-
         // Assign the instance when the script is loaded
         EndlessGameManager.instance = this;
+
+        // Load mission
+        this.assignMission(this.missionLabel);
+        this.missionKeys = MissionManager.getInstance().MissionKeys;
 
         // Get the last value of the enemy amount array
         this.lastAmountValue = this.enemyAmountQueue[this.enemyAmountQueue.length - 1];
@@ -150,8 +142,6 @@ export class EndlessGameManager extends Component {
 
     start()
     {
-        //GameManager.Instance.isEndlessMode = false;
-
         // Initialize targetPoint with the first checkpoint
         this.targetPoint = this.stageCheckPoint.shift();
 
@@ -163,6 +153,9 @@ export class EndlessGameManager extends Component {
     public incrementScore() {
         this.score++;
         this.updateScoreLabel();
+
+        // do scoring without bump mission
+        this.doMissionScoreWithoutBump();
 
         // Check if we need to go to next stage
         if (this.checkIfAtTargetPoint()) {
@@ -390,5 +383,99 @@ export class EndlessGameManager extends Component {
                 }
             }
         }
+    }
+
+    assignMission(missionLabel: RichText)   // put 1 argument so the skip mission button and reuse this funcction
+    {
+        this.currentMission = localStorage.getItem("currentMission");
+
+        switch (this.currentMission)
+        {
+            case "missionGetDiamond":
+                let diamondMissions = JSON.parse(localStorage.getItem("missionGetDiamond"));
+                missionLabel.string = "collect " + diamondMissions[0].toString() + " crystals";
+                break;
+            case "missionScoreNoBump":
+                let scoreMissions = JSON.parse(localStorage.getItem("missionScoreNoBump"));
+                missionLabel.string = scoreMissions[0].toString() + " points without bump";
+                break;
+            default:
+                missionLabel.string = "no mission found...";
+                break;
+        }
+    }
+
+    doMissionGetDiamond(diamondValue: number)
+    {
+        // if current mission is getting diamond
+        if (this.currentMission == this.missionKeys[0])
+        {
+            const getDiamondMissionKey = this.missionKeys[0];
+
+            let targetValues = JSON.parse(localStorage.getItem(getDiamondMissionKey));
+            if (this.missionGetDiamond + diamondValue < targetValues[0]) {      // still in mission
+                this.missionGetDiamond += diamondValue;
+                this.missionProgressBar.updateFill();
+            } else {                                                        // advance to the next mission
+                MissionManager.getInstance().missionCompleted();
+                this.tweenMissionCompletedText();
+                this.missionGetDiamond = 0;
+
+                // read get diamond mission, shift the array then save the mission
+                if (targetValues.length > 1)
+                    targetValues.shift();
+                localStorage.setItem(getDiamondMissionKey, JSON.stringify(targetValues));
+
+                // change current mission
+                MissionManager.getInstance().changeCurrentMission();
+
+                // update the mission label and the filler
+                this.assignMission(this.missionLabel);
+                this.missionProgressBar.resetProgressBarFiller();
+            }
+        }
+    }
+
+    doMissionScoreWithoutBump()
+    {
+        // if current mission is scoring without bumb
+        if (this.currentMission == this.missionKeys[1])
+        {
+            const scoreNoBumpMissionKey = this.missionKeys[1];
+            let targetValues = JSON.parse(localStorage.getItem(scoreNoBumpMissionKey));
+
+            if (this.missionScoreNoBump + 1 < targetValues[0]) {      // still in mission
+                this.missionScoreNoBump++;
+                this.missionProgressBar.updateFill();
+            } else {
+                MissionManager.getInstance().missionCompleted();
+                this.tweenMissionCompletedText();
+                this.missionScoreNoBump = 0;
+
+                // read get diamond mission, shift the array then save the mission
+                if (targetValues.length > 1)
+                    targetValues.shift();
+                localStorage.setItem(scoreNoBumpMissionKey, JSON.stringify(targetValues));
+
+                // change current mission
+                MissionManager.getInstance().changeCurrentMission();
+
+                // update the mission label and the filler
+                this.assignMission(this.missionLabel);
+                this.missionProgressBar.resetProgressBarFiller();
+            }
+        }
+    }
+
+    tweenMissionCompletedText()
+    {
+        // tween this missionCompletedText node y down 100 value with tween ease back out
+        // then after 1 second tween it back up at its old position
+        const originalPosition = this.missionCompletedText.position.clone();
+        tween(this.missionCompletedText)
+            .to(0.5, { position: new Vec3(originalPosition.x, originalPosition.y - 100, originalPosition.z) }, { easing: 'backOut' })
+            .delay(1) // Wait for 1 second
+            .to(0.5, { position: originalPosition }, { easing: 'backIn' }) // Move back to original position with ease back in
+            .start();
     }
 }

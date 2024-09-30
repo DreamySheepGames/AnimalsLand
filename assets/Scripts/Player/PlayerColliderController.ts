@@ -5,6 +5,7 @@ import {InvincibleMeterController} from "db://assets/Scripts/UI/InvincibleMeterC
 import {Diamond} from "db://assets/Scripts/EnemyAndItems/Diamond";
 import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
+import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -17,6 +18,9 @@ export class PlayerColliderController extends Component {
 
     @property({type: TimerManager})
     private timerManager: TimerManager;
+
+    @property(MissionProgressBarController)
+    private missionProgressBarController: MissionProgressBarController;
 
     start() {
         var collider = this.getComponent(Collider2D);
@@ -70,12 +74,21 @@ export class PlayerColliderController extends Component {
 
     hitEnemy()
     {
+        // reset counter for scoring without bump mission
+        EndlessGameManager.Instance.MissionScoreWithoutBump = 0;
+
+        // reset the mission progress bar if mission is scoring without bump
+        if (localStorage.getItem("currentMission") == "missionScoreNoBump")
+            this.missionProgressBarController.resetProgressBarFiller();
+
         // Trigger a vibration if the device supports it
         if (navigator.vibrate) {
             navigator.vibrate(200); // Vibrate for 200 milliseconds
         } else {
             console.warn('Vibration not supported on this device.');
         }
+
+        // mission score without bump
 
         // decrease invincible filler and heart
         this.invincibleMeter.decreaseFiller();
@@ -111,6 +124,11 @@ export class PlayerColliderController extends Component {
 
     hitDiamond(otherCollider)
     {
+        //this.invincibleMeter.increaseFiller();
+
+        // mission get diamond
+        EndlessGameManager.Instance.doMissionGetDiamond(otherCollider.node.getComponent(Diamond).Value);
+
         // update total received diamond value
         if (!EndlessGameData.getInstance().IsSpinWheelDiamondDouble)
             EndlessGameManager.Instance.diamondIncrement(otherCollider.node.getComponent(Diamond).Value);

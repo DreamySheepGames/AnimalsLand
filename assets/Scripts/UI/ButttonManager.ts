@@ -1,9 +1,11 @@
-import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle} from 'cc';
+import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText} from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
+import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
+import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('ButttonManager')
@@ -14,6 +16,9 @@ export class ButttonManager extends Component {
 
     @property(Node)
     private darkLayer: Node;
+
+    @property(Node)
+    private darkLayerOpponent: Node;
 
     @property(Slider)
     private musicSlider: Slider;
@@ -30,10 +35,19 @@ export class ButttonManager extends Component {
     @property(AudioSource)
     private sfxSource: AudioSource;
 
+    @property(RichText)
+    private missionLabel: RichText;
+
+    @property(GameManager)
+    private gameManager: GameManager;
+
     public openPanel(event: Event, CustomEventData) {
         // Turn on dark layer
         if (this.darkLayer)
             this.darkLayer.active = true;
+
+        if (this.darkLayerOpponent)
+            this.darkLayerOpponent.active = true;
 
         // First, close all panels
         this.panels.forEach(panel => panel.active = false);
@@ -47,6 +61,9 @@ export class ButttonManager extends Component {
     public closeParent(event: Event) {
         if (this.darkLayer)
             this.darkLayer.active = false;
+
+        if (this.darkLayerOpponent)
+            this.darkLayerOpponent.active = false;
 
         const buttonNode = event.currentTarget as Node; // Get the button node
         const parentNode = buttonNode.parent; // Get the grandparent of the button (assuming this is the panel)
@@ -146,6 +163,18 @@ export class ButttonManager extends Component {
         localStorage.setItem('revivedHeartsCount', EndlessGameData.getInstance().ReviveHearts.toString());
 
         EndlessGameManager.Instance.cancelScheduledGameOver();
+    }
+
+    public changeCurrentMission()
+    {
+        MissionManager.getInstance().changeCurrentMission();
+        EndlessGameManager.Instance.assignMission(this.missionLabel);
+    }
+
+    public changeCurrentMissionAtCharactersPanel()
+    {
+        MissionManager.getInstance().changeCurrentMission();
+        this.gameManager.updateMissionLabel();
     }
 }
 

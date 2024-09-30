@@ -1,8 +1,9 @@
-import { _decorator, Component, Node, Slider, Toggle } from 'cc';
+import { _decorator, Component, Node, Slider, Toggle, RichText } from 'cc';
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -29,6 +30,9 @@ export class GameManager extends Component {
     @property([Node])
     private reviveHearts: Node[] = [];
 
+    @property(RichText)
+    private missionLabel: RichText;
+
     private isEndless:boolean = true;
     private currentSavedHeartsCount: number;
 
@@ -53,9 +57,10 @@ export class GameManager extends Component {
 
     onLoad()
     {
-        // generate revive hearts
+        // generate revive hearts, data, mission
         this.reviveHeartsDataLoading();
         this.itemDataLoading();
+        MissionManager.getInstance().generateMission();
 
         CharacterData.getInstance().onLoad();
 
@@ -69,6 +74,7 @@ export class GameManager extends Component {
         EndlessGameData.getInstance().checkSpinWheelDoubleStatus();
         this.updateReviveHeartsLayout();
         this.updateReceivedDiamond();
+        this.updateMissionLabel();
     }
 
     reviveHeartsDataLoading()
@@ -159,5 +165,25 @@ export class GameManager extends Component {
         // test, not importatnt
         const money = 10000;
         localStorage.setItem("receivedDiamonds", money.toString());
+    }
+
+    updateMissionLabel()
+    {
+        let currentMission = localStorage.getItem("currentMission");
+
+        switch (currentMission)
+        {
+            case "missionGetDiamond":
+                let diamondMissions = JSON.parse(localStorage.getItem("missionGetDiamond"));
+                this.missionLabel.string = "collect " + diamondMissions[0].toString() + " crystals";
+                break;
+            case "missionScoreNoBump":
+                let scoreMissions = JSON.parse(localStorage.getItem("missionScoreNoBump"));
+                this.missionLabel.string = scoreMissions[0].toString() + " points without bump";
+                break;
+            default:
+                this.missionLabel.string = "no mission found...";
+                break;
+        }
     }
 }
