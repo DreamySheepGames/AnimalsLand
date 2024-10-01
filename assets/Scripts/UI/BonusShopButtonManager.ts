@@ -89,7 +89,8 @@ export class BonusShopButtonManager extends Component {
             localStorage.setItem('receivedDiamonds', playerResource.toString());
             this.playerDiamond.string = playerResource.toString();
 
-            this.menuDiamondCount.string = playerResource.toString();
+            if (this.menuDiamondCount)
+                this.menuDiamondCount.string = playerResource.toString();
 
             if (savedDataValue < 3)
             {

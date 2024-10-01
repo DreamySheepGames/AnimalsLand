@@ -9777,7 +9777,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": null,
     "_type": 0,
     "_inverted": false,
@@ -9793,7 +9793,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": null,
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -15904,7 +15904,7 @@
     "node": {
       "__id__": 321
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": null,
     "_type": 0,
     "_inverted": false,
@@ -15920,7 +15920,7 @@
     "node": {
       "__id__": 321
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": null,
     "_customMaterial": null,
     "_srcBlendFactor": 2,

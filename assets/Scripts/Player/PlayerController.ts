@@ -79,10 +79,12 @@ export class PlayerController extends Component {
     onLoad()
     {
         this.applyPlayerSkin();
+        this.rb = this.getComponent(RigidBody2D);
+        // let contactEnabled = this.rb.enabledContactListener;
+        // console.log(contactEnabled);
     }
 
     start() {
-        this.rb = this.getComponent(RigidBody2D);
         this.node.setPosition(this.startPosition); // Set initial position
     }
 

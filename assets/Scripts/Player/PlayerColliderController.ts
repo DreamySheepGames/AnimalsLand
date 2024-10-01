@@ -124,7 +124,8 @@ export class PlayerColliderController extends Component {
 
     hitDiamond(otherCollider)
     {
-        //this.invincibleMeter.increaseFiller();
+        if (!this.playerController.isInvincible)
+            this.invincibleMeter.increaseFiller();
 
         // mission get diamond
         EndlessGameManager.Instance.doMissionGetDiamond(otherCollider.node.getComponent(Diamond).Value);
