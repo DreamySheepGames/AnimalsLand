@@ -35,10 +35,10 @@ export class MissionManager {
     generateMission()
     {
         // testing, not important
-        localStorage.removeItem(this.diamondMissionsKey);
-        localStorage.removeItem(this.scoreMissionsKey);
-        localStorage.removeItem(this.unlockedCountKey);
-        localStorage.removeItem(this.currentMissionKey);
+        // localStorage.removeItem(this.diamondMissionsKey);
+        // localStorage.removeItem(this.scoreMissionsKey);
+        // localStorage.removeItem(this.unlockedCountKey);
+        // localStorage.removeItem(this.currentMissionKey);
         //localStorage.setItem(this.currentMissionKey, this.diamondMissionsKey);
 
         // loop through all the data keys, use switch i to read or generate data for each key

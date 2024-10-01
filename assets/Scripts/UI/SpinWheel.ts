@@ -15,6 +15,9 @@ export class SpinWheel extends Component {
     @property([Node])
     private reviveHearts: Node[] = [];
 
+    @property(Button)
+    private buttonSpin: Button;
+
     @property(Node)
     private buttonNoThanks: Node;
 
@@ -44,11 +47,21 @@ export class SpinWheel extends Component {
     private hugeDiamondPackage: number = 5000;
 
     private countdownDuration: number = 60; // 60 seconds for testing, change to 7200 for 2 hours in production
+    private remainingTime: number = 0;
 
     onEnable()
     {
         // Reset the wheel's angle back to 0
         this.wheel.setRotationFromEuler(0, 0, 0);
+
+        // update button spin and button no thanks
+        const endTime = parseInt(sys.localStorage.getItem('spinEndTime') || '0');
+        const now = Date.now();
+        this.remainingTime = Math.max(0, endTime - now); // Get remaining time
+        if (this.remainingTime && this.remainingTime > 0) {
+            this.buttonSpin.interactable = false;
+            this.updateCountdown();
+        }
     }
 
     public spin() {
@@ -155,7 +168,7 @@ export class SpinWheel extends Component {
         this.prizeName.string = "Double diamond";
         this.prizeDescription.string = "Double the received diamonds in 24 hours";
 
-        // turn off the flag after 1 minute (1 minute is for testing, in game it would be 24 hours)
+        // turn off the flag after 1 minute (1 minute is for testing, in game it would be 24 hours) in EndlessGameData.ts
         // Get the current timestamp and save it in localStorage
         const now = Date.now(); // This gives you the current time in milliseconds
         localStorage.setItem('spinWheelDoubleStartTime', now.toString());
@@ -272,13 +285,17 @@ export class SpinWheel extends Component {
     updateCountdown() {
         const endTime = parseInt(sys.localStorage.getItem('spinEndTime') || '0');
         const now = Date.now();
-        let remainingTime = Math.max(0, endTime - now); // Get remaining time
+        this.remainingTime = Math.max(0, endTime - now); // Get remaining time
 
-        if (remainingTime > 0) {
+        if (this.remainingTime > 0) {
+            this.buttonNoThanks.active = false;
+            this.spinIcon.active = false;
+            this.spinLabel.node.setPosition(0, this.spinLabel.node.position.y); // Set spinLabel.x = 0
+
             // Update the countdown display
-            const seconds = Math.floor(remainingTime / 1000) % 60;
-            const minutes = Math.floor(remainingTime / (1000 * 60)) % 60;
-            const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+            const seconds = Math.floor(this.remainingTime / 1000) % 60;
+            const minutes = Math.floor(this.remainingTime / (1000 * 60)) % 60;
+            const hours = Math.floor(this.remainingTime / (1000 * 60 * 60));
 
             this.spinLabel.string = `${this.padWithZero(hours)}:${this.padWithZero(minutes)}:${this.padWithZero(seconds)}`;
 

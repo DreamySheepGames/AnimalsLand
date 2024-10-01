@@ -80,7 +80,7 @@ export class EndlessGameData {
         return EndlessGameData.instance;
     }
 
-    public checkSpinWheelDoubleStatus() {
+    public checkSpinWheelDoubleStatus() {       // is called in GameManager start() end in GameOver scenes
         const gameData = EndlessGameData.getInstance();
         const savedTimestamp = localStorage.getItem('spinWheelDoubleStartTime');
 

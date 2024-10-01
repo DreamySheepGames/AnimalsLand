@@ -140,18 +140,18 @@ export class GameManager extends Component {
             localStorage.setItem(this.itemKeys[i], currentSavedItemData.toString());
 
             // testing, not important
-            EndlessGameData.getInstance().MagnetLevel = 0;
-            EndlessGameData.getInstance().FreezerLevel = 0;
-            EndlessGameData.getInstance().SlowdownLevel = 0;
-            EndlessGameData.getInstance().DoubleLevel = 0;
-            EndlessGameData.getInstance().SuperHeroLevel = 0;
-
-            let zero = 0;
-            localStorage.setItem(this.magnetLevelKey, zero.toString())
-            localStorage.setItem(this.freezerLevelKey, zero.toString())
-            localStorage.setItem(this.slowdownLevelKey, zero.toString())
-            localStorage.setItem(this.doubleLevelKey, zero.toString())
-            localStorage.setItem(this.superHeroLevelKey, zero.toString())
+            // EndlessGameData.getInstance().MagnetLevel = 0;
+            // EndlessGameData.getInstance().FreezerLevel = 0;
+            // EndlessGameData.getInstance().SlowdownLevel = 0;
+            // EndlessGameData.getInstance().DoubleLevel = 0;
+            // EndlessGameData.getInstance().SuperHeroLevel = 0;
+            //
+            // let zero = 0;
+            // localStorage.setItem(this.magnetLevelKey, zero.toString())
+            // localStorage.setItem(this.freezerLevelKey, zero.toString())
+            // localStorage.setItem(this.slowdownLevelKey, zero.toString())
+            // localStorage.setItem(this.doubleLevelKey, zero.toString())
+            // localStorage.setItem(this.superHeroLevelKey, zero.toString())
 
         }
     }
@@ -163,8 +163,8 @@ export class GameManager extends Component {
         localStorage.setItem("receivedDiamonds", currentSavedDiamondCount.toString());
 
         // test, not importatnt
-        const money = 10000;
-        localStorage.setItem("receivedDiamonds", money.toString());
+        // const money = 10000;
+        // localStorage.setItem("receivedDiamonds", money.toString());
     }
 
     updateMissionLabel()
