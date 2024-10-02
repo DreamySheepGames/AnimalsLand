@@ -48,6 +48,9 @@ export class SpinWheel extends Component {
 
     private countdownDuration: number = 60; // 60 seconds for testing, change to 7200 for 2 hours in production
     private remainingTime: number = 0;
+    private revivedHeartsCountKey = "revivedHeartsCount";
+    private spinWheelDoubleStartTimeKey = 'spinWheelDoubleStartTime';
+    private spinWheelOneMoreHealthKey = 'spinWheelOneMoreHealth';
 
     onEnable()
     {
@@ -69,13 +72,13 @@ export class SpinWheel extends Component {
         const randomStop = Math.floor(Math.random() * 8);
 
         // Calculate the target rotation angle (360 + 45 * randomStop)
-        const targetAngle = 720 + 45 * randomStop;
+        const targetAngle = 720 + 45 * 2;
 
         // Create a tween to spin the wheel to the target angle over 2 seconds
         tween(this.wheel)
             .to(2, { eulerAngles: new Vec3(0, 0, -targetAngle) }, { easing: 'cubicOut' }) // Spin counter-clockwise
             .call(() => {
-                this.prize(randomStop);             // assign prize
+                this.prize(2);             // assign prize
                 this.prizePanel.active = true;      // turn on prize panel
                 this.node.active = false;           // turn off spin panel
             })
@@ -144,20 +147,26 @@ export class SpinWheel extends Component {
     {
         this.characterIcon.node.active = false;
         this.prizeName.string = "Health";
-        this.prizeDescription.string = "Increase health to revive";
+        this.prizeDescription.string = "Increase health in 24 hours";
 
-        const savedReviveHearts = localStorage.getItem('revivedHeartsCount');
+        // update the hearts layout at main menu
+        const savedReviveHearts = localStorage.getItem(this.revivedHeartsCountKey);
         const currentSavedHearts = savedReviveHearts ? parseInt(savedReviveHearts, 10) : 3;
-        if (currentSavedHearts < 5)
+        if (currentSavedHearts < 4)     // avoid player spam increase health then only decrease 1 health after 24 hours
         {
             const updatedReviveHearts = currentSavedHearts + 1;
-            localStorage.setItem('revivedHeartsCount', updatedReviveHearts.toString());
+            localStorage.setItem(this.revivedHeartsCountKey, updatedReviveHearts.toString());
+            EndlessGameData.getInstance().ReviveHearts = updatedReviveHearts;
 
             for (let i = 0; i < 5; i++)
             {
-                this.reviveHearts[i].active = i < parseInt(localStorage.getItem('revivedHeartsCount'), 10) ? true : false;
+                this.reviveHearts[i].active = i < parseInt(localStorage.getItem(this.revivedHeartsCountKey), 10) ? true : false;
             }
         }
+
+        // after 24 hours, the fx will be turned off in EndlessGameData
+        const now = Date.now(); // This gives you the current time in milliseconds
+        localStorage.setItem(this.spinWheelOneMoreHealthKey, now.toString());
     }
 
     spinWheelDoubleDiamondOn()
@@ -171,7 +180,7 @@ export class SpinWheel extends Component {
         // turn off the flag after 1 minute (1 minute is for testing, in game it would be 24 hours) in EndlessGameData.ts
         // Get the current timestamp and save it in localStorage
         const now = Date.now(); // This gives you the current time in milliseconds
-        localStorage.setItem('spinWheelDoubleStartTime', now.toString());
+        localStorage.setItem(this.spinWheelDoubleStartTimeKey, now.toString());
 
         // Optionally log for testing
         //console.log("Spin wheel double diamond enabled. Timestamp saved:", now);

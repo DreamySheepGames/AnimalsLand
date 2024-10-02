@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, RichText } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('ChallengeGameDataManager')
@@ -32,6 +33,7 @@ export class ChallengeGameDataManager extends Component {
     {
         const challengeGameData = EndlessGameData.getInstance();
         challengeGameData.checkSpinWheelDoubleStatus();
+        challengeGameData.checkSpinWheelHealthStatus();
 
         // assign scores to labels
         this.playerScoreLabel.string = "Your score: <color=#EE6E69>" + challengeGameData.Score.toString() + "</color>";
@@ -45,6 +47,9 @@ export class ChallengeGameDataManager extends Component {
         this.playerScoreLabel.node.active = !deadBeforeEnd;
         this.opponentScoreLabel.node.active = !deadBeforeEnd;
 
+        // diamond count label
+        this.gemCountLabel.string = EndlessGameManager.Instance.ReceivedDiamond.toString();
+        this.saveReceivedDiamond();
 
         if (challengeGameData.Score < challengeGameData.OpponentScore && !deadBeforeEnd)
         {
@@ -70,6 +75,22 @@ export class ChallengeGameDataManager extends Component {
                 }
             }
         }
+    }
+
+    saveReceivedDiamond() {
+        const gameData = EndlessGameData.getInstance();
+
+        // Retrieve the current saved diamonds from localStorage, if any
+        const savedDiamonds = localStorage.getItem('receivedDiamonds');
+
+        // Convert the saved value to a number, defaulting to 0 if it's null
+        const currentSavedDiamonds = savedDiamonds ? parseInt(savedDiamonds, 10) : 0;
+
+        // Add the current ReceivedDiamond value to the saved value
+        const updatedDiamonds = currentSavedDiamonds + gameData.ReceivedDiamond;
+
+        // Save the updated total back to localStorage
+        localStorage.setItem('receivedDiamonds', updatedDiamonds.toString());
     }
 }
 

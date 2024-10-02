@@ -10,6 +10,7 @@ import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
 import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
 import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
+import {EndlessGameDataManager} from "db://assets/Scripts/GameData/EndlessGameDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManager')
@@ -126,6 +127,10 @@ export class EndlessGameManager extends Component {
         // Assign the instance when the script is loaded
         EndlessGameManager.instance = this;
 
+        // Check player's status
+        EndlessGameData.getInstance().checkSpinWheelDoubleStatus();
+        EndlessGameData.getInstance().checkSpinWheelHealthStatus();
+
         // Load mission
         this.assignMission(this.missionLabel);
         this.missionKeys = MissionManager.getInstance().MissionKeys;
@@ -147,6 +152,14 @@ export class EndlessGameManager extends Component {
 
         // Spawn the first enemy
         this.spawnEnemyManager.getComponent(SpawnEnemyManager).spawnEnemy(this.enemyAmountQueue[0], this.hasSpeedBurst);
+
+        // Assign how many hearts the player has
+        this.assignHearts();
+
+            // load game over scene
+        this.scheduledCallback = () => {
+            director.loadScene('GameOver');
+        };
     }
 
     // Function to increment score and update label
@@ -230,10 +243,6 @@ export class EndlessGameManager extends Component {
 
                         this.endGamePanel.setSiblingIndex(this.darkLayer.children.length - 1);
 
-                        // load game over scene
-                        this.scheduledCallback = () => {
-                            director.loadScene('GameOver');
-                        };
                         this.scheduleOnce(this.scheduledCallback, 4);
                     } else
                         director.loadScene('GameOver');
@@ -247,7 +256,7 @@ export class EndlessGameManager extends Component {
         }
     }
 
-    cancelScheduledGameOver() {
+    public cancelScheduledGameOver() {
         // Cancel the scheduled callback if it exists
         if (this.scheduledCallback) {
             this.unschedule(this.scheduledCallback);
@@ -388,7 +397,7 @@ export class EndlessGameManager extends Component {
     assignMission(missionLabel: RichText)   // put 1 argument so the skip mission button and reuse this funcction
     {
         this.currentMission = localStorage.getItem("currentMission");
-
+        console.log(missionLabel.string);
         switch (this.currentMission)
         {
             case "missionGetDiamond":
@@ -477,5 +486,13 @@ export class EndlessGameManager extends Component {
             .delay(1) // Wait for 1 second
             .to(0.5, { position: originalPosition }, { easing: 'backIn' }) // Move back to original position with ease back in
             .start();
+    }
+
+    assignHearts()
+    {
+        // turn on hearts based on the saved count value;
+        const heartCount = EndlessGameData.getInstance().ReviveHearts;
+        for (let i = 0; i < this.heart.length; i++)
+            this.heart[i].active = (i < heartCount) ? true : false;
     }
 }

@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, RichText } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameDataManager')
@@ -20,6 +21,7 @@ export class EndlessGameDataManager extends Component {
 
     start() {
         EndlessGameData.getInstance().checkSpinWheelDoubleStatus();
+        EndlessGameData.getInstance().checkSpinWheelHealthStatus();
         this.saveReceivedDiamond();
     }
 

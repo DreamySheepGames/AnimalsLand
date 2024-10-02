@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText} from 'cc';
+import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText, game} from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
@@ -6,6 +6,9 @@ import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManage
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
+import { showPrerollAd, showInterstitialAd, requestRewardedAd, showRewardedAd } from 'db://assets/adsense-h5g-api/h5_games_ads';
+import {RewardedVideoAdEvent} from 'db://assets/adsense-h5g-api/ad_event';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('ButttonManager')
@@ -40,6 +43,11 @@ export class ButttonManager extends Component {
 
     @property(GameManager)
     private gameManager: GameManager;
+
+    start()
+    {
+        requestRewardedAd("placement_name");
+    }
 
     public openPanel(event: Event, CustomEventData) {
         // Turn on dark layer
@@ -158,9 +166,9 @@ export class ButttonManager extends Component {
         this.darkLayer.active = false;
 
         // increase a heart then decrease revive count
-        EndlessGameManager.Instance.Heart[0].active = true;
-        --EndlessGameData.getInstance().ReviveHearts;
-        localStorage.setItem('revivedHeartsCount', EndlessGameData.getInstance().ReviveHearts.toString());
+        EndlessGameManager.Instance.Heart[3].active = true;
+        // --EndlessGameData.getInstance().ReviveHearts;
+        // localStorage.setItem('revivedHeartsCount', EndlessGameData.getInstance().ReviveHearts.toString());
 
         EndlessGameManager.Instance.cancelScheduledGameOver();
     }
@@ -175,6 +183,37 @@ export class ButttonManager extends Component {
     {
         MissionManager.getInstance().changeCurrentMission();
         this.gameManager.updateMissionLabel();
+    }
+
+    public startAdToChangeMissionAtCharactersPanel()
+    {
+        game.on(RewardedVideoAdEvent.AD_VIEWED, this.changeCurrentMissionAtCharactersPanel, this);
+        requestRewardedAd("placement_name");
+        showRewardedAd();
+    }
+
+    public startAdToChangeMission() {
+        game.on(RewardedVideoAdEvent.AD_VIEWED, this.changeCurrentMission, this);
+        requestRewardedAd("placement_name");
+        showRewardedAd();
+    }
+
+    public startAdToRevive(event: Event) {
+        EndlessGameManager.Instance.cancelScheduledGameOver();
+        game.on(RewardedVideoAdEvent.AD_VIEWED, () => {
+            this.revive(event); // Pass null if you don't need the event argument
+        }, this);
+        game.on(RewardedVideoAdEvent.AD_DISMISSED, this.closeEndGamePanel, this);
+        requestRewardedAd("placement_name");
+        showRewardedAd();
+    }
+
+    public startAdToDoubleDiamond() {
+        EndlessGameManager.Instance.cancelScheduledGameOver();
+        game.on(RewardedVideoAdEvent.AD_VIEWED, this.doubleDiamond, this);
+        game.on(RewardedVideoAdEvent.AD_DISMISSED, this.closeEndGamePanel, this);
+        requestRewardedAd("placement_name");
+        showRewardedAd();
     }
 }
 

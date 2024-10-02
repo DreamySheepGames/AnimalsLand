@@ -26,6 +26,13 @@ export class EndlessGameData {
     private level3Price: number = 2500;
     private itemPrices: number[] = [this.level1Price, this.level2Price, this.level3Price];
 
+    // data keys
+    private revivedHeartsCountKey = "revivedHeartsCount";
+    private default5HeartsKey = "default5Hearts";
+
+    // check if player has 5 heart from purchasing iap or not;
+    private isDefault5Hearts: boolean = false;
+
     get Score(): number {return this.score;}
     set Score(value: number) {this.score = value;}
 
@@ -81,7 +88,6 @@ export class EndlessGameData {
     }
 
     public checkSpinWheelDoubleStatus() {       // is called in GameManager start() end in GameOver scenes
-        const gameData = EndlessGameData.getInstance();
         const savedTimestamp = localStorage.getItem('spinWheelDoubleStartTime');
 
         if (savedTimestamp) {
@@ -94,13 +100,49 @@ export class EndlessGameData {
 
             // Check if the required time has passed
             if (elapsedTime >= oneMinute) {
-                gameData.IsSpinWheelDiamondDouble = false;
+                this.isSpinWheelDiamondDouble = false;
                 //console.log('Spin wheel double diamond time expired. Flag turned off.');
 
                 // Optionally, remove the stored timestamp
                 localStorage.removeItem('spinWheelDoubleStartTime');
             } else {
                 //console.log('Spin wheel double diamond still active.');
+            }
+        }
+    }
+
+    public checkDefault5HeartsStatus() {        // is called in GameManager start()
+        const savedDefault5Hearts = localStorage.getItem(this.default5HeartsKey);
+        this.isDefault5Hearts = savedDefault5Hearts ? savedDefault5Hearts === 'true' : false;
+        localStorage.setItem(this.default5HeartsKey, this.isDefault5Hearts.toString());
+    }
+
+    public checkSpinWheelHealthStatus() {       // is called in GameManager start() end in GameOver scenes
+        const savedTimestamp = localStorage.getItem('spinWheelOneMoreHealth');
+
+        if (savedTimestamp) {
+            const startTime = parseInt(savedTimestamp, 10); // Convert the saved string back to a number
+            const now = Date.now();
+            const elapsedTime = now - startTime; // Time elapsed in milliseconds
+
+            const oneMinute = 60000; // 1 minute in milliseconds (for testing)
+            // const oneDay = 86400000; // 24 hours in milliseconds (for production)
+
+            // Check if the required time has passed
+            if (elapsedTime >= oneMinute) {
+                // if player doesn't have has default5Hearts flag then decrease 1 health
+                if (!this.isDefault5Hearts) {
+                    const savedReviveHearts = localStorage.getItem(this.revivedHeartsCountKey);
+                    const currentSavedHearts = parseInt(savedReviveHearts, 10);
+                    if (currentSavedHearts && currentSavedHearts > 3)
+                    {
+                        const updatedReviveHearts = currentSavedHearts - 1;
+                        localStorage.setItem(this.revivedHeartsCountKey, updatedReviveHearts.toString());
+                        EndlessGameData.getInstance().ReviveHearts = updatedReviveHearts;
+                    }
+                }
+            } else {
+
             }
         }
     }

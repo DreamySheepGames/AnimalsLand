@@ -4,6 +4,7 @@ import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
+import {EndlessGameDataManager} from "db://assets/Scripts/GameData/EndlessGameDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -37,7 +38,7 @@ export class GameManager extends Component {
     private currentSavedHeartsCount: number;
 
     // data key
-    private receivedDiamondsKey = "receivedDiamons";
+    private receivedDiamondsKey = "receivedDiamonds";
     private revivedHeartsCountKey = "revivedHeartsCount";
     private magnetLevelKey = "magnetLevel";
     private freezerLevelKey = "freezerLevel";
@@ -71,7 +72,9 @@ export class GameManager extends Component {
 
     start()
     {
+        EndlessGameData.getInstance().checkDefault5HeartsStatus();
         EndlessGameData.getInstance().checkSpinWheelDoubleStatus();
+        EndlessGameData.getInstance().checkSpinWheelHealthStatus();
         this.updateReviveHeartsLayout();
         this.updateReceivedDiamond();
         this.updateMissionLabel();
@@ -80,10 +83,10 @@ export class GameManager extends Component {
     reviveHeartsDataLoading()
     {
         // Retrieve the current saved hearts from localStorage, if any
-        const savedDiamonds = localStorage.getItem(this.revivedHeartsCountKey);
+        const savedHeartCount = localStorage.getItem(this.revivedHeartsCountKey);
 
         // Convert the saved value to a number, defaulting to 3 if it's null
-        this.currentSavedHeartsCount = savedDiamonds ? parseInt(savedDiamonds, 10) : 3;
+        this.currentSavedHeartsCount = savedHeartCount ? parseInt(savedHeartCount, 10) : 3;
         if (this.currentSavedHeartsCount > 5)
             this.currentSavedHeartsCount = 5;
 
