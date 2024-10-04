@@ -2,6 +2,7 @@ import { _decorator, Component, Node, tween, Vec3, RichText, Event, Button, sys,
 import {MenuDataManager} from "db://assets/Scripts/GameData/MenuDataManager";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
+import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('SpinWheel')
@@ -140,6 +141,8 @@ export class SpinWheel extends Component {
         // Save the updated total back to localStorage
         localStorage.setItem('receivedDiamonds', updatedDiamonds.toString());
 
+        //UserDataManager.getInstance().updateUserData();
+
         this.menuDataManager.updateDiamondTexts();
     }
 
@@ -167,6 +170,8 @@ export class SpinWheel extends Component {
         // after 24 hours, the fx will be turned off in EndlessGameData
         const now = Date.now(); // This gives you the current time in milliseconds
         localStorage.setItem(this.spinWheelOneMoreHealthKey, now.toString());
+
+        //UserDataManager.getInstance().updateUserData();
     }
 
     spinWheelDoubleDiamondOn()
@@ -181,6 +186,8 @@ export class SpinWheel extends Component {
         // Get the current timestamp and save it in localStorage
         const now = Date.now(); // This gives you the current time in milliseconds
         localStorage.setItem(this.spinWheelDoubleStartTimeKey, now.toString());
+
+        //UserDataManager.getInstance().updateUserData();
 
         // Optionally log for testing
         //console.log("Spin wheel double diamond enabled. Timestamp saved:", now);
@@ -226,6 +233,8 @@ export class SpinWheel extends Component {
 
             // Save the updated characterID array back to localStorage
             localStorage.setItem('characterIDs', JSON.stringify(characterIDs));
+
+            //UserDataManager.getInstance().updateUserData();
 
             this.showUnlockedCharacter(newCharacterID);
         }

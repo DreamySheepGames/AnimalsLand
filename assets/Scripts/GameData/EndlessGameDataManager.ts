@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, RichText } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameDataManager')
@@ -39,5 +40,7 @@ export class EndlessGameDataManager extends Component {
 
         // Save the updated total back to localStorage
         localStorage.setItem('receivedDiamonds', updatedDiamonds.toString());
+
+        //UserDataManager.getInstance().updateUserData();
     }
 }

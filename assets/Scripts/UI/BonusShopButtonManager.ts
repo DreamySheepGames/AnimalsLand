@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Event, RichText } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {MenuDataManager} from "db://assets/Scripts/GameData/MenuDataManager";
+import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('BonusShopButtonManager')
@@ -87,6 +88,7 @@ export class BonusShopButtonManager extends Component {
             playerResource -= EndlessGameData.getInstance().ItemPrices[savedDataValue];
             // safe the resource and update new resource string
             localStorage.setItem('receivedDiamonds', playerResource.toString());
+            //UserDataManager.getInstance().updateUserData();
             this.playerDiamond.string = playerResource.toString();
 
             if (this.menuDiamondCount)
@@ -97,6 +99,8 @@ export class BonusShopButtonManager extends Component {
                 savedDataValue += 1;
                 EndlessGameData.getInstance().updateItemLevels();
                 localStorage.setItem(dataKey, savedDataValue.toString());
+
+                //UserDataManager.getInstance().updateUserData();
             }
             // change the name of the item
             this.updateItemName();

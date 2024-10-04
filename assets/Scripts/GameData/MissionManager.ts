@@ -1,4 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
+import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('MissionManager')
@@ -62,6 +63,7 @@ export class MissionManager {
                         localStorage.setItem(this.missionKeys[i], JSON.stringify(this.scoreMissions));
                         break;
                 }
+                //UserDataManager.getInstance().updateUserData();
             }
         }
 
@@ -73,6 +75,8 @@ export class MissionManager {
         const storedCurrentMission = localStorage.getItem(this.currentMissionKey);
         this.currentMission = storedCurrentMission ? storedCurrentMission : this.missionKeys[1];
         localStorage.setItem(this.currentMissionKey, this.currentMission);
+
+        //UserDataManager.getInstance().updateUserData();
     }
 
     changeCurrentMission()
@@ -87,6 +91,8 @@ export class MissionManager {
 
         this.currentMission = newMission    // update current mission
         localStorage.setItem(this.currentMissionKey, newMission);
+
+        //UserDataManager.getInstance().updateUserData();
     }
 
     missionCompleted()
@@ -98,9 +104,13 @@ export class MissionManager {
             let unlockedCount = parseInt(storedUnlockedCount, 10);
             unlockedCount++;
             localStorage.setItem(this.unlockedCountKey, unlockedCount.toString());
+
+            //UserDataManager.getInstance().updateUserData();
         } else {    // else generate it with value = 1
             let unlockedCount = 1;
             localStorage.setItem(this.unlockedCountKey, unlockedCount.toString());
+
+            //UserDataManager.getInstance().updateUserData();
         }
     }
 }

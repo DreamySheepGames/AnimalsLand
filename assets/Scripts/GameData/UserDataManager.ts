@@ -6,7 +6,22 @@ const { ccclass, property } = _decorator;
 //                 if none -> generate json file -> local keys
 // - local keys changed -> update local json file -> update online database (no database yet)
 
-// scripts that need to use updateUserData
+// scripts that need to use updateUserData()
+// 'characterIDs':              SpinWheel.ts, CharactersLayoutController.ts
+// 'currentMission':            MissionManager.ts
+// 'default5Hearts':            there's no script to change this key yet, perhaps it will be used in iap shop
+// 'doubleLevel':               BonusShopButtonManager.ts
+// 'freezerLevel':              ~
+// 'magnetLevel':               ~
+// 'slowdownLevel':             ~
+// 'superHeroLevel':            ~
+// 'missionGetDiamond':         MissionManager.ts, EndlessGameManager.ts
+// 'missionScoreNoBump':        ~                , ~
+// 'receivedDiamonds':          EndlessGameDataManager.ts, ChallengeGameDataManager.ts, iap shop, SpinWheel.ts, BonusShopButtonManager.ts
+// 'revivedHeartsCount':        SpinWheel.ts, EndlessGameData.ts
+// 'unlockedCount':             MissionManager.ts
+// 'spinWheelOneMoreHealth':    SpinWheel.ts
+// 'spinWheelDoubleStartTime':  SpinWheel.ts
 
 @ccclass('UserDataManager')
 export class UserDataManager {
@@ -65,6 +80,7 @@ export class UserDataManager {
         localStorage.setItem('missionScoreNoBump', JSON.stringify(userData.scoringMissionProgress));
         localStorage.setItem('receivedDiamonds', userData.receivedDiamonds.toString());
         localStorage.setItem('revivedHeartsCount', userData.revivedHeartsCount.toString());
+        localStorage.setItem('unlockedCount', userData.unlockedCount.toString());
         localStorage.setItem('spinWheelOneMoreHealth', userData.oneMoreHeartTimeMark ? userData.oneMoreHeartTimeMark.toString() : '');
         localStorage.setItem('spinWheelDoubleStartTime', userData.doubleDiamondTimeMark ? userData.doubleDiamondTimeMark.toString() : '');
     }
@@ -83,6 +99,7 @@ export class UserDataManager {
         const missionScoreNoBump = JSON.parse(localStorage.getItem('missionScoreNoBump') || '[0]');
         const receivedDiamonds = Number(localStorage.getItem('receivedDiamonds')) || 0;
         const revivedHeartsCount = Number(localStorage.getItem('revivedHeartsCount')) || 3;
+        const unlockedCount = Number(localStorage.getItem('unlockedCount')) || 0;
         const spinWheelOneMoreHealth = localStorage.getItem('spinWheelOneMoreHealth') ? Number(localStorage.getItem('spinWheelOneMoreHealth')) : null;
         const spinWheelDoubleStartTime = localStorage.getItem('spinWheelDoubleStartTime') ? Number(localStorage.getItem('spinWheelDoubleStartTime')) : null;
 
@@ -102,6 +119,7 @@ export class UserDataManager {
             scoringMissionProgress: missionScoreNoBump,
             receivedDiamonds,
             revivedHeartsCount,
+            unlockedCount,
             oneMoreHeartTimeMark: spinWheelOneMoreHealth,
             doubleDiamondTimeMark: spinWheelDoubleStartTime
         };
@@ -153,6 +171,7 @@ export class UserDataManager {
             scoringMissionProgress: [0],
             receivedDiamonds: 0,
             revivedHeartsCount: 3,
+            unlockedCount: 0,
             oneMoreHeartTimeMark: null,
             doubleDiamondTimeMark: null
         };

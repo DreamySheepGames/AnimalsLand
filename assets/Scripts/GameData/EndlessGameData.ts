@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameData')
@@ -138,6 +139,7 @@ export class EndlessGameData {
                     {
                         const updatedReviveHearts = currentSavedHearts - 1;
                         localStorage.setItem(this.revivedHeartsCountKey, updatedReviveHearts.toString());
+                        //UserDataManager.getInstance().updateUserData();
                         EndlessGameData.getInstance().ReviveHearts = updatedReviveHearts;
                     }
                 }

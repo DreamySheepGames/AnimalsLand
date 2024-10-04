@@ -2,6 +2,7 @@ import { _decorator, Component, Node } from 'cc';
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {FillBarController} from "db://assets/Scripts/UI/FillBarController";
 import {CharactersPanelController} from "db://assets/Scripts/UI/CharactersPanelController";
+import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('CharactersLayoutController')
@@ -72,6 +73,8 @@ export class CharactersLayoutController extends Component {
 
             // Save the updated characterID array back to localStorage
             localStorage.setItem('characterIDs', JSON.stringify(characterIDs));
+
+            //UserDataManager.getInstance().updateUserData();
 
             // Save the unlocked count left
             let unlockedCountLeft = parseInt(localStorage.getItem("unlockedCount"), 10);
