@@ -45,6 +45,7 @@ export class BonusShopButtonManager extends Component {
 
     start()
     {
+        this.playerDiamond.string = localStorage.getItem("receivedDiamonds");
         this.updateItemName();
         this.updatePrices();
     }

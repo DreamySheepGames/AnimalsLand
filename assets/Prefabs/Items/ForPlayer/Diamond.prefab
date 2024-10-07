@@ -176,7 +176,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "eab5de7c-2706-4b5c-9732-7221a608c31b@f9941",
+      "__uuid__": "7f167848-e271-4432-a11f-443c5e3b8532@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -517,6 +517,7 @@
       "__id__": 0
     },
     "fileId": "e4OMzhaGJMnbrEjEF6J48M",
+    "instance": null,
     "targetOverrides": null
   }
 ]
