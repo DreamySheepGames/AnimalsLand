@@ -408,7 +408,7 @@ export class EndlessGameManager extends Component {
         {
             case "missionGetDiamond":
                 let diamondMissions = JSON.parse(localStorage.getItem("missionGetDiamond"));
-                missionLabel.string = "collect " + diamondMissions[0].toString() + " crystals";
+                missionLabel.string = "collect " + diamondMissions[0].toString() + " flowers";
                 break;
             case "missionScoreNoBump":
                 let scoreMissions = JSON.parse(localStorage.getItem("missionScoreNoBump"));

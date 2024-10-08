@@ -178,7 +178,7 @@ export class GameManager extends Component {
         {
             case "missionGetDiamond":
                 let diamondMissions = JSON.parse(localStorage.getItem("missionGetDiamond"));
-                this.missionLabel.string = "collect " + diamondMissions[0].toString() + " crystals";
+                this.missionLabel.string = "collect " + diamondMissions[0].toString() + " flowers";
                 break;
             case "missionScoreNoBump":
                 let scoreMissions = JSON.parse(localStorage.getItem("missionScoreNoBump"));

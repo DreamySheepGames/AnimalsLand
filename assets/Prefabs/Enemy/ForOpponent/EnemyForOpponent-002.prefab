@@ -249,7 +249,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
+    "_enabled": false,
     "__prefab": {
       "__id__": 10
     },
@@ -637,6 +637,7 @@
     "isOneTimeUse": false,
     "hasSpeedBurst": false,
     "isSpin": false,
+    "needFlipVertical": true,
     "_id": ""
   },
   {

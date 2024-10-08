@@ -1,0 +1,8 @@
+add assets/fonts/Comicy.tff in the built folder
+add this in style.css:
+@font-face {
+    font-family: 'Comicy';
+    src: url('assets/fonts/Comicy.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

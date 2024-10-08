@@ -16,6 +16,9 @@ export class MoveSideWay extends Component {
     @property
     isSpin: boolean = false;
 
+    @property
+    needFlipVertical: boolean = false;
+
     private moveDirection: number = 1;              // 1 for right, -1 for left
     private speed: number;                          // Movement speed
     private speedMin: number = 200;                 // Minimum speed
@@ -94,12 +97,16 @@ export class MoveSideWay extends Component {
             this.getComponent(RigidBody2D).angularVelocity = spinForce;
         }
 
+
         // Randomize normal speed between speedMin and speedMax
         this.speed = Math.random() * (this.speedMax - this.speedMin) + this.speedMin;
 
         // Set initial direction based on position
         if (this.node.position.x < 0) {
-            this.moveDirection = 1; // Move to the right
+            this.moveDirection = 1;         // Move to the right
+
+            if (this.needFlipVertical)      // this can only be apllied if the sprite turn to the left by default
+                this.node.setScale(-this.node.scale.x, this.node.scale.y);
         } else {
             this.moveDirection = -1; // Move to the left
         }
@@ -145,6 +152,9 @@ export class MoveSideWay extends Component {
             && this.isMoveSideWay)
         {
             this.moveDirection *= -1; // Reverse the direction
+
+            if (this.needFlipVertical)      // this can only be apllied if the sprite turn to the left by default
+                this.node.setScale(-this.node.scale.x, this.node.scale.y);
 
             // If isOneTimeUse is true, stop moving sideways after the first hit
             if (this.isOneTimeUse && !this.oneTimeUseTriggered) {
