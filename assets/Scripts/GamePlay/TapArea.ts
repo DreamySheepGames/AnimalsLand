@@ -8,7 +8,7 @@ export class TapArea extends Component {
     private playerController: PlayerController = null;
 
     private isInteractable: boolean = false;
-    private interactableCountdown: number = 0.36;
+    private interactableCountdown: number = 0.38;
 
     start() {
         this.node.on(Input.EventType.TOUCH_START, this.onTouchStart, this);

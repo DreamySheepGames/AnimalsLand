@@ -445,7 +445,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1666.9921875,
+      "width": 1696.25,
       "height": 315
     },
     "_anchorPoint": {
@@ -478,7 +478,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -1182,7 +1182,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 11.123046875,
+      "width": 12.439987182617188,
       "height": 25.2
     },
     "_anchorPoint": {
@@ -1215,7 +1215,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -1492,7 +1492,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 333.69140625,
+      "width": 371.39996337890625,
       "height": 201.6
     },
     "_anchorPoint": {
@@ -1525,7 +1525,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -1939,7 +1939,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 366.8994140625,
+      "width": 423.45001220703125,
       "height": 138.6
     },
     "_anchorPoint": {
@@ -1963,7 +1963,7 @@
     "_string": "Magnet",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 110,
+    "_fontSize": 90,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -1972,7 +1972,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -2065,7 +2065,7 @@
     "_string": "Attract desired items",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 90,
+    "_fontSize": 70,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 224,
@@ -2074,7 +2074,7 @@
       "a": 255
     },
     "_maxWidth": 760,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -2435,7 +2435,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 333.69140625,
+      "width": 371.39996337890625,
       "height": 201.6
     },
     "_anchorPoint": {
@@ -2468,7 +2468,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -2882,7 +2882,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 378.984375,
+      "width": 415.88995361328125,
       "height": 138.6
     },
     "_anchorPoint": {
@@ -2906,7 +2906,7 @@
     "_string": "Freezer",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 110,
+    "_fontSize": 90,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -2915,7 +2915,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -3008,7 +3008,7 @@
     "_string": "Stop enemies for a while",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 90,
+    "_fontSize": 70,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 224,
@@ -3017,7 +3017,7 @@
       "a": 255
     },
     "_maxWidth": 760,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -3378,7 +3378,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 333.69140625,
+      "width": 371.39996337890625,
       "height": 201.6
     },
     "_anchorPoint": {
@@ -3411,7 +3411,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -3825,7 +3825,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 501.3916015625,
+      "width": 587.1599731445312,
       "height": 138.6
     },
     "_anchorPoint": {
@@ -3849,7 +3849,7 @@
     "_string": "Slowdown",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 110,
+    "_fontSize": 90,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -3858,7 +3858,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -3951,7 +3951,7 @@
     "_string": "Reduces speed of all enemies",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 90,
+    "_fontSize": 70,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 224,
@@ -3960,7 +3960,7 @@
       "a": 255
     },
     "_maxWidth": 760,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -4321,7 +4321,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 333.69140625,
+      "width": 371.39996337890625,
       "height": 201.6
     },
     "_anchorPoint": {
@@ -4354,7 +4354,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -4768,7 +4768,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 348.583984375,
+      "width": 374.12994384765625,
       "height": 138.6
     },
     "_anchorPoint": {
@@ -4792,7 +4792,7 @@
     "_string": "Double",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 110,
+    "_fontSize": 90,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -4801,7 +4801,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -4832,7 +4832,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -626.73,
-      "y": -107.62,
+      "y": -140.69,
       "z": 0
     },
     "_lrot": {
@@ -4871,7 +4871,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 760,
-      "height": 271.2
+      "height": 391.2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4894,7 +4894,7 @@
     "_string": "Multiplies collected money and points",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 90,
+    "_fontSize": 70,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 224,
@@ -4903,7 +4903,7 @@
       "a": 255
     },
     "_maxWidth": 760,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -5264,7 +5264,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 333.69140625,
+      "width": 371.39996337890625,
       "height": 201.6
     },
     "_anchorPoint": {
@@ -5297,7 +5297,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -5711,7 +5711,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 305.7763671875,
+      "width": 333.89996337890625,
       "height": 138.6
     },
     "_anchorPoint": {
@@ -5735,7 +5735,7 @@
     "_string": "Shield",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 110,
+    "_fontSize": 90,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -5744,7 +5744,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -5837,7 +5837,7 @@
     "_string": "Attract desired items",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 90,
+    "_fontSize": 70,
     "_fontColor": {
       "__type__": "cc.Color",
       "r": 224,
@@ -5846,7 +5846,7 @@
       "a": 255
     },
     "_maxWidth": 760,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -6726,7 +6726,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -6795,7 +6795,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 167.58544921875,
+      "width": 212.9849395751953,
       "height": 56.7
     },
     "_anchorPoint": {
@@ -6828,7 +6828,7 @@
       "a": 255
     },
     "_maxWidth": 0,
-    "_fontFamily": "Arial",
+    "_fontFamily": "Comicy",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": null,
@@ -7080,7 +7080,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 19.46533203125,
+      "width": 21.769989013671875,
       "height": 37.8
     },
     "_anchorPoint": {

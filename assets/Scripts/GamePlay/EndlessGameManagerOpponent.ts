@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, director } from 'cc';
+import { _decorator, Component, Node, Label, director, tween, UIOpacity } from 'cc';
 import { EndlessBGManager } from 'db://assets/Scripts/GamePlay/EndlessBGManager';
 import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
 import {OpponentController} from "db://assets/Scripts/Opponent/OpponentController";
@@ -117,6 +117,12 @@ export class EndlessGameManagerOpponent extends Component {
     get IsGameOver(): boolean {
         return this.isGameOver;
     }
+
+    @property(Node)
+    private redLayer: Node;
+
+    @property(Node)
+    private canvas: Node;
 
     onLoad() {
         //console.log(this.endlessBGManager.getComponent(EndlessBGManager).LevelSteps);
@@ -329,6 +335,27 @@ export class EndlessGameManagerOpponent extends Component {
                 if (moveSideWay) {
                     moveSideWay.IsFreeze = false;
                 }
+            }
+        }
+    }
+
+    public hitVFX() {
+        if (this.redLayer) {
+            // Ensure the redLayer node is fully visible
+            this.redLayer.active = true;
+
+            this.canvas.setSiblingIndex(this.redLayer.children.length - 1);
+
+            // Get the UIOpacity component from the redLayer node
+            const uiOpacity = this.redLayer.getComponent(UIOpacity);
+            if (uiOpacity) {
+                // Tween the opacity (alpha) from 0 to 70% (178) and then back to 0
+                tween(uiOpacity)
+                    .to(0.075, { opacity: 178 })  // 70% opacity in the first 0.075s
+                    .to(0.075, { opacity: 0 })    // Back to 0 opacity in the next 0.075s
+                    .start();
+            } else {
+                console.error("UIOpacity component not found on redLayer.");
             }
         }
     }

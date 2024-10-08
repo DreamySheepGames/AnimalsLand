@@ -27,8 +27,8 @@ export class ChallengeGameDataManager extends Component {
     @property(RichText)
     private drawLabel: RichText;
 
-    @property(RichText)
-    private gameOverLabel: RichText;
+    @property(Node)
+    private gameOverLabel: Node;
 
     onLoad()
     {
@@ -43,7 +43,7 @@ export class ChallengeGameDataManager extends Component {
 
         // decide which label will appear
         let deadBeforeEnd = challengeGameData.ChallengeDeadBeforeEnd;
-        this.gameOverLabel.node.active = deadBeforeEnd;
+        this.gameOverLabel.active = deadBeforeEnd;
         this.playerLoseScoreLabel.node.active = deadBeforeEnd;
         this.playerScoreLabel.node.active = !deadBeforeEnd;
         this.opponentScoreLabel.node.active = !deadBeforeEnd;

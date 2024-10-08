@@ -106,11 +106,11 @@ export class PlayerController extends Component {
     private applyPseudoForce() {
         // Apply a small force on a different axis (like z-axis or in Vec2 with small y-offset)
         // Since we are in 2D, applying in Vec2 will not change the player's position
-        this.rb.applyForceToCenter(new Vec2(0, 100), true); // Adjust small force as needed
+        this.rb.applyForceToCenter(new Vec2(0, 500), true); // Adjust small force as needed
     }
 
     private applyReversePseudoForce() {
-        this.rb.applyForceToCenter(new Vec2(0, -100), true); // Adjust small force as needed
+        this.rb.applyForceToCenter(new Vec2(0, -500), true); // Adjust small force as needed
     }
 
     private applyIdlePseudoForce() {

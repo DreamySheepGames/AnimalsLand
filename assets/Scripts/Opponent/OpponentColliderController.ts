@@ -75,6 +75,8 @@ export class OpponentColliderController extends Component {
         this.invincibleMeter.decreaseFiller();
         EndlessGameManagerOpponent.Instance.decreaseHeart();
 
+        EndlessGameManagerOpponent.Instance.hitVFX();
+
         if (this.playerController.hasGoneUp) {
             // If hasGoneUp is true, set it to false (reverse direction)
             this.playerController.hasGoneUp = false;

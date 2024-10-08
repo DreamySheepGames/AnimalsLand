@@ -77,6 +77,9 @@ export class PlayerColliderController extends Component {
         // reset counter for scoring without bump mission
         EndlessGameManager.Instance.MissionScoreWithoutBump = 0;
 
+        // VFX
+        EndlessGameManager.Instance.hitVFX();
+
         // reset the mission progress bar if mission is scoring without bump
         if (localStorage.getItem("currentMission") == "missionScoreNoBump")
             this.missionProgressBarController.resetProgressBarFiller();

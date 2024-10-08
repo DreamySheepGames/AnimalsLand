@@ -39,8 +39,10 @@ export class EndlessBGManager extends Component {
     }
 
     onLoad() {
-        this.screenHeight = view.getDesignResolutionSize().height;
-        this.screenWidth = view.getDesignResolutionSize().width;
+        // this.screenHeight = view.getDesignResolutionSize().height;
+        // this.screenWidth = view.getDesignResolutionSize().width;
+        this.screenHeight = 667;
+        this.screenWidth = 105;
         this.setBackgroundAnchors();
 
         // Store the last step value from levelSteps for future use
@@ -109,7 +111,7 @@ export class EndlessBGManager extends Component {
 
         const nextBG = this.backgrounds[this.nextBackgroundIndex];
 
-        nextBG.setPosition(0, this.screenHeight, 0); // Position above the current one
+        nextBG.setPosition(nextBG.position.x, this.screenHeight, 0); // Position above the current one
         nextBG.active = true; // Reactivate the new background
     }
 }
