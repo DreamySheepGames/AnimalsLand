@@ -1,4 +1,5 @@
-import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText, game} from 'cc';
+import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText, game,
+        tween, Vec3, UIOpacity } from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
@@ -49,13 +50,38 @@ export class ButttonManager extends Component {
         requestRewardedAd("placement_name");
     }
 
+    tweenDarkLayerOpcacityOn(uiOpacity: UIOpacity) {
+        if (uiOpacity) {
+            tween(uiOpacity)
+                .to(0.25, { opacity: 255 })
+                .start();
+        }
+    }
+
+    tweenDarkLayerOpcacityOff(uiOpacity: UIOpacity, darkLayer: Node) {
+        if (uiOpacity) {
+            tween(uiOpacity)
+                .to(0.25, { opacity: 0 })
+                .call(() => {darkLayer.active = false;})
+                .start();
+        }
+    }
+
     public openPanel(event: Event, CustomEventData) {
         // Turn on dark layer
-        if (this.darkLayer)
+        if (this.darkLayer) {
+            this.darkLayer.getComponent(UIOpacity).opacity = 0;
+            const uiOpacity = this.darkLayer.getComponent(UIOpacity);
             this.darkLayer.active = true;
+            this.tweenDarkLayerOpcacityOn(uiOpacity);
+        }
 
-        if (this.darkLayerOpponent)
+        if (this.darkLayerOpponent) {
+            this.darkLayerOpponent.getComponent(UIOpacity).opacity = 0;
+            const uiOpacity = this.darkLayerOpponent.getComponent(UIOpacity);
             this.darkLayerOpponent.active = true;
+            this.tweenDarkLayerOpcacityOn(uiOpacity);
+        }
 
         // First, close all panels
         this.panels.forEach(panel => panel.active = false);
@@ -63,21 +89,34 @@ export class ButttonManager extends Component {
         // Then, open the desired panel based on the index
         if (this.panels[CustomEventData]) {
             this.panels[CustomEventData].active = true;
+            this.panels[CustomEventData].setScale(0.1, 0.1, 0.1);
+            tween(this.panels[CustomEventData])
+                .to(0.3, { scale: new Vec3(1, 1, 1) }, { easing: 'cubicOut' })
+                .to(0.2, { scale: new Vec3(0.9, 1.023, 1) }, { easing: 'backOut' })
+                .to(0.25, { scale: new Vec3(1, 1, 1) }, { easing: 'backOut' })
+                .start();
         }
     }
 
     public closeParent(event: Event) {
-        if (this.darkLayer)
-            this.darkLayer.active = false;
+        if (this.darkLayerOpponent) {
+            const uiOpacity = this.darkLayerOpponent.getComponent(UIOpacity);
+            this.tweenDarkLayerOpcacityOff(uiOpacity, this.darkLayerOpponent);
+        }
 
-        if (this.darkLayerOpponent)
-            this.darkLayerOpponent.active = false;
+        if (this.darkLayer) {
+            const uiOpacity = this.darkLayer.getComponent(UIOpacity);
+            this.tweenDarkLayerOpcacityOff(uiOpacity, this.darkLayer);
+        }
 
         const buttonNode = event.currentTarget as Node; // Get the button node
         const parentNode = buttonNode.parent; // Get the grandparent of the button (assuming this is the panel)
 
         if (parentNode) {
-            parentNode.active = false; // Set the parent (panel) to inactive
+            tween(parentNode)
+                .to(0.3, { scale: new Vec3(0.1, 0.1, 0.1) }, { easing: 'backIn' })
+                .call(() => {parentNode.active = false;})
+                .start();
         }
     }
 

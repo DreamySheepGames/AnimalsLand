@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Event, RichText } from 'cc';
+import { _decorator, Component, Node, Event, RichText, Label } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {MenuDataManager} from "db://assets/Scripts/GameData/MenuDataManager";
@@ -33,7 +33,7 @@ export class BonusShopButtonManager extends Component {
     @property(RichText) private priceSuperHero: RichText;
 
     @property(RichText) private playerDiamond: RichText;
-    @property(RichText) private menuDiamondCount: RichText;
+    @property(Label) private menuDiamondCount: Label;
 
     // @property layout to turn off button, turn on tick icon
 

@@ -170,7 +170,10 @@ export class EndlessGameManager extends Component {
 
     // Function to increment score and update label
     public incrementScore() {
-        this.score++;
+        if (!this.doubleDiamond)
+            this.score++;
+        else
+            this.score += 2;
         this.updateScoreLabel();
 
         // do scoring without bump mission

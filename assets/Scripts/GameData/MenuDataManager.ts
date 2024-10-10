@@ -1,10 +1,10 @@
-import { _decorator, Component, Node, RichText } from 'cc';
+import { _decorator, Component, Node, RichText, Label } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('MenuDataManager')
 export class MenuDataManager extends Component {
-    @property(RichText)
-    private mainMenuDiamondText: RichText;
+    @property(Label)
+    private mainMenuDiamondText: Label;
 
     @property(RichText)
     private bonusShopDiamondText: RichText;

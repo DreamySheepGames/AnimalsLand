@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Color, tween, UIOpacity, Button } from 'cc';
+import { _decorator, Component, Node, Color, tween, UIOpacity, Button, director } from 'cc';
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 const { ccclass, property } = _decorator;
 
@@ -20,72 +20,73 @@ export class PlayModeButtons extends Component {
 
     start()
     {
-        if (GameManager.Instance.isEndlessMode)
-            this.changeToEndless();
-        else
-            this.changeToChallenge();
+        // if (GameManager.Instance.isEndlessMode)
+        //     this.changeToEndless();
+        // else
+        //     this.changeToChallenge();
     }
 
     public changeToEndless()
     {
         GameManager.Instance.isEndlessMode = true;
-
+        director.loadScene("Endless");
         // Change buttonEndless color
-        const endlessSprite = this.buttonEndless.getComponent(Button);
-        if (endlessSprite) {
-            endlessSprite.normalColor = this.hexToColor("#FFFFFF");
-        }
-
-        const challengeSprite = this.buttonChallenge.getComponent(Button);
-        if (challengeSprite) {
-            challengeSprite.normalColor = this.hexToColor("#D6D6D6");
-        }
-
-        // Tween alpha buttonEndlessHighlight from 0 to 1
-        const highlightOpacity = this.buttonEndlessHighlight.getComponent(UIOpacity);
-        if (highlightOpacity) {
-            tween(highlightOpacity)
-                .to(this.opacityTweenTime, { opacity: 255 }, { easing: 'smooth' }) // Tween to full opacity (255)
-                .start();
-        }
-
-        const challengeHighlightOpacity = this.buttonChallengeHighlight.getComponent(UIOpacity);
-        if (challengeHighlightOpacity) {
-            tween(challengeHighlightOpacity)
-                .to(this.opacityTweenTime, { opacity: 0 }, { easing: 'smooth' }) // Tween to full opacity (255)
-                .start();
-        }
+        // const endlessSprite = this.buttonEndless.getComponent(Button);
+        // if (endlessSprite) {
+        //     endlessSprite.normalColor = this.hexToColor("#FFFFFF");
+        // }
+        //
+        // const challengeSprite = this.buttonChallenge.getComponent(Button);
+        // if (challengeSprite) {
+        //     challengeSprite.normalColor = this.hexToColor("#D6D6D6");
+        // }
+        //
+        // // Tween alpha buttonEndlessHighlight from 0 to 1
+        // const highlightOpacity = this.buttonEndlessHighlight.getComponent(UIOpacity);
+        // if (highlightOpacity) {
+        //     tween(highlightOpacity)
+        //         .to(this.opacityTweenTime, { opacity: 255 }, { easing: 'smooth' }) // Tween to full opacity (255)
+        //         .start();
+        // }
+        //
+        // const challengeHighlightOpacity = this.buttonChallengeHighlight.getComponent(UIOpacity);
+        // if (challengeHighlightOpacity) {
+        //     tween(challengeHighlightOpacity)
+        //         .to(this.opacityTweenTime, { opacity: 0 }, { easing: 'smooth' }) // Tween to full opacity (255)
+        //         .start();
+        // }
     }
 
     public changeToChallenge()
     {
         GameManager.Instance.isEndlessMode = false;
+        director.loadScene("Challenge");
 
         // Change buttonEndless color
-        const endlessSprite = this.buttonEndless.getComponent(Button);
-        if (endlessSprite) {
-            endlessSprite.normalColor = this.hexToColor("#D6D6D6");
-        }
-
-        const challengeSprite = this.buttonChallenge.getComponent(Button);
-        if (challengeSprite) {
-            challengeSprite.normalColor = this.hexToColor("#FFFFFF");
-        }
-
-        // Tween alpha buttonEndlessHighlight from 0 to 1
-        const highlightOpacity = this.buttonEndlessHighlight.getComponent(UIOpacity);
-        if (highlightOpacity) {
-            tween(highlightOpacity)
-                .to(this.opacityTweenTime, { opacity: 0 }, { easing: 'smooth' }) // Tween to full opacity (255)
-                .start();
-        }
-
-        const challengeHighlightOpacity = this.buttonChallengeHighlight.getComponent(UIOpacity);
-        if (challengeHighlightOpacity) {
-            tween(challengeHighlightOpacity)
-                .to(this.opacityTweenTime, { opacity: 255 }, { easing: 'smooth' }) // Tween to full opacity (255)
-                .start();
-        }
+        // const endlessSprite = this.buttonEndless.getComponent(Button);
+        // if (endlessSprite) {
+        //     endlessSprite.normalColor = this.hexToColor("#D6D6D6");
+        // }
+        //
+        // const challengeSprite = this.buttonChallenge.getComponent(Button);
+        // if (challengeSprite) {
+        //     challengeSprite.normalColor = this.hexToColor("#FFFFFF");
+        // }
+        //
+        // // Tween alpha buttonEndlessHighlight from 0 to 1
+        // const highlightOpacity = this.buttonEndlessHighlight.getComponent(UIOpacity);
+        // if (highlightOpacity) {
+        //     tween(highlightOpacity)
+        //         .to(this.opacityTweenTime, { opacity: 0 }, { easing: 'smooth' }) // Tween to full opacity (255)
+        //         .start();
+        // }
+        //
+        // const challengeHighlightOpacity = this.buttonChallengeHighlight.getComponent(UIOpacity);
+        // if (challengeHighlightOpacity) {
+        //     tween(challengeHighlightOpacity)
+        //         .to(this.opacityTweenTime, { opacity: 255 }, { easing: 'smooth' }) // Tween to full opacity (255)
+        //         .start();
+        // }
     }
 
     private hexToColor(hex: string): Color {

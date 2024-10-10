@@ -322,7 +322,7 @@ export class SpinWheel extends Component {
         } else {
             // Countdown finished, restore the original state
             this.spinLabel.string = "Spin";
-            this.spinLabel.node.setPosition(211, this.spinLabel.node.position.y); // Restore spinLabel.x = 211
+            this.spinLabel.node.setPosition(20.691, this.spinLabel.node.position.y); // Restore spinLabel.x = 211
             this.buttonNoThanks.active = true;
             this.spinIcon.active = true;
 
