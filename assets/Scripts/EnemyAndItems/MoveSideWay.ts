@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, view, UITransform, RigidBody2D } from 'cc';
+import { _decorator, Component, Node, Vec3, view, UITransform, RigidBody2D, Vec2 } from 'cc';
 import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
 const { ccclass, property } = _decorator;
 
@@ -39,6 +39,8 @@ export class MoveSideWay extends Component {
 
     private spinForceMin: number = -10;
     private spinForceMax: number = 10;
+
+    private rb;
 
     get IsMoveSideWay(): boolean {
         return this.isMoveSideWay;
@@ -89,6 +91,8 @@ export class MoveSideWay extends Component {
     }
 
     start() {
+        this.rb = this.node.getComponent(RigidBody2D);
+
         this.screenWidth = view.getDesignResolutionSize().width / 2; // Get half the screen width
 
         if (this.isSpin)
@@ -118,6 +122,9 @@ export class MoveSideWay extends Component {
     }
 
     update(deltaTime: number) {
+        // this.applyPseudoForce();
+        // this.applyReversePseudoForce();
+
         // If the flag is false, stop sideways movement
         if (!this.isMoveSideWay) {
             // Check if the node is outside the screen bounds
@@ -164,6 +171,16 @@ export class MoveSideWay extends Component {
                 }, 0.1); // Delay of 0.1 second
             }
         }
+    }
+
+    private applyPseudoForce() {
+        // Apply a small force on a different axis (like z-axis or in Vec2 with small y-offset)
+        // Since we are in 2D, applying in Vec2 will not change the player's position
+        this.rb.applyForceToCenter(new Vec2(0, 500), true); // Adjust small force as needed
+    }
+
+    private applyReversePseudoForce() {
+        this.rb.applyForceToCenter(new Vec2(0, -500), true); // Adjust small force as needed
     }
 
     private handleSpeedBurst(deltaTime: number) {

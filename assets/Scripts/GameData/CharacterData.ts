@@ -9,21 +9,16 @@ export class CharacterData{
     private characterID: number[] = [];
     private characterName: string;
 
-    get CharacterID(): number[] {
-        return this.characterID;
-    }
+    private opponentSkinID: number;
 
-    set CharacterID(value: number[]) {
-        this.characterID = value;
-    }
+    get CharacterID(): number[] {return this.characterID;}
+    set CharacterID(value: number[]) {this.characterID = value;}
 
-    get CharacterName(): string {
-        return this.characterName;
-    }
+    get CharacterName(): string {return this.characterName;}
+    set CharacterName(value: string) {this.characterName = value;}
 
-    set CharacterName(value: string) {
-        this.characterName = value;
-    }
+    get OpponentSkinID() {return this.opponentSkinID;}
+    set OpponentSkinID(value: number) {this.opponentSkinID = value;}
 
     public onLoad()
     {

@@ -6,6 +6,7 @@ import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
 import {OpponentController} from "db://assets/Scripts/Opponent/OpponentController";
 import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
 import {OpponentInvincibleMeterController} from "db://assets/Scripts/Opponent/UI/OpponentInvincibleMeterController";
+import {OpponentAnimController} from "db://assets/Scripts/ANIM/Player/OpponentAnimController";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentColliderController')
@@ -19,9 +20,12 @@ export class OpponentColliderController extends Component {
     @property({type: TimerManager})
     private timerManager: TimerManager;
 
-    start() {
-        var collider = this.getComponent(Collider2D);
+    private opponentAnimController: OpponentAnimController;
 
+    start() {
+        this.opponentAnimController = this.node.getComponent(OpponentAnimController);
+
+        var collider = this.getComponent(Collider2D);
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
     }
 
@@ -76,6 +80,8 @@ export class OpponentColliderController extends Component {
         EndlessGameManagerOpponent.Instance.decreaseHeart();
 
         EndlessGameManagerOpponent.Instance.hitVFX();
+
+        this.opponentAnimController.playAnimOnce("hit");
 
         if (this.playerController.hasGoneUp) {
             // If hasGoneUp is true, set it to false (reverse direction)

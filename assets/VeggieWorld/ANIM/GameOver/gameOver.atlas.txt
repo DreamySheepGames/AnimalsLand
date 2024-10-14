@@ -1,0 +1,76 @@
+
+gameOver.png
+size: 755,523
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 313
+  size: 486, 208
+  orig: 488, 210
+  offset: 1, 1
+  index: -1
+eyes
+  rotate: false
+  xy: 2, 2
+  size: 153, 28
+  orig: 155, 30
+  offset: 1, 1
+  index: -1
+game
+  rotate: false
+  xy: 2, 172
+  size: 477, 139
+  orig: 479, 141
+  offset: 1, 1
+  index: -1
+ghost
+  rotate: false
+  xy: 490, 181
+  size: 263, 340
+  orig: 263, 340
+  offset: 0, 0
+  index: -1
+hand_L
+  rotate: false
+  xy: 615, 44
+  size: 67, 63
+  orig: 69, 65
+  offset: 1, 1
+  index: -1
+hand_R
+  rotate: false
+  xy: 615, 109
+  size: 78, 70
+  orig: 80, 72
+  offset: 1, 1
+  index: -1
+leaf
+  rotate: true
+  xy: 452, 7
+  size: 163, 91
+  orig: 165, 93
+  offset: 1, 1
+  index: -1
+mouth
+  rotate: false
+  xy: 695, 129
+  size: 33, 50
+  orig: 35, 52
+  offset: 1, 1
+  index: -1
+over
+  rotate: false
+  xy: 2, 32
+  size: 448, 138
+  orig: 450, 140
+  offset: 1, 1
+  index: -1
+soul
+  rotate: false
+  xy: 545, 33
+  size: 68, 146
+  orig: 70, 148
+  offset: 1, 1
+  index: -1

@@ -406,7 +406,6 @@ export class EndlessGameManager extends Component {
     assignMission(missionLabel: RichText)   // put 1 argument so the skip mission button and reuse this funcction
     {
         this.currentMission = localStorage.getItem("currentMission");
-        console.log(missionLabel.string);
         switch (this.currentMission)
         {
             case "missionGetDiamond":

@@ -1,0 +1,193 @@
+{
+"skeleton": {
+	"hash": "jdbBwQz7DAl92fZrAoBrhNF8xzY",
+	"spine": "3.8.99",
+	"x": -112.91,
+	"y": -93.67,
+	"width": 226.51,
+	"height": 216.5,
+	"images": "./images/",
+	"audio": "D:/1_Anim_Trunn/VeggieWorld/iconButton"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "character", "parent": "root", "y": -91.94 },
+	{ "name": "body", "parent": "character", "length": 66.18, "rotation": 90, "x": -1.85, "y": 17.7 },
+	{ "name": "hand_R", "parent": "body", "length": 40.85, "rotation": 130.19, "x": 55.42, "y": 55.96 },
+	{ "name": "hand_L", "parent": "body", "length": 38.57, "rotation": -127.3, "x": 55.45, "y": -60.47 },
+	{ "name": "leaf", "parent": "body", "length": 89.76, "rotation": 64.96, "x": 132.4, "y": -4.46 },
+	{ "name": "eyes", "parent": "body", "rotation": -90, "x": 94.52, "y": 1.88 },
+	{ "name": "mouth", "parent": "body", "rotation": -90, "x": 81.58, "y": 2.2 },
+	{ "name": "shopicon", "parent": "root", "y": -87.44 },
+	{ "name": "shop", "parent": "shopicon", "length": 113.23, "rotation": 88.98, "x": -0.51, "y": 13.14 },
+	{ "name": "spin", "parent": "root", "y": -84.15 },
+	{ "name": "spin2", "parent": "spin", "x": -0.15, "y": 91.62 },
+	{ "name": "spin1", "parent": "spin2", "x": -0.38, "y": -0.12 },
+	{ "name": "spin0", "parent": "spin2", "length": 63.28, "rotation": 97.5, "x": 8.29, "y": -14.56 }
+],
+"slots": [
+	{ "name": "leaf2", "bone": "leaf", "attachment": "leaf_ol" },
+	{ "name": "hand_R2", "bone": "hand_R", "attachment": "hand_R_ol" },
+	{ "name": "hand_L2", "bone": "hand_L", "attachment": "hand_L_ol" },
+	{ "name": "body ol", "bone": "body", "attachment": "body ol" },
+	{ "name": "leaf", "bone": "leaf", "attachment": "leaf" },
+	{ "name": "body", "bone": "body", "attachment": "body" },
+	{ "name": "mouth", "bone": "mouth", "attachment": "mouth" },
+	{ "name": "eyes", "bone": "eyes", "attachment": "eyes" },
+	{ "name": "hand_L", "bone": "hand_L", "attachment": "hand_L" },
+	{ "name": "hand_R", "bone": "hand_R", "attachment": "hand_R" },
+	{ "name": "spin4", "bone": "spin2", "attachment": "spin_ol" },
+	{ "name": "spin2", "bone": "spin2", "attachment": "spin2" },
+	{ "name": "spin1", "bone": "spin1", "attachment": "spin1" },
+	{ "name": "spin3", "bone": "spin2", "attachment": "spin3" },
+	{ "name": "spin0", "bone": "spin0", "attachment": "spin0" },
+	{ "name": "shop2", "bone": "shop", "attachment": "shop_ol" },
+	{ "name": "shop", "bone": "shop", "attachment": "shop" }
+],
+"skins": [
+	{
+		"name": "Character",
+		"attachments": {
+			"body": {
+				"body": { "x": 80.07, "y": 2.55, "rotation": -90, "width": 172, "height": 177 }
+			},
+			"body ol": {
+				"body ol": { "x": 80.07, "y": 2.55, "rotation": -90, "width": 194, "height": 199 }
+			},
+			"eyes": {
+				"eyes": { "x": -1.67, "y": -4.45, "width": 96, "height": 29 }
+			},
+			"hand_L": {
+				"hand_L": { "x": 21.72, "y": 0.34, "rotation": 37.3, "width": 53, "height": 54 }
+			},
+			"hand_L2": {
+				"hand_L_ol": { "x": 21.72, "y": 0.34, "rotation": 37.3, "width": 75, "height": 76 }
+			},
+			"hand_R": {
+				"hand_R": { "x": 22.38, "y": -0.78, "rotation": 139.81, "width": 51, "height": 58 }
+			},
+			"hand_R2": {
+				"hand_R_ol": { "x": 22.38, "y": -0.78, "rotation": 139.81, "width": 75, "height": 82 }
+			},
+			"leaf": {
+				"leaf": { "x": 44.94, "y": 4.25, "rotation": -154.96, "width": 109, "height": 76 }
+			},
+			"leaf2": {
+				"leaf_ol": { "x": 44.94, "y": 4.25, "rotation": -154.96, "width": 131, "height": 99 }
+			},
+			"mouth": {
+				"mouth": { "x": -0.85, "y": 1.99, "width": 27, "height": 18 }
+			}
+		}
+	},
+	{
+		"name": "Shop",
+		"attachments": {
+			"shop": {
+				"shop": { "x": 67.9, "y": 6.13, "rotation": -88.98, "width": 175, "height": 148 }
+			},
+			"shop2": {
+				"shop_ol": { "x": 67.9, "y": 6.13, "rotation": -88.98, "width": 197, "height": 170 }
+			}
+		}
+	},
+	{
+		"name": "Spin",
+		"attachments": {
+			"spin0": {
+				"spin0": { "x": 28.36, "y": 1.4, "rotation": -97.5, "width": 59, "height": 79 }
+			},
+			"spin1": {
+				"spin1": { "width": 156, "height": 155 }
+			},
+			"spin2": {
+				"spin2": { "x": -9.3, "y": -8.63, "width": 156, "height": 155 }
+			},
+			"spin3": {
+				"spin3": { "x": -0.3, "y": -4.63, "width": 66, "height": 67 }
+			},
+			"spin4": {
+				"spin_ol": { "x": -4.86, "y": -5.53, "rotation": 88.98, "width": 184, "height": 184 }
+			}
+		}
+	}
+],
+"animations": {
+	"idle": {
+		"bones": {
+			"body": {
+				"scale": [
+					{},
+					{ "time": 0.6667, "x": 0.9, "y": 1.1 },
+					{ "time": 1.3333 }
+				]
+			},
+			"eyes": {
+				"translate": [
+					{ "x": -0.6 },
+					{ "time": 0.1667 },
+					{ "time": 0.8333, "x": -3.74 },
+					{ "time": 1.3333, "x": -0.6 }
+				]
+			},
+			"hand_L": {
+				"rotate": [
+					{ "angle": 3.85 },
+					{ "time": 0.1667 },
+					{ "time": 0.8333, "angle": 24.09 },
+					{ "time": 1.3333, "angle": 3.85 }
+				]
+			},
+			"hand_R": {
+				"rotate": [
+					{ "angle": -4.07 },
+					{ "time": 0.1667 },
+					{ "time": 0.8333, "angle": -25.41 },
+					{ "time": 1.3333, "angle": -4.07 }
+				]
+			},
+			"leaf": {
+				"rotate": [
+					{ "angle": -12.3 },
+					{ "time": 0.3333 },
+					{ "time": 1, "angle": -24.6 },
+					{ "time": 1.3333, "angle": -12.3 }
+				]
+			},
+			"mouth": {
+				"translate": [
+					{ "x": -1.24 },
+					{ "time": 0.2667 },
+					{ "time": 0.9333, "x": -3.53 },
+					{ "time": 1.3333, "x": -1.24 }
+				]
+			},
+			"shop": {
+				"scale": [
+					{ "x": 0.97, "y": 1.03 },
+					{ "time": 0.6667, "x": 1.03, "y": 0.97 },
+					{ "time": 1.3333, "x": 0.97, "y": 1.03 }
+				]
+			},
+			"spin0": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": -16.49 },
+					{ "time": 0.6667 },
+					{ "time": 1, "angle": -16.49 },
+					{ "time": 1.3333 }
+				]
+			},
+			"spin2": {
+				"scale": [
+					{},
+					{ "time": 0.3333, "x": 1.05, "y": 1.05 },
+					{ "time": 0.6667 },
+					{ "time": 1, "x": 1.05, "y": 1.05 },
+					{ "time": 1.3333 }
+				]
+			}
+		}
+	}
+}
+}

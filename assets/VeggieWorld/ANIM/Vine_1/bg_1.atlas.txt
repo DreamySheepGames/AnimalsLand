@@ -1,0 +1,47 @@
+
+bg_1.png
+size: 1587,2104
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1/b_flower
+  rotate: false
+  xy: 243, 1643
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: -1
+1/s_flower
+  rotate: true
+  xy: 2, 1867
+  size: 235, 239
+  orig: 237, 240
+  offset: 2, 1
+  index: -1
+vine_12
+  rotate: false
+  xy: 704, 2
+  size: 881, 2100
+  orig: 881, 2100
+  offset: 0, 0
+  index: -1
+
+bg_12.png
+size: 1845,2154
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_11
+  rotate: false
+  xy: 991, 2
+  size: 852, 2150
+  orig: 852, 2150
+  offset: 0, 0
+  index: -1
+vine_13
+  rotate: false
+  xy: 2, 2
+  size: 987, 2150
+  orig: 987, 2150
+  offset: 0, 0
+  index: -1

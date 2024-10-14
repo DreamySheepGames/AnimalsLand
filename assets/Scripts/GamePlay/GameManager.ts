@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Slider, Toggle, RichText } from 'cc';
+import { _decorator, Component, Node, Slider, Toggle, RichText, Label } from 'cc';
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";

@@ -1,0 +1,90 @@
+
+titleSpin.png
+size: 1106,368
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+banner
+  rotate: false
+  xy: 2, 2
+  size: 1000, 364
+  orig: 1000, 364
+  offset: 0, 0
+  index: -1
+d1
+  rotate: false
+  xy: 1004, 214
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+l1
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l2
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l3
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l4
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l5
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l6
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l7
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l8
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+l9
+  rotate: false
+  xy: 1004, 266
+  size: 100, 100
+  orig: 104, 104
+  offset: 2, 2
+  index: -1
+shadow
+  rotate: false
+  xy: 1004, 162
+  size: 46, 50
+  orig: 46, 50
+  offset: 0, 0
+  index: -1

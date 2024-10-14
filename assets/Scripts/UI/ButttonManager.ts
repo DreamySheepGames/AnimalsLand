@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText, game,
-        tween, Vec3, UIOpacity } from 'cc';
+        tween, Vec3, UIOpacity, Label } from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
@@ -9,6 +9,7 @@ import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import { showPrerollAd, showInterstitialAd, requestRewardedAd, showRewardedAd } from 'db://assets/adsense-h5g-api/h5_games_ads';
 import {RewardedVideoAdEvent} from 'db://assets/adsense-h5g-api/ad_event';
+import {TransitionCanvasController} from "db://assets/Scripts/UI/TransitionCanvasController";
 
 const { ccclass, property } = _decorator;
 
@@ -44,6 +45,9 @@ export class ButttonManager extends Component {
 
     @property(GameManager)
     private gameManager: GameManager;
+
+    @property(TransitionCanvasController)
+    private transitionCanvasController: TransitionCanvasController;
 
     start()
     {
@@ -132,25 +136,53 @@ export class ButttonManager extends Component {
 
     public openMenuScene()
     {
-        director.loadScene('MainMenu');
+        if (this.transitionCanvasController) {      // if there is transition canvas
+            this.transitionCanvasController.outTransition();
+
+            this.scheduleOnce(() => {
+                director.loadScene('MainMenu');
+            }, this.transitionCanvasController.TransitionDuration);
+        } else {                                    // if there's not then just change the scene
+            director.loadScene('MainMenu');
+        }
     }
 
     public openEndlessScene()
     {
-        director.loadScene('Endless');
+        if (this.transitionCanvasController) {      // if there is transition canvas
+            this.transitionCanvasController.outTransition();
+
+            this.scheduleOnce(() => {
+                director.loadScene('Endless');
+            }, this.transitionCanvasController.TransitionDuration);
+        } else {                                    // if there's not then just change the scene
+            director.loadScene('Endless');
+        }
     }
 
-    public chooseCharacter(event: Event)
+    public chooseCharacter(event: Event, CustomEventData)
     {
         const buttonNode = event.currentTarget as Node; // Get the button node
-        CharacterData.getInstance().CharacterName = buttonNode.getComponent(Sprite).spriteFrame.name;
+        //CharacterData.getInstance().CharacterName = buttonNode.getComponent(Sprite).spriteFrame.name;
+
+        CharacterData.getInstance().CharacterName = CustomEventData;
     }
 
     public doneChooseCharacter(event: Event)
     {
+        // turn off dark layer
+        const uiOpacity = this.darkLayer.getComponent(UIOpacity);
+        this.tweenDarkLayerOpcacityOff(uiOpacity, this.darkLayer);
+
+        // turn off character panel
         const buttonNode = event.currentTarget as Node; // Get the button node
-        buttonNode.parent.parent.parent.active = false;
-        this.darkLayer.active = false;
+        const characterPanel = buttonNode.parent.parent.parent;
+        if (characterPanel) {
+            tween(characterPanel)
+                .to(0.3, { scale: new Vec3(0.1, 0.1, 0.1) }, { easing: 'backIn' })
+                .call(() => {characterPanel.active = false;})
+                .start();
+        }
     }
 
     public changingMusicVolume(event: Event)

@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, Color, tween, UIOpacity, Button, director } from 'cc';
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
+import {TransitionCanvasController} from "db://assets/Scripts/UI/TransitionCanvasController";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayModeButtons')
@@ -18,6 +19,9 @@ export class PlayModeButtons extends Component {
 
     private opacityTweenTime = 0.12;
 
+    @property(TransitionCanvasController)
+    private transitionCanvasController: TransitionCanvasController;
+
     start()
     {
         // if (GameManager.Instance.isEndlessMode)
@@ -29,7 +33,11 @@ export class PlayModeButtons extends Component {
     public changeToEndless()
     {
         GameManager.Instance.isEndlessMode = true;
-        director.loadScene("Endless");
+        this.transitionCanvasController.outTransition();
+
+        this.scheduleOnce(() => {
+            director.loadScene("Endless");
+        }, this.transitionCanvasController.TransitionDuration + 0.15)
         // Change buttonEndless color
         // const endlessSprite = this.buttonEndless.getComponent(Button);
         // if (endlessSprite) {
@@ -60,7 +68,11 @@ export class PlayModeButtons extends Component {
     public changeToChallenge()
     {
         GameManager.Instance.isEndlessMode = false;
-        director.loadScene("Challenge");
+        this.transitionCanvasController.outTransition();
+
+        this.scheduleOnce(() => {
+            director.loadScene("VS");
+        }, this.transitionCanvasController.TransitionDuration + 0.15)
 
         // Change buttonEndless color
         // const endlessSprite = this.buttonEndless.getComponent(Button);

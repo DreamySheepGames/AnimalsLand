@@ -21,7 +21,7 @@ export class DarkLayerPauseMenu extends Component {
         if (this.pauseMenuPanel) {
             this.pauseMenuPanel.setSiblingIndex(this.canvas.children.length - 1);
         } else {
-            console.error("Pause Menu Panel is not assigned.");
+            console.warn("Pause Menu Panel is not assigned.");
         }
     }
 }

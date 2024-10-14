@@ -4,6 +4,7 @@ import { EndlessBGManager } from "db://assets/Scripts/GamePlay/EndlessBGManager"
 import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
 import {CheckEnemyController} from "db://assets/Scripts/Opponent/CheckEnemyController";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
+import {OpponentAnimController} from "db://assets/Scripts/ANIM/Player/OpponentAnimController";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentController')
@@ -36,6 +37,8 @@ export class OpponentController extends Component {
     private clonedNode: Node;
     private startAuto: boolean = false;
     private opponentSprite;
+
+    private opponentAnimController: OpponentAnimController;
 
     // Getter and Setter for _hasGoneUp
     get hasGoneUp(): boolean {
@@ -82,12 +85,8 @@ export class OpponentController extends Component {
         this._isReturnAfterEnemyHit = value;
     }
 
-    onLoad()
-    {
-        this.applyOpponentSkin();
-    }
-
     start() {
+        this.opponentAnimController = this.node.getComponent(OpponentAnimController);
         this.rb = this.getComponent(RigidBody2D);
         this.node.setPosition(this.startPosition); // Set initial position
 
@@ -116,8 +115,10 @@ export class OpponentController extends Component {
         if (!this._isMoving) {  // anti-spam tap
             if (this._isInvincible) {
                 this._hasGoneUp ? this.goDownFast() : this.goUpFast();
+                this.opponentAnimController.playAnimOnce("push");
             } else {
                 this._hasGoneUp ? this.goDown() : this.goUp();
+                this.opponentAnimController.playAnimOnce("push");
             }
         }
     }
@@ -166,6 +167,8 @@ export class OpponentController extends Component {
                 this.cancelPseudoForce();
 
                 this._isMoving = false;  // Reset moving flag when done
+
+                this.opponentAnimController.playAnimLoop("idle");
 
                 // If the player reaches the start position, increase score
                 if (targetPosition.equals(this.startPosition) && this._hasGoneUp) {
@@ -221,57 +224,57 @@ export class OpponentController extends Component {
     {
         this._isInvincible = true;
 
-        const spriteComponent = this.node.getComponent(Sprite);
-        const originalTransform = this.node.getComponent(UITransform); // Get UITransform of the original node
-
-        if (spriteComponent) {
-            // Clone the node
-            if (this.clonedNode == null)
-            {
-                this.clonedNode = new Node("ClonedSprite");
-                const clonedSprite = this.clonedNode.addComponent(Sprite);
-                clonedSprite.spriteFrame = spriteComponent.spriteFrame; // Clone the sprite frame
-
-                // Set layer to UI_3D (index 23)
-                this.clonedNode.layer = this.node.layer;
-
-                // Add the cloned node as a child of the original node
-                this.clonedNode.setParent(this.node);
-
-                // Set the clone's content size to the original node's content size
-                const clonedTransform = this.clonedNode.addComponent(UITransform);
-                clonedTransform.setContentSize(originalTransform.contentSize);
-
-                // Set the cloned sprite's scale to 0.9 (keep it normal size)
-                this.clonedNode.setScale(new Vec3(0.9, 0.9, 0.9));
-                this.clonedNode.setPosition(new Vec3(0, 0, 0));
-            }
-            else
-                this.clonedNode.active = true;
-
-            // Scale the original node (parent) by 1.1
-            this.node.setScale(new Vec3(1.1, 1.1, 1.1));
-
-            // Set the color of the parent node's sprite to red
-            spriteComponent.color = new Color(255, 0, 0);
-        } else {
-            console.error("No Sprite component found on the node.");
-        }
+        // const spriteComponent = this.node.getComponent(Sprite);
+        // const originalTransform = this.node.getComponent(UITransform); // Get UITransform of the original node
+        //
+        // if (spriteComponent) {
+        //     // Clone the node
+        //     if (this.clonedNode == null)
+        //     {
+        //         this.clonedNode = new Node("ClonedSprite");
+        //         const clonedSprite = this.clonedNode.addComponent(Sprite);
+        //         clonedSprite.spriteFrame = spriteComponent.spriteFrame; // Clone the sprite frame
+        //
+        //         // Set layer to UI_3D (index 23)
+        //         this.clonedNode.layer = this.node.layer;
+        //
+        //         // Add the cloned node as a child of the original node
+        //         this.clonedNode.setParent(this.node);
+        //
+        //         // Set the clone's content size to the original node's content size
+        //         const clonedTransform = this.clonedNode.addComponent(UITransform);
+        //         clonedTransform.setContentSize(originalTransform.contentSize);
+        //
+        //         // Set the cloned sprite's scale to 0.9 (keep it normal size)
+        //         this.clonedNode.setScale(new Vec3(0.9, 0.9, 0.9));
+        //         this.clonedNode.setPosition(new Vec3(0, 0, 0));
+        //     }
+        //     else
+        //         this.clonedNode.active = true;
+        //
+        //     // Scale the original node (parent) by 1.1
+        //     this.node.setScale(new Vec3(1.1, 1.1, 1.1));
+        //
+        //     // Set the color of the parent node's sprite to red
+        //     spriteComponent.color = new Color(255, 0, 0);
+        // } else {
+        //     console.error("No Sprite component found on the node.");
+        // }
     }
 
     turnOffInvincible()
     {
         this._isInvincible = false;
 
-        // change this node's color back to normal
-        this.node.getComponent(Sprite).color = new Color(255, 255, 255);
-        this.node.setScale(new Vec3(1, 1, 1));
-
-        // turn off the child
-        if (this.clonedNode)
-            this.clonedNode.active = false;
-        else
-            console.error("No cloned node found");
+        // // change this node's color back to normal
+        // this.node.getComponent(Sprite).color = new Color(255, 255, 255);
+        // this.node.setScale(new Vec3(1, 1, 1));
+        //
+        // // turn off the child
+        // if (this.clonedNode)
+        //     this.clonedNode.active = false;
+        // else
+        //     console.error("No cloned node found");
 
     }
 

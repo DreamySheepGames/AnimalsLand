@@ -1,0 +1,97 @@
+
+oops.png
+size: 1271,358
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 2, 7
+  size: 349, 322
+  orig: 352, 324
+  offset: 2, 1
+  index: -1
+body_ol
+  rotate: false
+  xy: 326, 10
+  size: 374, 346
+  orig: 374, 346
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: true
+  xy: 908, 135
+  size: 221, 88
+  orig: 223, 90
+  offset: 1, 1
+  index: -1
+hand_L
+  rotate: true
+  xy: 1060, 2
+  size: 147, 69
+  orig: 149, 71
+  offset: 1, 1
+  index: -1
+hand_L_ol
+  rotate: false
+  xy: 887, 32
+  size: 171, 93
+  orig: 171, 93
+  offset: 0, 0
+  index: -1
+hand_R
+  rotate: true
+  xy: 1131, 19
+  size: 130, 65
+  orig: 132, 67
+  offset: 1, 1
+  index: -1
+hand_R_ol
+  rotate: true
+  xy: 1180, 202
+  size: 154, 89
+  orig: 154, 89
+  offset: 0, 0
+  index: -1
+leaf
+  rotate: true
+  xy: 998, 151
+  size: 205, 180
+  orig: 207, 182
+  offset: 1, 1
+  index: -1
+leaf_ol
+  rotate: true
+  xy: 702, 127
+  size: 229, 204
+  orig: 229, 204
+  offset: 0, 0
+  index: -1
+mouth
+  rotate: true
+  xy: 1198, 72
+  size: 56, 54
+  orig: 58, 56
+  offset: 1, 1
+  index: -1
+stun_1
+  rotate: false
+  xy: 702, 21
+  size: 91, 104
+  orig: 93, 106
+  offset: 1, 1
+  index: -1
+stun_2
+  rotate: true
+  xy: 1198, 130
+  size: 70, 65
+  orig: 72, 67
+  offset: 1, 1
+  index: -1
+stun_3
+  rotate: false
+  xy: 795, 23
+  size: 90, 102
+  orig: 92, 104
+  offset: 1, 1
+  index: -1

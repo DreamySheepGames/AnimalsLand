@@ -1,4 +1,5 @@
-import { _decorator, Component, Node, tween, Vec3, RichText, Event, Button, sys, Sprite, resources, SpriteFrame } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, RichText, Event, Button, sys, Sprite,
+    resources, SpriteFrame, sp, Label } from 'cc';
 import {MenuDataManager} from "db://assets/Scripts/GameData/MenuDataManager";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
@@ -25,8 +26,8 @@ export class SpinWheel extends Component {
     @property(Node)
     private spinIcon: Node;
 
-    @property(RichText)
-    private spinLabel: RichText;
+    @property(Label)
+    private spinLabel: Label;
 
     @property(Node)
     private prizePanel: Node;
@@ -43,6 +44,9 @@ export class SpinWheel extends Component {
     @property(Node)
     private characterLayout: Node;
 
+    @property(sp.Skeleton)
+    private bannerSkeleton: sp.Skeleton;
+
     private smallDiamondPackage: number = 500;
     private mediumDiamondPackage: number = 1000;
     private hugeDiamondPackage: number = 5000;
@@ -57,6 +61,9 @@ export class SpinWheel extends Component {
     {
         // Reset the wheel's angle back to 0
         this.wheel.setRotationFromEuler(0, 0, 0);
+
+        // Reset banner animation
+        this.bannerSkeleton.setAnimation(0, "idle", true);
 
         // update button spin and button no thanks
         const endTime = parseInt(sys.localStorage.getItem('spinEndTime') || '0');
@@ -327,10 +334,11 @@ export class SpinWheel extends Component {
             this.spinIcon.active = true;
 
             // Enable the button
-            const spinButton = this.node.getComponent(Button);
-            if (spinButton) {
-                spinButton.interactable = true;
-            }
+            this.buttonSpin.interactable = true;
+            // const spinButton = this.node.getComponent(Button);
+            // if (spinButton) {
+            //     spinButton.interactable = true;
+            // }
 
             // Clear the localStorage item
             sys.localStorage.removeItem('spinEndTime');
@@ -365,5 +373,10 @@ export class SpinWheel extends Component {
         }
 
         this.prizeDescription.string = "A package contains " + diamondAmount.toString() + " diamonds.";
+    }
+
+    public bannerSpin()
+    {
+        this.bannerSkeleton.setAnimation(0, "spin", true); // 'true' means it will loop
     }
 }

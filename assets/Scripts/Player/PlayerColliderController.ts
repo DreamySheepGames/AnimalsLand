@@ -6,6 +6,7 @@ import {Diamond} from "db://assets/Scripts/EnemyAndItems/Diamond";
 import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
+import {PlayerAnimController} from "db://assets/Scripts/ANIM/Player/PlayerAnimController";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -22,9 +23,13 @@ export class PlayerColliderController extends Component {
     @property(MissionProgressBarController)
     private missionProgressBarController: MissionProgressBarController;
 
-    start() {
-        var collider = this.getComponent(Collider2D);
+    private playerAnimController: PlayerAnimController;
 
+
+    start() {
+        this.playerAnimController = this.node.getComponent(PlayerAnimController);
+
+        var collider = this.getComponent(Collider2D);
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
     }
 
@@ -77,8 +82,11 @@ export class PlayerColliderController extends Component {
         // reset counter for scoring without bump mission
         EndlessGameManager.Instance.MissionScoreWithoutBump = 0;
 
-        // VFX
+        // red layer VFX
         EndlessGameManager.Instance.hitVFX();
+
+        // player anim
+        this.playerAnimController.playAnimOnce("hit");
 
         // reset the mission progress bar if mission is scoring without bump
         if (localStorage.getItem("currentMission") == "missionScoreNoBump")

@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Vec3, tween, Tween, RigidBody2D, Vec2, Spr
 import { EndlessGameManager } from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import { EndlessBGManager } from "db://assets/Scripts/GamePlay/EndlessBGManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
+import {PlayerAnimController} from "db://assets/Scripts/ANIM/Player/PlayerAnimController";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
@@ -30,6 +31,8 @@ export class PlayerController extends Component {
     private rb: RigidBody2D;
     private clonedNode: Node;
     private playerSprite: Sprite;
+
+    private playerAnimController: PlayerAnimController;
 
     // Getter and Setter for _hasGoneUp
     get hasGoneUp(): boolean {
@@ -78,7 +81,7 @@ export class PlayerController extends Component {
 
     onLoad()
     {
-        this.applyPlayerSkin();
+        this.playerAnimController = this.node.getComponent(PlayerAnimController);
         this.rb = this.getComponent(RigidBody2D);
         // let contactEnabled = this.rb.enabledContactListener;
         // console.log(contactEnabled);
@@ -95,8 +98,10 @@ export class PlayerController extends Component {
 
         if (!this._isMoving) {  // anti-spam tap
             if (this._isInvincible) {
+                this.playerAnimController.playAnimOnce("push");     // animation
                 this._hasGoneUp ? this.goDownFast() : this.goUpFast();
             } else {
+                this.playerAnimController.playAnimOnce("push");     // animation
                 this._hasGoneUp ? this.goDown() : this.goUp();
             }
         }
@@ -146,6 +151,8 @@ export class PlayerController extends Component {
                 this.cancelPseudoForce();
 
                 this._isMoving = false;  // Reset moving flag when done
+
+                this.playerAnimController.playAnimLoop("idle");     // animation
 
                 // If the player reaches the start position, increase score
                 if (targetPosition.equals(this.startPosition) && this._hasGoneUp) {
@@ -201,78 +208,54 @@ export class PlayerController extends Component {
     {
         this._isInvincible = true;
 
-        const spriteComponent = this.node.getComponent(Sprite);
-        const originalTransform = this.node.getComponent(UITransform); // Get UITransform of the original node
-
-        if (spriteComponent) {
-            // Clone the node
-            if (this.clonedNode == null)
-            {
-                this.clonedNode = new Node("ClonedSprite");
-                const clonedSprite = this.clonedNode.addComponent(Sprite);
-                clonedSprite.spriteFrame = spriteComponent.spriteFrame; // Clone the sprite frame
-
-                // Add the cloned node as a child of the original node
-                this.clonedNode.setParent(this.node);
-
-                // Set the clone's content size to the original node's content size
-                const clonedTransform = this.clonedNode.addComponent(UITransform);
-                clonedTransform.setContentSize(originalTransform.contentSize);
-
-                // Set the cloned sprite's scale to 0.9 (keep it normal size)
-                this.clonedNode.setScale(new Vec3(0.9, 0.9, 0.9));
-                this.clonedNode.setPosition(new Vec3(0, 0, 0));
-            }
-            else
-                this.clonedNode.active = true;
-
-            // Scale the original node (parent) by 1.1
-            this.node.setScale(new Vec3(1.1, 1.1, 1.1));
-
-            // Set the color of the parent node's sprite to red
-            spriteComponent.color = new Color(255, 0, 0);
-        } else {
-            console.error("No Sprite component found on the node.");
-        }
+        // const spriteComponent = this.node.getComponent(Sprite);
+        // const originalTransform = this.node.getComponent(UITransform); // Get UITransform of the original node
+        //
+        // if (spriteComponent) {
+        //     // Clone the node
+        //     if (this.clonedNode == null)
+        //     {
+        //         this.clonedNode = new Node("ClonedSprite");
+        //         const clonedSprite = this.clonedNode.addComponent(Sprite);
+        //         clonedSprite.spriteFrame = spriteComponent.spriteFrame; // Clone the sprite frame
+        //
+        //         // Add the cloned node as a child of the original node
+        //         this.clonedNode.setParent(this.node);
+        //
+        //         // Set the clone's content size to the original node's content size
+        //         const clonedTransform = this.clonedNode.addComponent(UITransform);
+        //         clonedTransform.setContentSize(originalTransform.contentSize);
+        //
+        //         // Set the cloned sprite's scale to 0.9 (keep it normal size)
+        //         this.clonedNode.setScale(new Vec3(0.9, 0.9, 0.9));
+        //         this.clonedNode.setPosition(new Vec3(0, 0, 0));
+        //     }
+        //     else
+        //         this.clonedNode.active = true;
+        //
+        //     // Scale the original node (parent) by 1.1
+        //     this.node.setScale(new Vec3(1.1, 1.1, 1.1));
+        //
+        //     // Set the color of the parent node's sprite to red
+        //     spriteComponent.color = new Color(255, 0, 0);
+        // } else {
+        //     console.error("No Sprite component found on the node.");
+        // }
     }
 
     turnOffInvincible()
     {
         this._isInvincible = false;
 
-        // change this node's color back to normal
-        this.node.getComponent(Sprite).color = new Color(255, 255, 255);
-        this.node.setScale(new Vec3(1, 1, 1));
+        // // change this node's color back to normal
+        // this.node.getComponent(Sprite).color = new Color(255, 255, 255);
+        // this.node.setScale(new Vec3(1, 1, 1));
+        //
+        // // turn off the child
+        // if (this.clonedNode)
+        //     this.clonedNode.active = false;
+        // else
+        //     console.error("No cloned node found");
 
-        // turn off the child
-        if (this.clonedNode)
-            this.clonedNode.active = false;
-        else
-            console.error("No cloned node found");
-
-    }
-
-    applyPlayerSkin()
-    {
-        this.playerSprite = this.getComponent(Sprite);
-        const characterData = CharacterData.getInstance();
-        const chosenFrameName = characterData.CharacterName; // The saved sprite frame name
-
-        if (chosenFrameName) {
-            // Load the sprite frame by name from the atlas
-            resources.load(`CharactersIcon/${chosenFrameName}/spriteFrame`, SpriteFrame, (err, spriteFrame) => {
-                if (err) {
-                    console.error('Error loading sprite frame:', err);
-                    return;
-                }
-                if (this.playerSprite && spriteFrame) {
-                    this.playerSprite.spriteFrame = spriteFrame; // Set the loaded frame to the player sprite
-                } else {
-                    console.error('Player sprite or loaded sprite frame is null.');
-                }
-            });
-        } else {
-            console.warn('Chosen sprite frame name is missing.');
-        }
     }
 }

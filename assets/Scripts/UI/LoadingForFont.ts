@@ -1,0 +1,15 @@
+import { _decorator, Component, Node, director } from 'cc';
+const { ccclass, property } = _decorator;
+
+@ccclass('LoadingForFont')
+export class LoadingForFont extends Component {
+    @property(Node)
+    private panel: Node;
+
+    start() {
+        this.panel.active = true;
+        director.loadScene("MainMenu");
+    }
+}
+
+

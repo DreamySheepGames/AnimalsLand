@@ -1,0 +1,125 @@
+
+icon_Button.png
+size: 559,515
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 389, 338
+  size: 156, 175
+  orig: 172, 177
+  offset: 9, 1
+  index: -1
+body ol
+  rotate: true
+  xy: 2, 321
+  size: 192, 199
+  orig: 194, 199
+  offset: 1, 0
+  index: -1
+eyes
+  rotate: true
+  xy: 157, 225
+  size: 94, 27
+  orig: 96, 29
+  offset: 1, 1
+  index: -1
+hand_L
+  rotate: false
+  xy: 318, 36
+  size: 51, 52
+  orig: 53, 54
+  offset: 1, 1
+  index: -1
+hand_L_ol
+  rotate: false
+  xy: 158, 2
+  size: 75, 76
+  orig: 75, 76
+  offset: 0, 0
+  index: -1
+hand_R
+  rotate: false
+  xy: 500, 26
+  size: 51, 58
+  orig: 51, 58
+  offset: 0, 0
+  index: -1
+hand_R_ol
+  rotate: true
+  xy: 158, 80
+  size: 75, 82
+  orig: 75, 82
+  offset: 0, 0
+  index: -1
+leaf
+  rotate: true
+  xy: 242, 48
+  size: 107, 74
+  orig: 109, 76
+  offset: 1, 1
+  index: -1
+leaf_ol
+  rotate: true
+  xy: 400, 32
+  size: 131, 98
+  orig: 131, 99
+  offset: 0, 1
+  index: -1
+mouth
+  rotate: true
+  xy: 157, 198
+  size: 25, 16
+  orig: 27, 18
+  offset: 1, 1
+  index: -1
+shop
+  rotate: true
+  xy: 400, 165
+  size: 171, 146
+  orig: 175, 148
+  offset: 2, 1
+  index: -1
+shop_ol
+  rotate: false
+  xy: 203, 157
+  size: 195, 170
+  orig: 197, 170
+  offset: 1, 0
+  index: -1
+spin0
+  rotate: false
+  xy: 500, 86
+  size: 57, 77
+  orig: 59, 79
+  offset: 1, 1
+  index: -1
+spin1
+  rotate: true
+  xy: 2, 165
+  size: 154, 153
+  orig: 156, 155
+  offset: 1, 1
+  index: -1
+spin2
+  rotate: false
+  xy: 2, 10
+  size: 154, 153
+  orig: 156, 155
+  offset: 1, 1
+  index: -1
+spin3
+  rotate: false
+  xy: 318, 90
+  size: 64, 65
+  orig: 66, 67
+  offset: 1, 1
+  index: -1
+spin_ol
+  rotate: false
+  xy: 203, 329
+  size: 184, 184
+  orig: 184, 184
+  offset: 0, 0
+  index: -1

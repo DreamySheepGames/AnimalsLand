@@ -62,61 +62,27 @@ export class EndlessGameManagerOpponent extends Component {
     private slowedEnemies: Node[] = [];
     private freezedEnemies: Node[] = [];
 
-    get StageCheckPoint(): number[] {
-        return this.stageCheckPoint;
-    }
+    get StageCheckPoint(): number[] {return this.stageCheckPoint;}
+    set StageCheckPoint(value: number[]) {this.stageCheckPoint = value;}
 
-    set StageCheckPoint(value: number[]) {
-        this.stageCheckPoint = value;
-    }
+    get CurrentStage(): number {return this.currentStage;}
 
-    get CurrentStage(): number {
-        return this.currentStage;
-    }
+    get ReceivedDiamond(): number {return this.receivedDiamond;}
+    set ReceivedDiamond(value: number) {this.receivedDiamond = value;}
 
-    get ReceivedDiamond(): number {
-        return this.receivedDiamond;
-    }
+    get DoubleDiamond(): boolean {return this.doubleDiamond;}
+    set DoubleDiamond(value: boolean) {this.doubleDiamond = value;}
 
-    set ReceivedDiamond(value: number) {
-        this.receivedDiamond = value;
-    }
+    get Magnet(): boolean {return this.magnet;}
+    set Magnet(value: boolean) {this.magnet = value;}
 
-    get DoubleDiamond(): boolean {
-        return this.doubleDiamond;
-    }
+    get Score(): number {return this.score;}
+    set Score(value: number) {this.score = value;}
 
-    set DoubleDiamond(value: boolean) {
-        this.doubleDiamond = value;
-    }
+    get OpponentScore(): number {return this.opponentScore;}
+    set OpponentScore(value: number) {this.opponentScore = value;}
 
-    get Magnet(): boolean {
-        return this.magnet;
-    }
-
-    set Magnet(value: boolean) {
-        this.magnet = value;
-    }
-
-    get Score(): number {
-        return this.score;
-    }
-
-    set Score(value: number) {
-        this.score = value;
-    }
-
-    get OpponentScore(): number {
-        return this.opponentScore;
-    }
-
-    set OpponentScore(value: number) {
-        this.opponentScore = value;
-    }
-
-    get IsGameOver(): boolean {
-        return this.isGameOver;
-    }
+    get IsGameOver(): boolean {return this.isGameOver;}
 
     @property(Node)
     private redLayer: Node;
