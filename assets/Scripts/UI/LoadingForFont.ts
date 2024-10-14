@@ -8,7 +8,9 @@ export class LoadingForFont extends Component {
 
     start() {
         this.panel.active = true;
-        director.loadScene("MainMenu");
+        this.scheduleOnce(() => {
+            director.loadScene("MainMenu");
+        }, 0.5);
     }
 }
 

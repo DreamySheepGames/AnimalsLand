@@ -1,0 +1,273 @@
+{
+"skeleton": {
+	"hash": "V3AXOHVF07mmbNcpg5lXX4X36ak",
+	"spine": "3.8.99",
+	"x": -444.36,
+	"y": -445.63,
+	"width": 907,
+	"height": 905,
+	"images": "./images/",
+	"audio": "D:/1_Anim_Trunn/VeggieWorld/victory"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "x": -10.68, "y": -453.02 },
+	{ "name": "body", "parent": "bone", "x": 11.07, "y": 231.07 },
+	{ "name": "body2", "parent": "body", "length": 106.79, "rotation": 65, "x": -85.73, "y": 43.67 },
+	{ "name": "leaf", "parent": "body2", "length": 272.2, "rotation": 59.02, "x": 346.63, "y": -64.8 },
+	{ "name": "mouth", "parent": "body2", "rotation": -65, "x": 130.94, "y": 2.68 },
+	{ "name": "eyes", "parent": "body2", "rotation": -65, "x": 182.02, "y": 4.92 },
+	{
+		"name": "hand_R",
+		"parent": "body2",
+		"length": 103.31,
+		"rotation": 92.28,
+		"x": 164.3,
+		"y": 143.14,
+		"color": "abe323ff"
+	},
+	{ "name": "medal", "parent": "bone", "x": -257.1, "y": 755.87 },
+	{ "name": "medal_2", "parent": "medal", "length": 388.47, "rotation": -101.99, "x": -5.87, "y": -15.41 },
+	{ "name": "light", "parent": "medal", "x": 45.2, "y": -110.34 },
+	{ "name": "light2", "parent": "bone", "x": 19.82, "y": 459.89 },
+	{ "name": "victory", "parent": "bone", "x": 9.24, "y": 135.77 },
+	{ "name": "star", "parent": "medal", "x": 86.67, "y": -43.47 }
+],
+"slots": [
+	{ "name": "light2", "bone": "light2", "attachment": "light2" },
+	{ "name": "medal_2", "bone": "medal_2", "attachment": "medal_2" },
+	{ "name": "leaf", "bone": "leaf", "attachment": "leaf" },
+	{ "name": "body", "bone": "body2", "attachment": "body" },
+	{ "name": "mouth", "bone": "mouth", "attachment": "mouth" },
+	{ "name": "hand_R", "bone": "hand_R", "attachment": "hand_R" },
+	{ "name": "eyes", "bone": "eyes", "attachment": "eyes" },
+	{ "name": "medal", "bone": "medal", "attachment": "medal" },
+	{ "name": "medal_clipping", "bone": "medal", "attachment": "medal_clipping" },
+	{ "name": "light", "bone": "light", "attachment": "light" },
+	{ "name": "star", "bone": "star" },
+	{ "name": "victory", "bone": "victory", "attachment": "victory" }
+],
+"transform": [
+	{
+		"name": "hand_R",
+		"bones": [ "medal" ],
+		"target": "hand_R",
+		"rotation": -157.28,
+		"x": 217.63,
+		"y": -203.45,
+		"rotateMix": 0,
+		"translateMix": 0,
+		"scaleMix": 0,
+		"shearMix": 0
+	}
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"body": {
+				"body": { "x": 194, "y": -33.5, "rotation": -65, "width": 458, "height": 398 }
+			},
+			"eyes": {
+				"eyes": { "x": -3.12, "y": -6.88, "width": 308, "height": 213 }
+			},
+			"hand_R": {
+				"hand_R": { "x": 41.96, "y": 10.77, "rotation": -157.28, "width": 157, "height": 184 }
+			},
+			"leaf": {
+				"leaf": { "x": 139.84, "y": 11.62, "rotation": -124.02, "width": 204, "height": 247 }
+			},
+			"light": {
+				"light": { "x": 0.59, "y": -3.11, "width": 32, "height": 232 }
+			},
+			"light2": {
+				"light2": { "width": 907, "height": 905 }
+			},
+			"medal": {
+				"medal": { "x": 26.28, "y": -104.95, "width": 205, "height": 239 }
+			},
+			"medal_2": {
+				"medal_2": { "x": 185.79, "y": 13.54, "rotation": 101.99, "width": 194, "height": 417 }
+			},
+			"medal_clipping": {
+				"medal_clipping": {
+					"type": "clipping",
+					"end": "light",
+					"vertexCount": 24,
+					"vertices": [ -20.61, -27.16, -41.61, -40.42, -64.8, -72.28, -75.98, -112.03, -74.09, -146.52, -62.17, -173.27, -50.34, -191.17, -35.46, -204.02, -16.69, -215.37, 9.08, -223.15, 32.38, -225.35, 61.92, -218.41, 82.36, -205.78, 100.76, -190.54, 113.26, -171.56, 124.23, -143.36, 129.42, -110.24, 120.6, -75.66, 106.22, -52.58, 85.2, -31.68, 62.25, -20.06, 30.68, -13.73, 15.1, -15.62, -6.16, -20.55 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"mouth": {
+				"mouth": { "x": 4.43, "y": 3.86, "width": 102, "height": 82 }
+			},
+			"star": {
+				"star": { "x": -1.22, "y": -2.31, "width": 140, "height": 135 }
+			},
+			"victory": {
+				"victory": { "x": -3.56, "y": 1.65, "width": 806, "height": 156 }
+			}
+		}
+	}
+],
+"animations": {
+	"idle": {
+		"slots": {
+			"light": {
+				"color": [
+					{ "color": "fff9c7e9" }
+				]
+			},
+			"light2": {
+				"color": [
+					{ "color": "ffffffff", "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "color": "ffffff76", "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.6667, "color": "ffffffff" }
+				]
+			},
+			"star": {
+				"attachment": [
+					{ "time": 0.5, "name": "star" },
+					{ "time": 0.9333, "name": null },
+					{ "time": 1.6667, "name": "star" },
+					{ "time": 2.1, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"light": {
+				"rotate": [
+					{ "angle": 40 }
+				],
+				"translate": [
+					{ "x": -137.78, "y": -75.36 },
+					{ "time": 0.3333, "x": 98.24, "y": 64.32, "curve": "stepped" },
+					{ "time": 1.3333, "x": -137.78, "y": -75.36 },
+					{ "time": 1.6667, "x": 98.24, "y": 64.32 }
+				],
+				"scale": [
+					{ "x": 1.5 }
+				]
+			},
+			"light2": {
+				"rotate": [
+					{},
+					{ "time": 1.3333, "angle": 180 },
+					{ "time": 2.6667 }
+				],
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "x": 0.75, "y": 0.75, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.6667 }
+				]
+			},
+			"star": {
+				"rotate": [
+					{ "time": 0.5, "angle": 9.08 },
+					{ "time": 0.9333, "angle": -96.29, "curve": "stepped" },
+					{ "time": 1.6667, "angle": 9.08 },
+					{ "time": 2.1, "angle": -96.29 }
+				],
+				"scale": [
+					{ "time": 0.5, "x": 0.1, "y": 0.1 },
+					{ "time": 0.6667 },
+					{ "time": 0.9333, "x": 0.1, "y": 0.1, "curve": "stepped" },
+					{ "time": 1.6667, "x": 0.1, "y": 0.1 },
+					{ "time": 1.8333 },
+					{ "time": 2.1, "x": 0.1, "y": 0.1 }
+				]
+			},
+			"hand_R": {
+				"rotate": [
+					{ "angle": -5.69, "curve": 0.375, "c2": 0.5, "c3": 0.75 },
+					{ "time": 0.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1, "angle": -11.39, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.6667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.3333, "angle": -11.39, "curve": 0.25, "c3": 0.625, "c4": 0.5 },
+					{ "time": 2.6667, "angle": -5.69 }
+				],
+				"translate": [
+					{ "x": 11.24, "y": 5.24, "curve": 0.375, "c2": 0.5, "c3": 0.75 },
+					{ "time": 0.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1, "x": 22.48, "y": 10.48, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.6667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.3333, "x": 22.48, "y": 10.48, "curve": 0.25, "c3": 0.625, "c4": 0.5 },
+					{ "time": 2.6667, "x": 11.24, "y": 5.24 }
+				]
+			},
+			"leaf": {
+				"rotate": [
+					{ "angle": 2.62, "curve": 0.379, "c2": 0.6, "c3": 0.724 },
+					{ "time": 0.1667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.8333, "angle": 14.2, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.5, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.1667, "angle": 14.2, "curve": 0.242, "c3": 0.667, "c4": 0.67 },
+					{ "time": 2.6667, "angle": 2.62 }
+				]
+			},
+			"mouth": {
+				"scale": [
+					{ "x": 1.05, "y": 1.05, "curve": 0.375, "c2": 0.5, "c3": 0.75 },
+					{ "time": 0.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1, "x": 1.1, "y": 1.1, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.6667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.3333, "x": 1.1, "y": 1.1, "curve": 0.25, "c3": 0.625, "c4": 0.5 },
+					{ "time": 2.6667, "x": 1.05, "y": 1.05 }
+				]
+			},
+			"eyes": {
+				"translate": [
+					{ "x": 2.68, "curve": 0.379, "c2": 0.6, "c3": 0.724 },
+					{ "time": 0.1667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.8333, "x": 14.52, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.5, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.1667, "x": 14.52, "curve": 0.242, "c3": 0.667, "c4": 0.67 },
+					{ "time": 2.6667, "x": 2.68 }
+				]
+			},
+			"medal_2": {
+				"rotate": [
+					{ "angle": 16.38, "curve": 0.333, "c2": 0.33, "c3": 0.758 },
+					{ "time": 0.5, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.1667, "angle": 20.09, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.8333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.5, "angle": 20.09, "curve": 0.276, "c3": 0.621, "c4": 0.4 },
+					{ "time": 2.6667, "angle": 16.38 }
+				]
+			},
+			"body": {
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "y": 58.55, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "y": 58.55, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.6667 }
+				]
+			},
+			"body2": {
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "x": 1.05, "y": 0.95, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "x": 1.05, "y": 0.95, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.6667 }
+				]
+			},
+			"victory": {
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "x": 1.1, "y": 1.1, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "x": 1.2, "y": 1.2, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.6667 }
+				]
+			}
+		},
+		"transform": {
+			"hand_R": [
+				{ "scaleMix": 0, "shearMix": 0 }
+			]
+		}
+	}
+}
+}

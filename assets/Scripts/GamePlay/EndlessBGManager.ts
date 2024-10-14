@@ -23,11 +23,13 @@ export class EndlessBGManager extends Component {
 
     private currentBackgroundIndex: number = 0;
     private nextBackgroundIndex: number = 1; // Reference to the next background
+    private lastBackgroundIndex: number = 2; // Reference to the next background
     private screenHeight: number;
     private screenWidth: number;
 
     private currentTween1: Tween<Node> = null; // Reference to the active tween (tween current background)
     private currentTween2: Tween<Node> = null; // Reference to the active tween (tween next background)
+    private currentTween3: Tween<Node> = null; // Reference to the active tween (tween next background)
     private tweenSpeed = 0.25;                  // IMPORTANT NOTE: tween speed must be <= player tween move speed fast * 2;
     private lastStepValue: number;
     private yToDisactivate = 4;
@@ -42,7 +44,8 @@ export class EndlessBGManager extends Component {
         // this.screenHeight = view.getDesignResolutionSize().height;
         // this.screenWidth = view.getDesignResolutionSize().width;
         this.screenHeight = 667;
-        this.screenWidth = 105;
+        //this.screenWidth = 105;
+        this.screenWidth = 375;
         this.setBackgroundAnchors();
 
         // Store the last step value from levelSteps for future use
@@ -65,6 +68,7 @@ export class EndlessBGManager extends Component {
     public moveBackground() {
         const currentBG = this.backgrounds[this.currentBackgroundIndex];
         const nextBG = this.backgrounds[this.nextBackgroundIndex];
+        const lastBG = this.backgrounds[this.lastBackgroundIndex];
 
         // decide which move step to use
         var currentSteps: number;
@@ -79,6 +83,7 @@ export class EndlessBGManager extends Component {
         // create target postitions to move 2 backgrounds simultaneously
         const currentTargetPos = new Vec3(currentBG.position.x, currentBG.position.y - moveDistance, currentBG.position.z);
         const nextTargetPos = new Vec3(nextBG.position.x, nextBG.position.y - moveDistance, nextBG.position.z);
+        const lastTargetPos = new Vec3(lastBG.position.x, lastBG.position.y - moveDistance, lastBG.position.z);
 
         // Move both current and next background
         this.currentTween1 = tween(currentBG)
@@ -94,6 +99,10 @@ export class EndlessBGManager extends Component {
                 }
             })
             .start();
+
+        this.currentTween3 = tween(lastBG)
+            .to(this.tweenSpeed, {position: lastTargetPos }, {easing: "circOut" })
+            .start();
     }
 
     private toggleAndAddNewBG() {
@@ -108,10 +117,18 @@ export class EndlessBGManager extends Component {
             this.hasDoneAllLevel = true;
 
         this.nextBackgroundIndex = (this.nextBackgroundIndex + 1) % this.backgrounds.length;
+        this.lastBackgroundIndex = this.nextBackgroundIndex + 1;
+        if (this.lastBackgroundIndex == this.backgrounds.length)
+            this.lastBackgroundIndex = 2;
 
         const nextBG = this.backgrounds[this.nextBackgroundIndex];
+        const lastBG = this.backgrounds[this.lastBackgroundIndex];
+
 
         nextBG.setPosition(nextBG.position.x, this.screenHeight, 0); // Position above the current one
         nextBG.active = true; // Reactivate the new background
+
+        lastBG.setPosition(lastBG.position.x, this.screenHeight * 2, 0);
+        lastBG.active = true;
     }
 }
