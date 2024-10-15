@@ -21,8 +21,8 @@ export class ChallengeGameDataManager extends Component {
     @property(Node)
     private winLabel: Node;
 
-    @property(RichText)
-    private loseLabel: RichText;
+    @property(Node)
+    private loseLabel: Node;
 
     @property(RichText)
     private drawLabel: RichText;
@@ -55,7 +55,7 @@ export class ChallengeGameDataManager extends Component {
         if (challengeGameData.Score < challengeGameData.OpponentScore && !deadBeforeEnd)
         {
             this.winLabel.active = false;
-            this.loseLabel.node.active = true;
+            this.loseLabel.active = true;
             this.drawLabel.node.active = false;
         }
         else
@@ -63,7 +63,7 @@ export class ChallengeGameDataManager extends Component {
             if (challengeGameData.Score > challengeGameData.OpponentScore && !deadBeforeEnd)
             {
                 this.winLabel.active = true;
-                this.loseLabel.node.active = false;
+                this.loseLabel.active = false;
                 this.drawLabel.node.active = false;
             }
             else
@@ -71,7 +71,7 @@ export class ChallengeGameDataManager extends Component {
                 if (!deadBeforeEnd)
                 {
                     this.winLabel.active = false;
-                    this.loseLabel.node.active = false;
+                    this.loseLabel.active = false;
                     this.drawLabel.node.active = true;
                 }
             }
