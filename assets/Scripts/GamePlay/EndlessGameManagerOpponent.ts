@@ -6,6 +6,7 @@ import {OpponentSpawnDiamondManager} from "db://assets/Scripts/Opponent/Managers
 import {OpponentSpawnItemsManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnItemsManager";
 import {OpponentSpawnEnemyManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnEnemyManager";
 import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
+import {VFXManager} from "db://assets/Scripts/GamePlay/VFXManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManagerOpponent')
@@ -89,6 +90,9 @@ export class EndlessGameManagerOpponent extends Component {
 
     @property(Node)
     private canvas: Node;
+
+    @property(VFXManager)
+    public vfxManager: VFXManager;
 
     onLoad() {
         //console.log(this.endlessBGManager.getComponent(EndlessBGManager).LevelSteps);

@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "64d0852d-8a41-41de-a566-461b33dcb68b",
+  "uuid": "47fc92e4-34d7-4d2b-b6cc-485c47edd69e",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "FX_collider"
+    "syncNodeName": "VFXs"
   }
 }

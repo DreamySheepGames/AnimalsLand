@@ -7,6 +7,7 @@ import {OpponentController} from "db://assets/Scripts/Opponent/OpponentControlle
 import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGameManagerOpponent";
 import {OpponentInvincibleMeterController} from "db://assets/Scripts/Opponent/UI/OpponentInvincibleMeterController";
 import {OpponentAnimController} from "db://assets/Scripts/ANIM/Player/OpponentAnimController";
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentColliderController')
@@ -80,6 +81,7 @@ export class OpponentColliderController extends Component {
         EndlessGameManagerOpponent.Instance.decreaseHeart();
 
         EndlessGameManagerOpponent.Instance.hitVFX();
+        EndlessGameManagerOpponent.Instance.vfxManager.PlayVFXOnce(this.node.position, "FX_collider", 2);
 
         this.opponentAnimController.playAnimOnce("hit");
 
@@ -115,12 +117,15 @@ export class OpponentColliderController extends Component {
     {
         // we have to destroy the diamond AFTER the colliding callback has completed, so we have to use schedule callback
         this.destroyCollidedNode(otherCollider);
+        EndlessGameManagerOpponent.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_click", 1);
     }
 
     hitSuperHeroItem(otherCollider)
     {
         // turn on invincible
         this.playerController.turnOnInvincible();
+
+        EndlessGameManagerOpponent.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claimBoost", 1);
 
         // turn on countdown timer through TimerManager
         this.timerManager.timerSuperHeroOn();
@@ -138,6 +143,7 @@ export class OpponentColliderController extends Component {
     hitSlowdown(otherCollider)
     {
         EndlessGameManagerOpponent.Instance.slowdownEnemy();
+        EndlessGameManagerOpponent.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claim", 1);
         this.timerManager.timerSlowdownOn();
         this.destroyCollidedNode(otherCollider);
     }

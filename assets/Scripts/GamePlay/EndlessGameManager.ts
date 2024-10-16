@@ -11,6 +11,7 @@ import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXContro
 import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
 import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
 import {EndlessGameDataManager} from "db://assets/Scripts/GameData/EndlessGameDataManager";
+import {VFXManager} from "db://assets/Scripts/GamePlay/VFXManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManager')
@@ -72,6 +73,9 @@ export class EndlessGameManager extends Component {
 
     @property(Node)
     private canvas: Node;
+
+    @property(VFXManager)
+    public vfxManager: VFXManager;
 
     public enemyQueue: Node[] = []; // Queue for enemies
     private stageCheckPoint: number[] = []; // Queue for stage checkpoints

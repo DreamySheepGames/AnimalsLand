@@ -82,8 +82,8 @@ export class PlayerColliderController extends Component {
         // reset counter for scoring without bump mission
         EndlessGameManager.Instance.MissionScoreWithoutBump = 0;
 
-        // red layer VFX
-        EndlessGameManager.Instance.hitVFX();
+        EndlessGameManager.Instance.hitVFX();                       // red layer VFX
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(this.node.position, "FX_collider", 2);
 
         // player anim
         this.playerAnimController.playAnimOnce("hit");
@@ -138,6 +138,8 @@ export class PlayerColliderController extends Component {
         if (!this.playerController.isInvincible)
             this.invincibleMeter.increaseFiller();
 
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_click", 1);
+
         // mission get diamond
         EndlessGameManager.Instance.doMissionGetDiamond(otherCollider.node.getComponent(Diamond).Value);
 
@@ -156,6 +158,9 @@ export class PlayerColliderController extends Component {
         // turn on invincible
         this.playerController.turnOnInvincible();
 
+        // vfx
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claimBooster", 1);
+
         // turn on countdown timer through TimerManager
         this.timerManager.timerSuperHeroOn();
 
@@ -172,6 +177,8 @@ export class PlayerColliderController extends Component {
 
     hitSlowdown(otherCollider)
     {
+        // vfx
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claim", 1);
         EndlessGameManager.Instance.slowdownEnemy();
         this.timerManager.timerSlowdownOn();
         this.destroyCollidedNode(otherCollider);
