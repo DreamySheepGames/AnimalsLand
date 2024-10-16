@@ -1,13 +1,13 @@
-import { _decorator, Component, Node, instantiate, tween, Vec3, Prefab } from 'cc';
+import { _decorator, Component, Node, Prefab, tween, Vec3, instantiate } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('CloudSpawnerController')
-export class CloudSpawnerController extends Component {
+@ccclass('SmallCloudSpawnerController')
+export class SmallCloudSpawnerController extends Component {
     @property({ type: [Prefab] })
     private cloudPrefabs: Prefab[] = [];
 
-    private leftSpawnX: number = -330;
-    private rightSpawnX: number = 330;
+    private leftSpawnX: number = -250;
+    private rightSpawnX: number = 250;
 
     private minSpawnY: number = -327;
     private maxSpawnY: number = 660;
@@ -55,7 +55,7 @@ export class CloudSpawnerController extends Component {
 
             // Tween to move the cloud down
             tween(cloud)
-                .to(this.tweenSpeed, { position: new Vec3(currentPos.x, currentPos.y - moveDownDistance, currentPos.z) }, { easing: 'circOut' })
+                .to(this.tweenSpeed, { position: new Vec3(currentPos.x, currentPos.y - moveDownDistance / 2, currentPos.z) }, { easing: 'circOut' })
                 .start();
 
             // If the cloud is out of bounds, destroy it
@@ -71,3 +71,5 @@ export class CloudSpawnerController extends Component {
         return Math.random() * (max - min) + min;
     }
 }
+
+

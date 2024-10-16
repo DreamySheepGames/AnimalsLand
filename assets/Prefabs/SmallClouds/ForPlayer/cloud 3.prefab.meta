@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "64d0852d-8a41-41de-a566-461b33dcb68b",
+  "uuid": "1e604470-30c4-4ff7-877d-d65d5a67eb02",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "FX_collider"
+    "syncNodeName": "cloud 3"
   }
 }

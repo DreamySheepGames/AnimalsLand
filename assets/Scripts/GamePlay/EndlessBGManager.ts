@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Vec3, view, UITransform, tween, Tween } fr
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {GameManager} from "db://assets/Scripts/GamePlay/GameManager";
 import {CloudSpawnerController} from "db://assets/Scripts/OtherVFX/CloudSpawnerController";
+import {SmallCloudSpawnerController} from "db://assets/Scripts/OtherVFX/SmallCloudSpawnerController";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessBGManager')
@@ -24,6 +25,9 @@ export class EndlessBGManager extends Component {
 
     @property(CloudSpawnerController)
     private cloudSpawnerController: CloudSpawnerController;
+
+    @property(SmallCloudSpawnerController)
+    private smallCloudSpawnerController: SmallCloudSpawnerController;
 
     private currentBackgroundIndex: number = 0;
     private nextBackgroundIndex: number = 1; // Reference to the next background
@@ -89,7 +93,11 @@ export class EndlessBGManager extends Component {
         const nextTargetPos = new Vec3(nextBG.position.x, nextBG.position.y - moveDistance, nextBG.position.z);
         const lastTargetPos = new Vec3(lastBG.position.x, lastBG.position.y - moveDistance, lastBG.position.z);
 
-        this.cloudSpawnerController.moveAllCloudsDown(moveDistance);
+        // clouds
+        if (this.cloudSpawnerController)
+            this.cloudSpawnerController.moveAllCloudsDown(moveDistance);
+        if (this.smallCloudSpawnerController)
+            this.smallCloudSpawnerController.moveAllCloudsDown(moveDistance);
 
         // Move both current and next background
         this.currentTween1 = tween(currentBG)

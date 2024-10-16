@@ -33,11 +33,13 @@ export class PlayModeButtons extends Component {
     public changeToEndless()
     {
         GameManager.Instance.isEndlessMode = true;
+
         this.transitionCanvasController.outTransition();
 
         this.scheduleOnce(() => {
             director.loadScene("Endless");
         }, this.transitionCanvasController.TransitionDuration + 0.15)
+
         // Change buttonEndless color
         // const endlessSprite = this.buttonEndless.getComponent(Button);
         // if (endlessSprite) {
