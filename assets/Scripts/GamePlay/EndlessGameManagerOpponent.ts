@@ -7,6 +7,8 @@ import {OpponentSpawnItemsManager} from "db://assets/Scripts/Opponent/Managers/O
 import {OpponentSpawnEnemyManager} from "db://assets/Scripts/Opponent/Managers/OpponentSpawnEnemyManager";
 import {EnemyFXController} from "db://assets/Scripts/EnemyAndItems/EnemyFXController";
 import {VFXManager} from "db://assets/Scripts/GamePlay/VFXManager";
+import {OpponentVFXController} from "db://assets/Scripts/Opponent/OpponentVFXController";
+import {PlayerVFXController} from "db://assets/Scripts/PlayerVFX/PlayerVFXController";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManagerOpponent')
@@ -237,6 +239,13 @@ export class EndlessGameManagerOpponent extends Component {
     playerInvincibleOff()
     {
         this.playerController.turnOffInvincible();
+        this.playerController.node.getComponent(OpponentVFXController).fxShieldOff();
+    }
+
+    playerDoubleOff()
+    {
+        this.doubleDiamond = false;
+        this.playerController.node.getComponent(OpponentVFXController).fxX2Off();
     }
 
     slowdownEnemy()
@@ -307,6 +316,11 @@ export class EndlessGameManagerOpponent extends Component {
                 }
             }
         }
+    }
+
+    playerMagnetOff() {
+        this.magnet = false;
+        this.playerController.node.getComponent(OpponentVFXController).fxMagnetOff();
     }
 
     public hitVFX() {

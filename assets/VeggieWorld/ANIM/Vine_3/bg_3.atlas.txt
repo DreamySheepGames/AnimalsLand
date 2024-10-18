@@ -1,0 +1,88 @@
+
+bg_3.png
+size: 1500,2104
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+d1
+  rotate: false
+  xy: 232, 1977
+  size: 148, 125
+  orig: 148, 125
+  offset: 0, 0
+  index: -1
+d2
+  rotate: false
+  xy: 382, 1954
+  size: 169, 148
+  orig: 169, 148
+  offset: 0, 0
+  index: -1
+d3
+  rotate: false
+  xy: 2, 2019
+  size: 110, 83
+  orig: 110, 83
+  offset: 0, 0
+  index: -1
+d4
+  rotate: false
+  xy: 114, 1994
+  size: 116, 108
+  orig: 116, 108
+  offset: 0, 0
+  index: -1
+vine_c1/vine_3c_2
+  rotate: false
+  xy: 553, 2
+  size: 945, 2100
+  orig: 945, 2100
+  offset: 0, 0
+  index: -1
+
+bg_32.png
+size: 1682,2154
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_c1/vine_3c_1
+  rotate: false
+  xy: 949, 2
+  size: 731, 2150
+  orig: 731, 2150
+  offset: 0, 0
+  index: -1
+vine_c2/vine_3c_2
+  rotate: false
+  xy: 2, 52
+  size: 945, 2100
+  orig: 945, 2100
+  offset: 0, 0
+  index: -1
+
+bg_33.png
+size: 1989,2154
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_c1/vine_3c_3
+  rotate: false
+  xy: 735, 2
+  size: 625, 2150
+  orig: 625, 2150
+  offset: 0, 0
+  index: -1
+vine_c2/vine_3c_1
+  rotate: false
+  xy: 2, 2
+  size: 731, 2150
+  orig: 731, 2150
+  offset: 0, 0
+  index: -1
+vine_c2/vine_3c_3
+  rotate: false
+  xy: 1362, 2
+  size: 625, 2150
+  orig: 625, 2150
+  offset: 0, 0
+  index: -1

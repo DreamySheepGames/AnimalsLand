@@ -1,0 +1,66 @@
+
+bg_2.png
+size: 1418,2154
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_b1/vine_b1_1
+  rotate: false
+  xy: 2, 2
+  size: 706, 2150
+  orig: 706, 2150
+  offset: 0, 0
+  index: -1
+vine_b2/vine_b1_1
+  rotate: false
+  xy: 710, 2
+  size: 706, 2150
+  orig: 706, 2150
+  offset: 0, 0
+  index: -1
+
+bg_22.png
+size: 1844,2186
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_b1/vine_b1_2
+  rotate: false
+  xy: 2, 2
+  size: 919, 2182
+  orig: 919, 2182
+  offset: 0, 0
+  index: -1
+vine_b2/vine_b1_2
+  rotate: false
+  xy: 923, 2
+  size: 919, 2182
+  orig: 919, 2182
+  offset: 0, 0
+  index: -1
+
+bg_23.png
+size: 1054,2411
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_b2/vine_b1_3
+  rotate: false
+  xy: 2, 2
+  size: 1050, 2407
+  orig: 1050, 2407
+  offset: 0, 0
+  index: -1
+
+bg_24.png
+size: 1054,2412
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vine_b1/vine_b1_3
+  rotate: false
+  xy: 2, 2
+  size: 1050, 2408
+  orig: 1050, 2408
+  offset: 0, 0
+  index: -1

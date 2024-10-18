@@ -10,6 +10,9 @@ export class EnemyFXController extends Component {
     @property(Node)
     private spinSprite: Node;
 
+    @property(sp.Skeleton)
+    private enemySkeleton: sp.Skeleton;
+
     private angularVelocity: number;
 
     start() {
@@ -48,6 +51,7 @@ export class EnemyFXController extends Component {
     public freezeFXOn() {
         this.lockFX.active = true;
         this.spinSprite.getComponent(RigidBody2D).angularVelocity = 0;
+        this.enemySkeleton.setAnimation(0, "stun", true);
 
         // Sync the lockFX rotation with the spinSprite node's rotation
         this.lockFX.rotation = this.spinSprite.rotation;
@@ -57,6 +61,7 @@ export class EnemyFXController extends Component {
         // Reset the lockFX rotation to the default (zero rotation)
         //this.lockFX.setRotation(Quat.IDENTITY);
         this.lockFX.active = false;
+        this.enemySkeleton.setAnimation(0, "idle", true);
 
         // Restore the angular velocity to its original value
         this.spinSprite.getComponent(RigidBody2D).angularVelocity = this.angularVelocity;

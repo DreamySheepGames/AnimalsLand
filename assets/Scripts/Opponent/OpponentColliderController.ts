@@ -8,6 +8,7 @@ import {EndlessGameManagerOpponent} from "db://assets/Scripts/GamePlay/EndlessGa
 import {OpponentInvincibleMeterController} from "db://assets/Scripts/Opponent/UI/OpponentInvincibleMeterController";
 import {OpponentAnimController} from "db://assets/Scripts/ANIM/Player/OpponentAnimController";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
+import {OpponentVFXController} from "db://assets/Scripts/Opponent/OpponentVFXController";
 const { ccclass, property } = _decorator;
 
 @ccclass('OpponentColliderController')
@@ -126,6 +127,7 @@ export class OpponentColliderController extends Component {
         this.playerController.turnOnInvincible();
 
         EndlessGameManagerOpponent.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claimBoost", 1);
+        this.node.getComponent(OpponentVFXController).fxShieldOn();
 
         // turn on countdown timer through TimerManager
         this.timerManager.timerSuperHeroOn();
@@ -136,6 +138,7 @@ export class OpponentColliderController extends Component {
 
     hitDouble(otherCollider)
     {
+        this.node.getComponent(OpponentVFXController).fxX2On();
         this.timerManager.timerDoubleOn();
         this.destroyCollidedNode(otherCollider);
     }
@@ -151,6 +154,7 @@ export class OpponentColliderController extends Component {
     hitFreeze(otherCollider)
     {
         EndlessGameManagerOpponent.Instance.freezeEnemy();
+        this.node.getComponent(OpponentVFXController).fxFreezeOn();
         this.timerManager.timerFreezeOn();
         this.destroyCollidedNode(otherCollider);
     }
@@ -158,6 +162,7 @@ export class OpponentColliderController extends Component {
     hitMagnet(otherCollider)
     {
         EndlessGameManagerOpponent.Instance.Magnet = true;
+        this.node.getComponent(OpponentVFXController).fxMagnetOn();
         this.timerManager.timerMagnetOn();
         this.destroyCollidedNode(otherCollider);
     }

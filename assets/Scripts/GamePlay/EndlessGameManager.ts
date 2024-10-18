@@ -12,6 +12,8 @@ import {MissionManager} from "db://assets/Scripts/GameData/MissionManager";
 import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
 import {EndlessGameDataManager} from "db://assets/Scripts/GameData/EndlessGameDataManager";
 import {VFXManager} from "db://assets/Scripts/GamePlay/VFXManager";
+import {PlayerVFXController} from "db://assets/Scripts/PlayerVFX/PlayerVFXController";
+import {PlayerColliderController} from "db://assets/Scripts/Player/PlayerColliderController";
 const { ccclass, property } = _decorator;
 
 @ccclass('EndlessGameManager')
@@ -334,6 +336,13 @@ export class EndlessGameManager extends Component {
     playerInvincibleOff()
     {
         this.playerController.turnOffInvincible();
+        this.playerController.node.getComponent(PlayerVFXController).fxShieldOff();
+    }
+
+    playerDoubleOff()
+    {
+        this.doubleDiamond = false;
+        this.playerController.node.getComponent(PlayerVFXController).fxX2Off();
     }
 
     slowdownEnemy()
@@ -384,6 +393,8 @@ export class EndlessGameManager extends Component {
 
     unFreezeEnemy()
     {
+        this.playerController.node.getComponent(PlayerVFXController).fxFreezeOff();
+
         // loop through all enemy in the scene to freeze them
         for (let i = 0; i < this.enemyQueue.length; i++) {
             if (this.enemyQueue[i])
@@ -405,6 +416,11 @@ export class EndlessGameManager extends Component {
                 }
             }
         }
+    }
+
+    playerMagnetOff() {
+        this.magnet = false;
+        this.playerController.node.getComponent(PlayerVFXController).fxMagnetOff();
     }
 
     assignMission(missionLabel: RichText)   // put 1 argument so the skip mission button and reuse this funcction

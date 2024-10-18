@@ -69,7 +69,7 @@ export class OpponentTimerController extends Component {
                 break;
 
             case 4:     // double
-                EndlessGameManagerOpponent.Instance.DoubleDiamond = false;
+                EndlessGameManagerOpponent.Instance.playerDoubleOff();
                 break;
 
             case 5:     // slowdown
@@ -81,7 +81,7 @@ export class OpponentTimerController extends Component {
                 break;
 
             case 7:     // magnet
-                EndlessGameManagerOpponent.Instance.Magnet = false;
+                EndlessGameManagerOpponent.Instance.playerMagnetOff();
                 break;
         }
 

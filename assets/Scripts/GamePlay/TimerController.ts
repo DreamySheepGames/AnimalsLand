@@ -80,7 +80,8 @@ export class TimerController extends Component {
                 break;
 
             case 4:     // double
-                EndlessGameManager.Instance.DoubleDiamond = false;
+                //EndlessGameManager.Instance.DoubleDiamond = false;
+                EndlessGameManager.Instance.playerDoubleOff();
                 break;
 
             case 5:     // slowdown
@@ -92,7 +93,8 @@ export class TimerController extends Component {
                 break;
 
             case 7:     // magnet
-                EndlessGameManager.Instance.Magnet = false;
+                //EndlessGameManager.Instance.Magnet = false;
+                EndlessGameManager.Instance.playerMagnetOff();
                 break;
         }
 

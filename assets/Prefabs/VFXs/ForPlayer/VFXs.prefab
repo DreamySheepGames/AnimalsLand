@@ -110,11 +110,11 @@
       "a": 255
     },
     "_skeletonData": {
-      "__uuid__": "65fff910-d503-4847-8b4a-b6de0e3510b5",
+      "__uuid__": "299481d7-7973-46a0-998d-e9eff3b0388b",
       "__expectedType__": "sp.SkeletonData"
     },
     "defaultSkin": "default",
-    "defaultAnimation": "FX_click",
+    "defaultAnimation": "",
     "_premultipliedAlpha": true,
     "_timeScale": 1,
     "_preCacheMode": 0,
@@ -141,6 +141,7 @@
       "__id__": 0
     },
     "fileId": "2d5qZnA55H3aGZ0Xgg4zcu",
+    "instance": null,
     "targetOverrides": null
   }
 ]

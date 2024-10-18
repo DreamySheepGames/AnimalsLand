@@ -1,0 +1,55 @@
+
+vs.png
+size: 1900,1568
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+S
+  rotate: false
+  xy: 520, 16
+  size: 124, 166
+  orig: 126, 168
+  offset: 1, 1
+  index: -1
+all
+  rotate: true
+  xy: 685, 24
+  size: 540, 960
+  orig: 540, 960
+  offset: 0, 0
+  index: -1
+chain_1
+  rotate: false
+  xy: 604, 566
+  size: 651, 1000
+  orig: 651, 1000
+  offset: 0, 0
+  index: -1
+chain_2
+  rotate: false
+  xy: 1257, 573
+  size: 641, 993
+  orig: 641, 993
+  offset: 0, 0
+  index: -1
+light
+  rotate: true
+  xy: 2, 369
+  size: 1197, 600
+  orig: 1197, 600
+  offset: 0, 0
+  index: -1
+middle
+  rotate: false
+  xy: 2, 2
+  size: 516, 365
+  orig: 520, 367
+  offset: 1, 1
+  index: -1
+v
+  rotate: false
+  xy: 520, 184
+  size: 163, 183
+  orig: 165, 185
+  offset: 1, 1
+  index: -1

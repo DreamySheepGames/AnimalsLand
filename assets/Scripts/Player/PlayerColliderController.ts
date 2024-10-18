@@ -7,6 +7,7 @@ import {TimerManager} from "db://assets/Scripts/GamePlay/TimerManager";
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
 import {PlayerAnimController} from "db://assets/Scripts/ANIM/Player/PlayerAnimController";
+import {PlayerVFXController} from "db://assets/Scripts/PlayerVFX/PlayerVFXController";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -24,10 +25,12 @@ export class PlayerColliderController extends Component {
     private missionProgressBarController: MissionProgressBarController;
 
     private playerAnimController: PlayerAnimController;
+    private playerVFXController: PlayerVFXController;
 
 
     start() {
         this.playerAnimController = this.node.getComponent(PlayerAnimController);
+        this.playerVFXController = this.node.getComponent(PlayerVFXController);
 
         var collider = this.getComponent(Collider2D);
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
@@ -160,6 +163,7 @@ export class PlayerColliderController extends Component {
 
         // vfx
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claimBooster", 1);
+        this.playerVFXController.fxShieldOn();
 
         // turn on countdown timer through TimerManager
         this.timerManager.timerSuperHeroOn();
@@ -170,6 +174,8 @@ export class PlayerColliderController extends Component {
 
     hitDouble(otherCollider)
     {
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
+        this.playerVFXController.fxX2On();
         EndlessGameManager.Instance.DoubleDiamond = true;
         this.timerManager.timerDoubleOn();
         this.destroyCollidedNode(otherCollider);
@@ -186,6 +192,8 @@ export class PlayerColliderController extends Component {
 
     hitFreeze(otherCollider)
     {
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
+        this.playerVFXController.fxFreezeOn();
         EndlessGameManager.Instance.freezeEnemy();
         this.timerManager.timerFreezeOn();
         this.destroyCollidedNode(otherCollider);
@@ -193,6 +201,8 @@ export class PlayerColliderController extends Component {
 
     hitMagnet(otherCollider)
     {
+        EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
+        this.playerVFXController.fxMagnetOn();
         EndlessGameManager.Instance.Magnet = true;
         this.timerManager.timerMagnetOn();
         this.destroyCollidedNode(otherCollider);

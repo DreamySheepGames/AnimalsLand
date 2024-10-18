@@ -149,12 +149,12 @@ export class GameManager extends Component {
             // EndlessGameData.getInstance().DoubleLevel = 0;
             // EndlessGameData.getInstance().SuperHeroLevel = 0;
             //
-            // let zero = 0;
-            // localStorage.setItem(this.magnetLevelKey, zero.toString())
-            // localStorage.setItem(this.freezerLevelKey, zero.toString())
-            // localStorage.setItem(this.slowdownLevelKey, zero.toString())
-            // localStorage.setItem(this.doubleLevelKey, zero.toString())
-            // localStorage.setItem(this.superHeroLevelKey, zero.toString())
+            let zero = 0;
+            localStorage.setItem(this.magnetLevelKey, zero.toString())
+            localStorage.setItem(this.freezerLevelKey, zero.toString())
+            localStorage.setItem(this.slowdownLevelKey, zero.toString())
+            localStorage.setItem(this.doubleLevelKey, zero.toString())
+            localStorage.setItem(this.superHeroLevelKey, zero.toString())
 
         }
     }
@@ -166,8 +166,8 @@ export class GameManager extends Component {
         localStorage.setItem("receivedDiamonds", currentSavedDiamondCount.toString());
 
         // test, not importatnt
-        // const money = 10000;
-        // localStorage.setItem("receivedDiamonds", money.toString());
+        const money = 10000;
+        localStorage.setItem("receivedDiamonds", money.toString());
     }
 
     updateMissionLabel()

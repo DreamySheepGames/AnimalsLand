@@ -31218,7 +31218,7 @@
     "component": "",
     "_componentId": "b1bfc/MWXBA97NI4EUlKbA1",
     "handler": "incrementItemLevel",
-    "customEventData": "magnet"
+    "customEventData": "freezer"
   },
   {
     "__type__": "cc.Node",
@@ -32161,7 +32161,7 @@
     "component": "",
     "_componentId": "b1bfc/MWXBA97NI4EUlKbA1",
     "handler": "incrementItemLevel",
-    "customEventData": "magnet"
+    "customEventData": "slowdown"
   },
   {
     "__type__": "cc.Node",
@@ -33104,7 +33104,7 @@
     "component": "",
     "_componentId": "b1bfc/MWXBA97NI4EUlKbA1",
     "handler": "incrementItemLevel",
-    "customEventData": "magnet"
+    "customEventData": "double"
   },
   {
     "__type__": "cc.Node",
@@ -34047,7 +34047,7 @@
     "component": "",
     "_componentId": "b1bfc/MWXBA97NI4EUlKbA1",
     "handler": "incrementItemLevel",
-    "customEventData": "magnet"
+    "customEventData": "superHero"
   },
   {
     "__type__": "cc.Node",
