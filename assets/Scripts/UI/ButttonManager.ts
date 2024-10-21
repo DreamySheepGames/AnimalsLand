@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Event, director, Sprite, Slider, AudioSource, Toggle, RichText, game,
-        tween, Vec3, UIOpacity, Label } from 'cc';
+        tween, Vec3, UIOpacity, Label, UITransform } from 'cc';
 import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
@@ -48,6 +48,12 @@ export class ButttonManager extends Component {
 
     @property(TransitionCanvasController)
     private transitionCanvasController: TransitionCanvasController;
+
+    @property(Node)
+    private musicBarFiller: Node;
+
+    @property(Node)
+    private sfxBarFiller: Node;
 
     start()
     {
@@ -203,6 +209,16 @@ export class ButttonManager extends Component {
         } else {
             console.error('Slider component is missing on the target node.');
         }
+    }
+
+    public resetVolume(event: Event)
+    {
+        this.musicSlider.progress = 1;
+        this.sfxSlider.progress = 1;
+        this.changingMusicVolume(event);
+        this.changingSfxVolume(event);
+        this.musicBarFiller.getComponent(UITransform).setContentSize(200, 30);
+        this.sfxBarFiller.getComponent(UITransform).setContentSize(200, 30);
     }
 
     public changingVibration()

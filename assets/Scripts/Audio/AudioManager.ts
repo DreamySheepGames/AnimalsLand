@@ -25,6 +25,13 @@ export class AudioManager extends Component {
     @property({ type: AudioClip })
     public buttonPressed: AudioClip;
 
+    @property({ type: AudioClip })
+    public enemyCollide: AudioClip;
+
+    @property({ type: AudioClip })
+    public itemCollect: AudioClip;
+
+
     onLoad() {
         AudioManager._instance = this;
     }
@@ -35,7 +42,9 @@ export class AudioManager extends Component {
 
         // assign volume for music and sfx
         this.musicSource.volume = SettingsData.getInstance().MusicVol;
+        console.log(this.musicSource.volume);
         this.sfxSource.volume = SettingsData.getInstance().SfxVol;
+        console.log(this.sfxSource.volume);
     }
 
     public playSFX(clip: AudioClip) {

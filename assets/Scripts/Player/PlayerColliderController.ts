@@ -8,6 +8,8 @@ import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {MissionProgressBarController} from "db://assets/Scripts/UI/MissionProgressBarController";
 import {PlayerAnimController} from "db://assets/Scripts/ANIM/Player/PlayerAnimController";
 import {PlayerVFXController} from "db://assets/Scripts/PlayerVFX/PlayerVFXController";
+import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
+import {SettingsData} from "db://assets/Scripts/GameData/SettingsData";
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerColliderController')
@@ -101,6 +103,9 @@ export class PlayerColliderController extends Component {
         EndlessGameManager.Instance.hitVFX();                       // red layer VFX
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(this.node.position, "FX_collider", 2);
 
+        //audio
+        AudioManager.Instance.playSFX(AudioManager.Instance.enemyCollide);
+
         // player anim
         this.playerAnimController.playAnimOnce("hit");
 
@@ -109,10 +114,10 @@ export class PlayerColliderController extends Component {
             this.missionProgressBarController.resetProgressBarFiller();
 
         // Trigger a vibration if the device supports it
-        if (navigator.vibrate) {
+        if (navigator.vibrate && SettingsData.getInstance().IsVibrate) {
             navigator.vibrate(200); // Vibrate for 200 milliseconds
         } else {
-            console.warn('Vibration not supported on this device.');
+            console.warn('Vibration not supported on this device or no vibration in settings.');
         }
 
         // mission score without bump
@@ -156,6 +161,9 @@ export class PlayerColliderController extends Component {
 
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_click", 1);
 
+        //audio
+        AudioManager.Instance.playSFX(AudioManager.Instance.itemCollect);
+
         // mission get diamond
         EndlessGameManager.Instance.doMissionGetDiamond(otherCollider.node.getComponent(Diamond).Value);
 
@@ -174,6 +182,9 @@ export class PlayerColliderController extends Component {
         // turn on invincible
         this.playerController.turnOnInvincible();
 
+        //audio
+        AudioManager.Instance.playSFX(AudioManager.Instance.itemCollect);
+
         // vfx
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claimBooster", 1);
         this.playerVFXController.fxShieldOn();
@@ -189,6 +200,10 @@ export class PlayerColliderController extends Component {
     {
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
         this.destroyCollidedNode(otherCollider);
+
+        //audio
+        AudioManager.Instance.playSFX(AudioManager.Instance.itemCollect);
+
         this.playerVFXController.fxX2On();
         EndlessGameManager.Instance.DoubleDiamond = true;
         this.timerManager.timerDoubleOn();
@@ -199,6 +214,7 @@ export class PlayerColliderController extends Component {
         // vfx
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claim", 1);
         this.destroyCollidedNode(otherCollider);
+        AudioManager.Instance.playSFX(AudioManager.Instance.itemCollect);
         EndlessGameManager.Instance.slowdownEnemy();
         this.timerManager.timerSlowdownOn();
     }
@@ -207,6 +223,7 @@ export class PlayerColliderController extends Component {
     {
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
         this.destroyCollidedNode(otherCollider);
+        AudioManager.Instance.playSFX(AudioManager.Instance.itemCollect);
         this.playerVFXController.fxFreezeOn();
         EndlessGameManager.Instance.freezeEnemy();
         this.timerManager.timerFreezeOn();
@@ -216,6 +233,7 @@ export class PlayerColliderController extends Component {
     {
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
         this.destroyCollidedNode(otherCollider);
+        AudioManager.Instance.playSFX(AudioManager.Instance.itemCollect);
         this.playerVFXController.fxMagnetOn();
         EndlessGameManager.Instance.Magnet = true;
         this.timerManager.timerMagnetOn();

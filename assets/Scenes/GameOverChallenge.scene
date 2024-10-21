@@ -6661,9 +6661,12 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_clip": null,
+    "_clip": {
+      "__uuid__": "8b79ffd5-77ba-4ddd-8e5c-2fb73f01d4a0",
+      "__expectedType__": "cc.AudioClip"
+    },
     "_loop": true,
-    "_playOnAwake": false,
+    "_playOnAwake": true,
     "_volume": 0,
     "_id": "5b3YqBN7RH9LIiNqtUyIhO"
   },
@@ -6792,7 +6795,7 @@
       "__id__": 193
     },
     "background": {
-      "__uuid__": "bbee765d-036f-4962-8436-b64c8e484846",
+      "__uuid__": "8b79ffd5-77ba-4ddd-8e5c-2fb73f01d4a0",
       "__expectedType__": "cc.AudioClip"
     },
     "buttonPressed": {

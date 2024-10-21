@@ -44,8 +44,8 @@ export class SpawnItemsManager extends Component {
         // 1 item: spawn rate = 0.12
         // 5 item: spawn rate = 0.2
         // this is to anti player only buys super hero item
-        //this.spawnRate = 0.12 + (this.dataPlayerBoughtItem.length - 1) * 0.02
-        this.spawnRate = 0.8 + (this.dataPlayerBoughtItem.length - 1) * 0.02
+        this.spawnRate = 0.12 + (this.dataPlayerBoughtItem.length - 1) * 0.02
+        //this.spawnRate = 0.8 + (this.dataPlayerBoughtItem.length - 1) * 0.02
 
         // get all the prefab's names into an array
         let prefabNames = this.getPrefabNames();

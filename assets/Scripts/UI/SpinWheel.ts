@@ -80,14 +80,14 @@ export class SpinWheel extends Component {
         const randomStop = Math.floor(Math.random() * 8);
 
         // Calculate the target rotation angle (360 + 45 * randomStop)
-        const targetAngle = 720 + 45 * 1;
+        const targetAngle = 720 + 45 * randomStop;
 
         // Create a tween to spin the wheel to the target angle over 2 seconds
         tween(this.wheel)
             .to(2, { eulerAngles: new Vec3(0, 0, -targetAngle) }, { easing: 'cubicOut' }) // Spin counter-clockwise
             .call(() => {
                 this.prizePanel.active = true;      // turn on prize panel
-                this.prize(1);             // assign prize
+                this.prize(randomStop);             // assign prize
                 this.node.active = false;           // turn off spin panel
             })
             .start();
