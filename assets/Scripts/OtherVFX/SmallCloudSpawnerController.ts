@@ -61,7 +61,6 @@ export class SmallCloudSpawnerController extends Component {
             // If the cloud is out of bounds, destroy it
             if (currentPos.y < -330) {
                 cloud.destroy();
-                console.log("cloud destroyed");
             }
         });
     }

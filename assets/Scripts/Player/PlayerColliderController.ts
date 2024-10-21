@@ -63,21 +63,34 @@ export class PlayerColliderController extends Component {
 
                 case 4:     // double item hit (tag = 4)
                     this.hitDouble(otherCollider);
+                    otherCollider.enabled = false;
                     break;
 
                 case 5:     // slowdown item hit (tag = 5)
                     this.hitSlowdown(otherCollider);
+                    otherCollider.enabled = false;
                     break;
 
                 case 6:     // freeze item hit (tag = 6)
                     this.hitFreeze(otherCollider);
+                    otherCollider.enabled = false;
                     break;
 
                 case 7:     // magnet item hit (tag = 7)
                     this.hitMagnet(otherCollider);
+                    otherCollider.enabled = false;
                     break;
             }
         }
+
+        // if (!this.playerController.isReturnAfterEnemyHit && otherCollider.tag == 4)
+        //     this.hitDouble(otherCollider);
+        // if (!this.playerController.isReturnAfterEnemyHit && otherCollider.tag == 5)
+        //     this.hitSlowdown(otherCollider);
+        // if (!this.playerController.isReturnAfterEnemyHit && otherCollider.tag == 6)
+        //     this.hitFreeze(otherCollider);
+        // if (!this.playerController.isReturnAfterEnemyHit && otherCollider.tag == 7)
+        //     this.hitMagnet(otherCollider);
     }
 
     hitEnemy()
@@ -175,36 +188,36 @@ export class PlayerColliderController extends Component {
     hitDouble(otherCollider)
     {
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
+        this.destroyCollidedNode(otherCollider);
         this.playerVFXController.fxX2On();
         EndlessGameManager.Instance.DoubleDiamond = true;
         this.timerManager.timerDoubleOn();
-        this.destroyCollidedNode(otherCollider);
     }
 
     hitSlowdown(otherCollider)
     {
         // vfx
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_claim", 1);
+        this.destroyCollidedNode(otherCollider);
         EndlessGameManager.Instance.slowdownEnemy();
         this.timerManager.timerSlowdownOn();
-        this.destroyCollidedNode(otherCollider);
     }
 
     hitFreeze(otherCollider)
     {
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
+        this.destroyCollidedNode(otherCollider);
         this.playerVFXController.fxFreezeOn();
         EndlessGameManager.Instance.freezeEnemy();
         this.timerManager.timerFreezeOn();
-        this.destroyCollidedNode(otherCollider);
     }
 
     hitMagnet(otherCollider)
     {
         EndlessGameManager.Instance.vfxManager.PlayVFXOnce(otherCollider.node.position, "FX_item", 1);
+        this.destroyCollidedNode(otherCollider);
         this.playerVFXController.fxMagnetOn();
         EndlessGameManager.Instance.Magnet = true;
         this.timerManager.timerMagnetOn();
-        this.destroyCollidedNode(otherCollider);
     }
 }

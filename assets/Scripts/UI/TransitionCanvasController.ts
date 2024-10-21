@@ -11,6 +11,14 @@ export class TransitionCanvasController extends Component {
     get TransitionDuration(): number {return this.transitionDuration;}
     set TransitionDuration(value: number) {this.transitionDuration = value;}
 
+    private isInTransition: boolean;
+    private isOutTransition: boolean;
+
+    onLoad() {
+        this.isInTransition = false;        // anti spam "in" or "out" anim
+        this.isOutTransition = false;
+    }
+
     start() {
         this.inTransition();
     }
@@ -22,7 +30,9 @@ export class TransitionCanvasController extends Component {
 
         const uiTransform = this.node.getComponent(UITransform);
 
-        if (uiTransform) {
+        if (uiTransform && !this.isInTransition) {
+            this.isInTransition = true;
+
             // Start the tween to modify the content size from (0, 0) to (1200, 1200)
             tween(uiTransform)
                 .to(this.transitionDuration, { contentSize: new Size(1300, 1500) })
@@ -37,7 +47,8 @@ export class TransitionCanvasController extends Component {
 
         const uiTransform = this.node.getComponent(UITransform);
 
-        if (uiTransform) {
+        if (uiTransform && !this.isOutTransition) {
+            this.isOutTransition = true;
             tween(uiTransform)
                 .to(this.transitionDuration, { contentSize: new Size(0, 0) })
                 .start();

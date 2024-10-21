@@ -12,7 +12,7 @@ export class PrizePanelController extends Component {
     onEnable()
     {
         this.node.setScale(1, 1, 1);
-        this.prizeDescription.active = false;
+        //this.prizeDescription.active = false;
         this.prizeNamePop();
     }
 
@@ -28,7 +28,7 @@ export class PrizePanelController extends Component {
     private prizeDescriptionPop()
     {
         this.prizeDescription.setScale(0.1, 0.1, 0.1);
-        this.prizeDescription.active = true;
+        //this.prizeDescription.active = true;
         tween(this.prizeDescription)
             .to(0.35, { scale: new Vec3(1, 1, 1) }, { easing: 'backOut' })
             .start();

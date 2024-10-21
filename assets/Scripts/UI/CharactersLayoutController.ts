@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, sp } from 'cc';
 import {CharacterData} from "db://assets/Scripts/GameData/CharacterData";
 import {FillBarController} from "db://assets/Scripts/UI/FillBarController";
 import {CharactersPanelController} from "db://assets/Scripts/UI/CharactersPanelController";
@@ -29,8 +29,20 @@ export class CharactersLayoutController extends Component {
 
             if (childNode && childNode.children.length > 1)
             {
+                // explode vfx
+                const thirdChild = childNode.children[2];
+                if (thirdChild) {
+                    thirdChild.active = true;
+                    thirdChild.getComponent(sp.Skeleton).setCompleteListener(() => {
+                        thirdChild.destroy();
+                    })
+                }
+
+                // set frame off
                 const secondChild = childNode.children[1];
-                secondChild.active = false;
+                this.scheduleOnce(() => {
+                    secondChild.active = false;
+                }, 0.5);
             }
         }
     }

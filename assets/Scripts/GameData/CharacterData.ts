@@ -47,7 +47,7 @@ export class CharacterData{
         }
 
         // testing, unimportant
-        // this.characterID = [0]; // Default value (id 0)
+        // this.characterID = [0, 1, 2]; // Default value (id 0)
         // localStorage.setItem(characterDataKey, JSON.stringify(this.characterID));
     }
 

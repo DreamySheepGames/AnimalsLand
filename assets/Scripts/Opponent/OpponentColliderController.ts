@@ -58,18 +58,22 @@ export class OpponentColliderController extends Component {
 
                 case 4:     // double item hit (tag = 4)
                     this.hitDouble(otherCollider);
+                    otherCollider.enabled = false;
                     break;
 
                 case 5:     // slowdown item hit (tag = 5)
                     this.hitSlowdown(otherCollider);
+                    otherCollider.enabled = false;
                     break;
 
                 case 6:     // freeze item hit (tag = 6)
                     this.hitFreeze(otherCollider);
+                    otherCollider.enabled = false;
                     break;
 
                 case 7:     // magnet item hit (tag = 7)
                     this.hitMagnet(otherCollider);
+                    otherCollider.enabled = false;
                     break;
             }
         }

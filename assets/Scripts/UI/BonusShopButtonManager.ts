@@ -98,8 +98,8 @@ export class BonusShopButtonManager extends Component {
             if (savedDataValue < 3)
             {
                 savedDataValue += 1;
-                EndlessGameData.getInstance().updateItemLevels();
                 localStorage.setItem(dataKey, savedDataValue.toString());
+                EndlessGameData.getInstance().updateItemLevels();
 
                 //UserDataManager.getInstance().updateUserData();
             }

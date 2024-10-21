@@ -38,8 +38,8 @@ export class SpinWheel extends Component {
     @property(RichText)
     private prizeDescription: RichText;
 
-    @property(Sprite)
-    private characterIcon: Sprite;
+    @property(sp.Skeleton)
+    private characterIcon: sp.Skeleton;
 
     @property(Node)
     private characterLayout: Node;
@@ -80,14 +80,14 @@ export class SpinWheel extends Component {
         const randomStop = Math.floor(Math.random() * 8);
 
         // Calculate the target rotation angle (360 + 45 * randomStop)
-        const targetAngle = 720 + 45 * randomStop;
+        const targetAngle = 720 + 45 * 1;
 
         // Create a tween to spin the wheel to the target angle over 2 seconds
         tween(this.wheel)
             .to(2, { eulerAngles: new Vec3(0, 0, -targetAngle) }, { easing: 'cubicOut' }) // Spin counter-clockwise
             .call(() => {
-                this.prize(randomStop);             // assign prize
                 this.prizePanel.active = true;      // turn on prize panel
+                this.prize(1);             // assign prize
                 this.node.active = false;           // turn off spin panel
             })
             .start();
@@ -247,37 +247,12 @@ export class SpinWheel extends Component {
         }
     }
 
-    showUnlockedCharacter(newCharacterID: number)
-    {
+    showUnlockedCharacter(newCharacterID: number) {
         this.prizeDescription.node.active = false;
         this.characterIcon.node.active = true;
 
-        // Assuming that this.characterLayout is a Node that contains children
-        const newCharacterNode = this.characterLayout.children[newCharacterID]; // Get the child at the newCharacterID
-        const characterIconNode = newCharacterNode.children[0]; // Get the first child of that node
-
-        // Assuming this.characterIcon is of type Sprite
-        const characterSprite = characterIconNode.getComponent(Sprite); // Get the Sprite component of the first child
-        const chracterSpriteName: string = characterSprite.spriteFrame.name;
-        // console.log("new ID: " + newCharacterID);
-        // console.log("character icon node: " + newCharacterNode.children[0].getComponent(Sprite).spriteFrame.name);
-
-        if (characterSprite) {
-            resources.load(`CharactersIcon/${chracterSpriteName}/spriteFrame`, SpriteFrame, (err, spriteFrame) => {
-                if (err) {
-                    console.error('Error loading sprite frame:', err);
-                    return;
-                }
-                if (this.characterIcon && spriteFrame) {
-                    this.characterIcon.spriteFrame = spriteFrame; // Set the loaded frame to the player sprite
-                    this.prizeName.string = spriteFrame.name;
-                } else {
-                    console.error('Player sprite or loaded sprite frame is null.');
-                }
-            });
-        } else {
-            console.error("Sprite component not found on the child node.");
-        }
+        this.prizeName.string = "New character unlocked";
+        this.characterIcon.setSkin("char_" + (newCharacterID + 1).toString());
     }
 
 

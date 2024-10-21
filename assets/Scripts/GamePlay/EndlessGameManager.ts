@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, director, RichText, tween, Vec3, UIOpacity } from 'cc';
+import { _decorator, Component, Node, Label, director, RichText, tween, Vec3, UIOpacity, sp } from 'cc';
 import { EndlessBGManager } from 'db://assets/Scripts/GamePlay/EndlessBGManager';
 import {MoveSideWay} from "db://assets/Scripts/EnemyAndItems/MoveSideWay";
 import {SpawnEnemyManager} from "db://assets/Scripts/GamePlay/SpawnEnemyManager";
@@ -47,6 +47,9 @@ export class EndlessGameManager extends Component {
 
     @property(Node)
     private endlessBGManager: Node;
+
+    @property([Node])
+    private heartEmpty: Node[] = [];
 
     @property([Node])
     private heart: Node[] = [];
@@ -135,6 +138,8 @@ export class EndlessGameManager extends Component {
     get CurrentMission(): string {return this.currentMission;}
     set CurrentMission(value: string) {this.currentMission = value;}
 
+    private health: number;
+
     onLoad() {
         // Assign the instance when the script is loaded
         EndlessGameManager.instance = this;
@@ -210,11 +215,15 @@ export class EndlessGameManager extends Component {
     }
 
     public decreaseHeart() {
+        this.health--;
         if (this.heart && this.heart.length > 0) {
             for (let i = 0; i < this.heart.length; i++) {
-                if (this.heart[i].active) {
-                    this.heart[i].active = false;
+                if (this.heart[i].active && this.heart[i].getComponent(sp.Skeleton).paused == true) {
+                    this.heart[i].getComponent(sp.Skeleton).paused = false;
                     this.checkIfGameOver();
+                    this.heart[i].getComponent(sp.Skeleton).setCompleteListener(() => {
+                        this.heart[i].active = false;
+                    })
                     break; // Exit the loop immediately after turning off the heart
                 }
             }
@@ -226,7 +235,8 @@ export class EndlessGameManager extends Component {
         var isGameOver = true;
 
         // if there's an active heart then the game is not over
-        if (this.heart && this.heart.length > 0)
+        //if (this.heart && this.heart.length > 0)
+        if (this.health > 0)
         {
             this.heart.forEach(item => {
                if (item.active == true)
@@ -520,8 +530,18 @@ export class EndlessGameManager extends Component {
     {
         // turn on hearts based on the saved count value;
         const heartCount = EndlessGameData.getInstance().ReviveHearts;
-        for (let i = 0; i < this.heart.length; i++)
+        this.health = heartCount;
+        for (let i = 0; i < this.heart.length; i++) {
             this.heart[i].active = (i < heartCount) ? true : false;
+            if (this.heartEmpty[i])
+                this.heartEmpty[i].active = this.heart[i].active;
+
+            // pause sp.skeleton anim at start
+            const skeleton = this.heart[i].getComponent(sp.Skeleton);
+            if (skeleton) {
+                skeleton.paused = true; // Pauses the animation at the start
+            }
+        }
     }
 
     public hitVFX() {
