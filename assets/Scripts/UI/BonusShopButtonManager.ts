@@ -109,7 +109,7 @@ export class BonusShopButtonManager extends Component {
         }
     }
 
-    updateItemName()
+    public updateItemName()
     {
         if (parseInt(localStorage.getItem("magnetLevel")) < 3) {
             this.magnetName.string = "Magnet lv: " + (parseInt(localStorage.getItem("magnetLevel")) + 1).toString();
@@ -148,16 +148,16 @@ export class BonusShopButtonManager extends Component {
         }
 
         if (parseInt(localStorage.getItem("superHeroLevel")) < 3) {
-            this.superHeroName.string = "Super Hero lv: " + (parseInt(localStorage.getItem("superHeroLevel")) + 1).toString();
+            this.superHeroName.string = "Invincible lv: " + (parseInt(localStorage.getItem("superHeroLevel")) + 1).toString();
             this.TickIconOff(this.tickSuperHero, this.buttonSuperHero);
         }
         else {
-            this.superHeroName.string = "Super Hero lv: 3";
+            this.superHeroName.string = "Invincible lv: 3";
             this.TickIconOn(this.tickSuperHero, this.buttonSuperHero);
         }
     }
 
-    updatePrices()
+    public updatePrices()
     {
         if (parseInt(localStorage.getItem("magnetLevel")) < 3)
             this.priceMagnet.string = EndlessGameData.getInstance().ItemPrices[parseInt(localStorage.getItem("magnetLevel"),10)].toString();

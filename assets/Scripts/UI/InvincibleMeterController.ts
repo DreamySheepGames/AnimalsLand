@@ -37,9 +37,13 @@ export class InvincibleMeterController extends Component {
         }
 
         // get scale value then increase the vaue
-        let fillerScaleX = this.invincibleFiller.getScale().x + 1/this.fillingStep;
-        let fillerScaleY = this.invincibleFiller.getScale().y + 1/this.fillingStep;
-        let fillerScaleZ = this.invincibleFiller.getScale().z + 1/this.fillingStep;
+        // let fillerScaleX = this.invincibleFiller.getScale().x + 1/this.fillingStep;
+        // let fillerScaleY = this.invincibleFiller.getScale().y + 1/this.fillingStep;
+        // let fillerScaleZ = this.invincibleFiller.getScale().z + 1/this.fillingStep;
+
+        let fillerScaleX = this.currentStep/this.fillingStep;
+        let fillerScaleY = this.currentStep/this.fillingStep;
+        let fillerScaleZ = this.currentStep/this.fillingStep;
 
         if (fillerScaleX > 1 || fillerScaleY > 1 || fillerScaleZ > 1)
         {
