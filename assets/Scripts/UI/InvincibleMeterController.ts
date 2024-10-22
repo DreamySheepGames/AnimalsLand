@@ -12,7 +12,7 @@ export class InvincibleMeterController extends Component {
     playerController: PlayerController;
 
     @property
-    private fillingStep:number = 9;
+    private fillingStep: number = 9;
 
     private currentStep = 0;
     private meterTweenDuration = 0.25;

@@ -31,6 +31,8 @@ export class AudioManager extends Component {
     @property({ type: AudioClip })
     public itemCollect: AudioClip;
 
+    @property({ type: AudioClip })
+    public winSFX: AudioClip;
 
     onLoad() {
         AudioManager._instance = this;

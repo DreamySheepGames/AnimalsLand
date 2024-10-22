@@ -434,7 +434,7 @@
         "__id__": 937
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 1153
@@ -501,7 +501,7 @@
         "__id__": 335
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [],
     "_prefab": null,
     "_lpos": {
@@ -32881,7 +32881,7 @@
         "__id__": 955
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 958

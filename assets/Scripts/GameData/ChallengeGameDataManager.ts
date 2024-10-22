@@ -2,6 +2,7 @@ import { _decorator, Component, Node, RichText } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
+import {AudioManager} from "db://assets/Scripts/Audio/AudioManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('ChallengeGameDataManager')
@@ -52,7 +53,7 @@ export class ChallengeGameDataManager extends Component {
         this.gemCountLabel.string = EndlessGameManager.Instance.ReceivedDiamond.toString();
         this.saveReceivedDiamond();
 
-        if (challengeGameData.Score < challengeGameData.OpponentScore && !deadBeforeEnd)
+        if (challengeGameData.Score < challengeGameData.OpponentScore && !deadBeforeEnd)        // lose
         {
             this.winLabel.active = false;
             this.loseLabel.active = true;
@@ -60,7 +61,7 @@ export class ChallengeGameDataManager extends Component {
         }
         else
         {
-            if (challengeGameData.Score > challengeGameData.OpponentScore && !deadBeforeEnd)
+            if (challengeGameData.Score > challengeGameData.OpponentScore && !deadBeforeEnd)    // win
             {
                 this.winLabel.active = true;
                 this.loseLabel.active = false;
@@ -68,13 +69,22 @@ export class ChallengeGameDataManager extends Component {
             }
             else
             {
-                if (!deadBeforeEnd)
+                if (!deadBeforeEnd)                                                             // draw
                 {
                     this.winLabel.active = false;
                     this.loseLabel.active = false;
                     this.drawLabel.node.active = true;
+
                 }
             }
+        }
+    }
+
+    start()
+    {
+        if (this.winLabel.active == true || this.drawLabel.node.active == true) {
+            AudioManager.Instance.PauseMusic();
+            AudioManager.Instance.playSFX(AudioManager.Instance.winSFX);
         }
     }
 

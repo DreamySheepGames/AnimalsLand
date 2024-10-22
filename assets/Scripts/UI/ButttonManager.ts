@@ -219,6 +219,7 @@ export class ButttonManager extends Component {
         this.changingSfxVolume(event);
         this.musicBarFiller.getComponent(UITransform).setContentSize(200, 30);
         this.sfxBarFiller.getComponent(UITransform).setContentSize(200, 30);
+        this.vibrateToggle.isChecked = true;
     }
 
     public changingVibration()
