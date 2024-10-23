@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, RichText } from 'cc';
+import { _decorator, Component, Node, RichText, tween } from 'cc';
 import {EndlessGameData} from "db://assets/Scripts/GameData/EndlessGameData";
 import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 import {UserDataManager} from "db://assets/Scripts/GameData/UserDataManager";
@@ -7,29 +7,18 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ChallengeGameDataManager')
 export class ChallengeGameDataManager extends Component {
-    @property(RichText)
-    private playerScoreLabel: RichText;
+    @property(RichText) private playerScoreLabel: RichText;
+    @property(RichText) private opponentScoreLabel: RichText;
+    @property(RichText) private playerLoseScoreLabel: RichText;
+    @property(RichText) private gemCountLabel: RichText;
+    @property(Node) private winLabel: Node;
+    @property(Node) private loseLabel: Node;
+    @property(RichText) private drawLabel: RichText;
+    @property(Node) private gameOverLabel: Node;
 
-    @property(RichText)
-    private opponentScoreLabel: RichText;
-
-    @property(RichText)
-    private playerLoseScoreLabel: RichText;
-
-    @property(RichText)
-    private gemCountLabel: RichText;
-
-    @property(Node)
-    private winLabel: Node;
-
-    @property(Node)
-    private loseLabel: Node;
-
-    @property(RichText)
-    private drawLabel: RichText;
-
-    @property(Node)
-    private gameOverLabel: Node;
+    private scoreLabelUpdateDuration: number = 0.7;           // score will be running from 0 to target score in x seconds
+    private opponentScoreLabelUpdateDuration: number = 0.95;           // score will be running from 0 to target score in x seconds
+    private diamondLabelUpdateDuration: number = 1;
 
     onLoad()
     {
@@ -38,9 +27,20 @@ export class ChallengeGameDataManager extends Component {
         challengeGameData.checkSpinWheelHealthStatus();
 
         // assign scores to labels
-        this.playerScoreLabel.string = "Your score: <color=#EE6E69>" + challengeGameData.Score.toString() + "</color>";
-        this.playerLoseScoreLabel.string = "Score: <color=#EE6E69>" + challengeGameData.Score.toString() + "</color>";
-        this.opponentScoreLabel.string = "Enemy score: <color=#EE6E69>" + challengeGameData.OpponentScore.toString() + "</color>";
+        // this.playerScoreLabel.string = "Your score: <color=#FFFFFF>" + challengeGameData.Score.toString() + "</color>";
+        this.animateValue(0, challengeGameData.Score, this.scoreLabelUpdateDuration, (value) => {
+            this.playerScoreLabel.string = `Your score: <color=#FFFFFF>${Math.floor(value)}</color>`;
+        });
+
+        // this.playerLoseScoreLabel.string = "Score: <color=#FFFFFF>" + challengeGameData.Score.toString() + "</color>";
+        this.animateValue(0, challengeGameData.Score, this.scoreLabelUpdateDuration, (value) => {
+            this.playerLoseScoreLabel.string = `Score: <color=#FFFFFF>${Math.floor(value)}</color>`;
+        });
+
+        // this.opponentScoreLabel.string = "Enemy score: <color=#FFFFFF>" + challengeGameData.OpponentScore.toString() + "</color>";
+        this.animateValue(0, challengeGameData.OpponentScore, this.opponentScoreLabelUpdateDuration, (value) => {
+            this.opponentScoreLabel.string = `Enemy score: <color=#FFFFFF>${Math.floor(value)}</color>`;
+        });
 
         // decide which label will appear
         let deadBeforeEnd = challengeGameData.ChallengeDeadBeforeEnd;
@@ -50,8 +50,10 @@ export class ChallengeGameDataManager extends Component {
         this.opponentScoreLabel.node.active = !deadBeforeEnd;
 
         // diamond count label
-        this.gemCountLabel.string = EndlessGameManager.Instance.ReceivedDiamond.toString();
-        this.saveReceivedDiamond();
+        //this.gemCountLabel.string = EndlessGameManager.Instance.ReceivedDiamond.toString();
+        this.animateValue(0, EndlessGameManager.Instance.ReceivedDiamond, this.diamondLabelUpdateDuration, (value) => {
+            this.gemCountLabel.string = `${Math.floor(value)}`;
+        });
 
         if (challengeGameData.Score < challengeGameData.OpponentScore && !deadBeforeEnd)        // lose
         {
@@ -80,12 +82,25 @@ export class ChallengeGameDataManager extends Component {
         }
     }
 
+    // Helper function to animate value from start to end over a given duration
+    private animateValue(start: number, end: number, duration: number, updateLabel: (value: number) => void) {
+        const obj = { value: start };  // Define the object with a 'value' property
+        tween(obj)
+            .to(duration, { value: end }, {
+                onUpdate: () => {
+                    updateLabel(obj.value); // Update the label with the current 'value'
+                }
+            })
+            .start();
+    }
+
     start()
     {
         if (this.winLabel.active == true || this.drawLabel.node.active == true) {
             AudioManager.Instance.PauseMusic();
             AudioManager.Instance.playSFX(AudioManager.Instance.winSFX);
         }
+        this.saveReceivedDiamond();
     }
 
     saveReceivedDiamond() {
