@@ -14,11 +14,32 @@ export class LoadingForFont extends Component {
     @property(Node)
     private panel: Node;
 
+    @property(Node)
+    private loadingLabel: Node;
+
     start() {
         this.panel.active = true;
+
         this.scheduleOnce(() => {
-            director.loadScene("MainMenu");
-        }, 0.5);
+            if (this.loadingLabel)
+                this.loadingLabel.active = true;
+        }, 0.2);
+
+        const sceneName = director.getScene().name;
+
+        if (sceneName == "BootGame") {
+            this.scheduleOnce(() => {
+                director.loadScene("Loading");
+            }, 0.4);
+        }
+
+        if (sceneName == "Loading") {
+            this.scheduleOnce(() => {
+                director.loadScene("MainMenu");
+            }, 0.4);
+        }
+
+
     }
 }
 

@@ -96,7 +96,9 @@ export class CharactersLayoutController extends Component {
 
             // set freeze frame off and update fillbar
             this.setFreezeFrameOff();
-            this.characterSlider.updateFill();
+            this.scheduleOnce(() => {
+                this.characterSlider.updateFill();
+            }, 0.8);
 
             // turn off character button
             if (unlockedCountLeft <= 0)

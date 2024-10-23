@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Slider, UITransform, RichText } from 'cc';
+import { _decorator, Component, Node, Slider, UITransform, RichText, sp } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('FillBarController')
@@ -17,7 +17,9 @@ export class FillBarController extends Component {
 
     start()
     {
-        this.updateFill();
+        this.scheduleOnce(() => {
+            this.updateFill();
+        }, 0.8);
     }
 
     public updateFill() {
@@ -36,6 +38,14 @@ export class FillBarController extends Component {
                 if (!secondChild.active) {
                     unlockedCharacterCount++;
                 }
+                // Check if the skeleton animation is playing
+                // const skeleton = secondChild.getComponent(sp.Skeleton);
+                // if (skeleton) {
+                //     const currentAnimationState = skeleton.getCurrent(0); // 0 refers to the first track
+                //     if (currentAnimationState) {
+                //         unlockedCharacterCount++;
+                //     }
+                // }
             }
         }
 

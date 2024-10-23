@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, Input } from 'cc';
 import {PlayerController} from "db://assets/Scripts/Player/PlayerController";
+import {EndlessGameManager} from "db://assets/Scripts/GamePlay/EndlessGameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass('TapArea')
@@ -21,7 +22,7 @@ export class TapArea extends Component {
     }
 
     private onTouchStart() {
-        if (this.playerController && this.isInteractable == true) {
+        if (this.playerController && this.isInteractable == true && EndlessGameManager.Instance.Health > 0) {
             this.playerController.togglePosition();
         }
     }

@@ -8,6 +8,9 @@ export class TransitionCanvasController extends Component {
     @property(Node)
     private canvas: Node;
 
+    @property(Node)
+    private loadingLabel: Node;
+
     get TransitionDuration(): number {return this.transitionDuration;}
     set TransitionDuration(value: number) {this.transitionDuration = value;}
 
@@ -51,6 +54,10 @@ export class TransitionCanvasController extends Component {
             this.isOutTransition = true;
             tween(uiTransform)
                 .to(this.transitionDuration, { contentSize: new Size(0, 0) })
+                .call(() => {
+                    if (this.loadingLabel)
+                        this.loadingLabel.active = true;
+                })
                 .start();
         }
     }

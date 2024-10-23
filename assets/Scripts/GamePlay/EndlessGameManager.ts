@@ -106,6 +106,8 @@ export class EndlessGameManager extends Component {
     private scheduledCallback: Function | null = null; // To store the reference of the scheduled callback
     private playerHasDied:boolean = false;
 
+    private health: number;
+
     get StageCheckPoint(): number[] {return this.stageCheckPoint;}
     set StageCheckPoint(value: number[]) {this.stageCheckPoint = value;}
 
@@ -138,7 +140,8 @@ export class EndlessGameManager extends Component {
     get CurrentMission(): string {return this.currentMission;}
     set CurrentMission(value: string) {this.currentMission = value;}
 
-    private health: number;
+    get Health(): number {return this.health;}
+    set Health(value: number) {this.health = value;}
 
     onLoad() {
         // Assign the instance when the script is loaded
