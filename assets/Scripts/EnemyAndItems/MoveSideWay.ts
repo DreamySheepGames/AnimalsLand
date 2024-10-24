@@ -128,7 +128,7 @@ export class MoveSideWay extends Component {
         // If the flag is false, stop sideways movement
         if (!this.isMoveSideWay) {
             // Check if the node is outside the screen bounds
-            if (this.node.position.x > this.screenWidth || this.node.position.x < -this.screenWidth) {
+            if (this.node.position.x > this.screenWidth + 50 || this.node.position.x < -this.screenWidth - 50) {
                 this.node.destroy(); // Destroy the item/enemy if outside the screen
             }
         }

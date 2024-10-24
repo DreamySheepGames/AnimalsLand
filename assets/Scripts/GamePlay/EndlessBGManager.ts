@@ -38,11 +38,13 @@ export class EndlessBGManager extends Component {
     private currentTween1: Tween<Node> = null; // Reference to the active tween (tween current background)
     private currentTween2: Tween<Node> = null; // Reference to the active tween (tween next background)
     private currentTween3: Tween<Node> = null; // Reference to the active tween (tween next background)
-    private tweenSpeed = 0.25;                  // IMPORTANT NOTE: tween speed must be <= player tween move speed fast * 2;
+    private tweenSpeed = 0.4;                  // IMPORTANT NOTE: tween speed must be <= player tween move speed fast * 2;
     private lastStepValue: number;
     private yToDisactivate = 4;
 
     private hasDoneAllLevel = false;
+
+    private moveCount = 0;
 
     get LevelSteps(): number[] {
         return this.levelSteps;
@@ -73,7 +75,12 @@ export class EndlessBGManager extends Component {
         });
     }
 
-    public moveBackground() {
+    public startMovingBackGround() {
+        this.moveCount++;
+        this.moveBackground();
+    }
+
+    private moveBackground() {
         const currentBG = this.backgrounds[this.currentBackgroundIndex];
         const nextBG = this.backgrounds[this.nextBackgroundIndex];
         const lastBG = this.backgrounds[this.lastBackgroundIndex];
@@ -116,6 +123,12 @@ export class EndlessBGManager extends Component {
 
         this.currentTween3 = tween(lastBG)
             .to(this.tweenSpeed, {position: lastTargetPos }, {easing: "circOut" })
+            .call(() => {
+                this.moveCount--;
+                if (this.moveCount > 0) {
+                    this.moveBackground();
+                }
+            })
             .start();
     }
 

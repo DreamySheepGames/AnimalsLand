@@ -3061,7 +3061,7 @@
         "__id__": 89
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 93
@@ -20243,8 +20243,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 176.791,
-      "y": 282.317,
+      "x": 179.981,
+      "y": 278.868,
       "z": 0
     },
     "_lrot": {
@@ -21397,8 +21397,8 @@
     "_alignFlags": 33,
     "_target": null,
     "_left": 359.291,
-    "_right": 5.709000000000003,
-    "_top": 46.18299999999999,
+    "_right": -183.981,
+    "_top": -282.86800000000005,
     "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,

@@ -17,8 +17,8 @@ export class ChallengeGameDataManager extends Component {
     @property(Node) private gameOverLabel: Node;
 
     private scoreLabelUpdateDuration: number = 0.7;           // score will be running from 0 to target score in x seconds
-    private opponentScoreLabelUpdateDuration: number = 0.95;           // score will be running from 0 to target score in x seconds
-    private diamondLabelUpdateDuration: number = 1;
+    private opponentScoreLabelUpdateDuration: number = 0.7;           // score will be running from 0 to target score in x seconds
+    private diamondLabelUpdateDuration: number = 0.9;
 
     onLoad()
     {

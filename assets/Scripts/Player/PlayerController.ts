@@ -159,7 +159,7 @@ export class PlayerController extends Component {
                     EndlessGameManager.Instance.incrementScore();
 
                     // Move BG down
-                    this.backgroundManager.getComponent(EndlessBGManager).moveBackground();
+                    this.backgroundManager.getComponent(EndlessBGManager).startMovingBackGround();
                 }
 
                 this.applyIdlePseudoForce();
@@ -207,55 +207,10 @@ export class PlayerController extends Component {
     turnOnInvincible()
     {
         this._isInvincible = true;
-
-        // const spriteComponent = this.node.getComponent(Sprite);
-        // const originalTransform = this.node.getComponent(UITransform); // Get UITransform of the original node
-        //
-        // if (spriteComponent) {
-        //     // Clone the node
-        //     if (this.clonedNode == null)
-        //     {
-        //         this.clonedNode = new Node("ClonedSprite");
-        //         const clonedSprite = this.clonedNode.addComponent(Sprite);
-        //         clonedSprite.spriteFrame = spriteComponent.spriteFrame; // Clone the sprite frame
-        //
-        //         // Add the cloned node as a child of the original node
-        //         this.clonedNode.setParent(this.node);
-        //
-        //         // Set the clone's content size to the original node's content size
-        //         const clonedTransform = this.clonedNode.addComponent(UITransform);
-        //         clonedTransform.setContentSize(originalTransform.contentSize);
-        //
-        //         // Set the cloned sprite's scale to 0.9 (keep it normal size)
-        //         this.clonedNode.setScale(new Vec3(0.9, 0.9, 0.9));
-        //         this.clonedNode.setPosition(new Vec3(0, 0, 0));
-        //     }
-        //     else
-        //         this.clonedNode.active = true;
-        //
-        //     // Scale the original node (parent) by 1.1
-        //     this.node.setScale(new Vec3(1.1, 1.1, 1.1));
-        //
-        //     // Set the color of the parent node's sprite to red
-        //     spriteComponent.color = new Color(255, 0, 0);
-        // } else {
-        //     console.error("No Sprite component found on the node.");
-        // }
     }
 
     turnOffInvincible()
     {
         this._isInvincible = false;
-
-        // // change this node's color back to normal
-        // this.node.getComponent(Sprite).color = new Color(255, 255, 255);
-        // this.node.setScale(new Vec3(1, 1, 1));
-        //
-        // // turn off the child
-        // if (this.clonedNode)
-        //     this.clonedNode.active = false;
-        // else
-        //     console.error("No cloned node found");
-
     }
 }
